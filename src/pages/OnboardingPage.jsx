@@ -89,7 +89,7 @@ export default function OnboardingPage() {
               {loading ? (
                 <div className="btn btn-primary" style={{ width: '100%' }}>…</div>
               ) : (
-                <img src="/icon/Bouton C'est parti.png" alt="C'est parti" style={{ width: '100%', objectFit: 'contain', borderRadius: 16 }} />
+                <img src="/icon/bouton-cest-parti.png" alt="C'est parti" style={{ width: '100%', objectFit: 'contain', borderRadius: 16 }} />
               )}
             </button>
           </div>
