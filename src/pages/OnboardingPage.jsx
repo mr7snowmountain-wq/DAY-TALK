@@ -82,8 +82,15 @@ export default function OnboardingPage() {
                 </button>
               ))}
             </div>
-            <button className="btn btn-primary" onClick={finish} disabled={!usage || loading}>
-              {loading ? '…' : "C'est parti 🚀"}
+            <button onClick={finish} disabled={!usage || loading} style={{
+              background: 'none', border: 'none', padding: 0, cursor: !usage || loading ? 'not-allowed' : 'pointer',
+              opacity: !usage || loading ? 0.5 : 1, width: '100%', transition: 'opacity 0.2s',
+            }}>
+              {loading ? (
+                <div className="btn btn-primary" style={{ width: '100%' }}>…</div>
+              ) : (
+                <img src="/icon/Bouton C'est parti.png" alt="C'est parti" style={{ width: '100%', objectFit: 'contain', borderRadius: 16 }} />
+              )}
             </button>
           </div>
         )}
