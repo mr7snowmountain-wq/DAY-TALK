@@ -125,12 +125,12 @@ export default function HomePage() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
-              { icon: '/icon/Ma Journée Intelligente.png',   label: 'Ma Journée',  theme: 'journee', color: '#00C2B8' },
-              { icon: '/icon/Mon Voyage Intelligent.png',    label: 'Mon Voyage',  theme: 'voyage',  color: '#2B5CE6' },
-              { icon: '/icon/Mon Projet Intelligent.png',    label: 'Mon Projet',  theme: 'projet',  color: '#7C3AED' },
-              { icon: '/icon/Mon Weekend Intelligent.png',   label: 'Mon Weekend', theme: 'weekend', color: '#F59E0B' },
-              { icon: '/icon/Mon Sport Intelligent.png',     label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
-              { icon: '/icon/Mes Courses Intelligentes.png', label: 'Mes Courses', theme: 'courses', color: '#EC4899' },
+              { icon: '/icon/smart-journee.png', label: 'Ma Journée',  theme: 'journee', color: '#00C2B8' },
+              { icon: '/icon/smart-voyage.png',  label: 'Mon Voyage',  theme: 'voyage',  color: '#2B5CE6' },
+              { icon: '/icon/smart-projet.png',  label: 'Mon Projet',  theme: 'projet',  color: '#7C3AED' },
+              { icon: '/icon/smart-weekend.png', label: 'Mon Weekend', theme: 'weekend', color: '#F59E0B' },
+              { icon: '/icon/smart-sport.png',   label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
+              { icon: '/icon/smart-courses.png', label: 'Mes Courses', theme: 'courses', color: '#EC4899' },
             ].map(a => (
               <button key={a.theme} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
                 flex: '1 1 calc(33% - 8px)', display: 'flex', flexDirection: 'column',

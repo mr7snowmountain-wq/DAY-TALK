@@ -6,13 +6,13 @@ import { registerPush, isPushEnabled, unregisterPush } from '../lib/push'
 import { supabase } from '../lib/supabase'
 
 const THEME_CONFIG = {
-  journee: { label: 'Ma Journée',  color: '#00C2B8', icon: '/icon/Ma Journée Intelligente.png' },
-  voyage:  { label: 'Mon Voyage',  color: '#2B5CE6', icon: '/icon/Mon Voyage Intelligent.png' },
-  projet:  { label: 'Mon Projet',  color: '#7C3AED', icon: '/icon/Mon Projet Intelligent.png' },
-  weekend: { label: 'Mon Weekend', color: '#F59E0B', icon: '/icon/Mon Weekend Intelligent.png' },
-  sport:   { label: 'Mon Sport',   color: '#10B981', icon: '/icon/Mon Sport Intelligent.png' },
-  courses: { label: 'Mes Courses', color: '#EC4899', icon: '/icon/Mes Courses Intelligentes.png' },
-  default: { label: 'Planning',    color: '#00C2B8', icon: '/icon/Ma Journée Intelligente.png' },
+  journee: { label: 'Ma Journée',  color: '#00C2B8', icon: '/icon/smart-journee.png' },
+  voyage:  { label: 'Mon Voyage',  color: '#2B5CE6', icon: '/icon/smart-voyage.png' },
+  projet:  { label: 'Mon Projet',  color: '#7C3AED', icon: '/icon/smart-projet.png' },
+  weekend: { label: 'Mon Weekend', color: '#F59E0B', icon: '/icon/smart-weekend.png' },
+  sport:   { label: 'Mon Sport',   color: '#10B981', icon: '/icon/smart-sport.png' },
+  courses: { label: 'Mes Courses', color: '#EC4899', icon: '/icon/smart-courses.png' },
+  default: { label: 'Planning',    color: '#00C2B8', icon: '/icon/smart-journee.png' },
 }
 
 function NotifButton() {
