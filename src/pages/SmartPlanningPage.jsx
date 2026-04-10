@@ -209,10 +209,10 @@ function localDate() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
 }
 
-async function savePlan(theme, steps, userId) {
-  const today = localDate()
+async function savePlan(theme, steps, userId, date) {
+  const day = date || localDate()
   const { error } = await supabase.from('dt_plannings').upsert(
-    { user_id: userId, date: today, tasks: steps, theme, updated_at: new Date().toISOString() },
+    { user_id: userId, date: day, tasks: steps, theme, updated_at: new Date().toISOString() },
     { onConflict: 'user_id,date,theme' }
   )
   if (error) console.error('Save error:', error)
@@ -390,14 +390,14 @@ export default function SmartPlanningPage() {
   useEffect(() => {
     if (!dateParam || !user) return
     supabase.from('dt_plannings').select('tasks')
-      .eq('user_id', user.id).eq('date', dateParam).single()
+      .eq('user_id', user.id).eq('date', dateParam).eq('theme', themeKey).single()
       .then(({ data }) => {
         if (data?.tasks?.length) {
           setSteps(data.tasks)
           setStatus('done'); statusRef.current = 'done'
         }
       })
-  }, [dateParam, user])
+  }, [dateParam, themeKey, user])
 
   useEffect(() => { return () => stopRec() }, [])
 
@@ -416,7 +416,7 @@ export default function SmartPlanningPage() {
     try {
       const result = await callClaude(theme.prompt(text))
       setSteps(result.steps || [])
-      if (user) await savePlan(themeKey, result.steps || [], user.id)
+      if (user) await savePlan(themeKey, result.steps || [], user.id, null)
       setStatus('done'); statusRef.current = 'done'
     } catch {
       setErrorMsg("Je n'ai pas réussi à analyser. Réessaie 🎙")
@@ -531,7 +531,7 @@ export default function SmartPlanningPage() {
                 <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ton plan ✨</h2>
                 <span style={{ fontSize: 12, color: theme.color, fontWeight: 700 }}>{steps.length} étapes</span>
               </div>
-              <TimelinePlan steps={steps} onUpdate={updated => { setSteps(updated); if (user) savePlan(themeKey, updated, user.id) }} />
+              <TimelinePlan steps={steps} onUpdate={updated => { setSteps(updated); if (user) savePlan(themeKey, updated, user.id, dateParam || null) }} />
 
               {/* Export agenda */}
               <button onClick={() => exportToIcs(steps, theme.label, dateParam)} style={{
