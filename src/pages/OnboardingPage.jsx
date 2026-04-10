@@ -83,14 +83,13 @@ export default function OnboardingPage() {
               ))}
             </div>
             <button onClick={finish} disabled={!usage || loading} style={{
-              background: 'none', border: 'none', padding: 0, cursor: !usage || loading ? 'not-allowed' : 'pointer',
-              opacity: !usage || loading ? 0.5 : 1, width: '100%', transition: 'opacity 0.2s',
+              width: '100%', padding: '18px', border: 'none', borderRadius: 20,
+              background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+              color: 'white', fontSize: 16, fontWeight: 800, cursor: !usage || loading ? 'not-allowed' : 'pointer',
+              opacity: !usage || loading ? 0.5 : 1, transition: 'opacity 0.2s',
+              boxShadow: '0 6px 24px rgba(0,194,184,0.4)', letterSpacing: 0.3,
             }}>
-              {loading ? (
-                <div className="btn btn-primary" style={{ width: '100%' }}>…</div>
-              ) : (
-                <img src="/icon/bouton-cest-parti.png" alt="C'est parti" style={{ width: '100%', objectFit: 'contain', borderRadius: 16 }} />
-              )}
+              {loading ? '…' : "C'est parti ! 🚀"}
             </button>
           </div>
         )}
