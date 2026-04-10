@@ -63,10 +63,12 @@ export default function HomePage() {
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginTop: 5 }}>{date}</p>
             </div>
             <button onClick={signOut} style={{
-              width: 40, height: 40, background: 'rgba(255,255,255,0.2)',
+              width: 44, height: 44, background: 'rgba(255,255,255,0.2)',
               border: '1px solid rgba(255,255,255,0.3)', borderRadius: '50%',
-              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
-            }}>👤</button>
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, overflow: 'hidden',
+            }}>
+              <img src="/icon/Bouton profil (HomePage).png" alt="profil" style={{ width: 36, height: 36, objectFit: 'contain' }} />
+            </button>
           </div>
 
           {/* Message */}
@@ -83,7 +85,10 @@ export default function HomePage() {
         {/* Planning du jour */}
         <section className="anim-1" style={{ width: '100%', marginBottom: 24, position: 'relative' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)' }}>Aujourd'hui 📅</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <img src="/icon/Titre Aujourd'hui.png" alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
+              Aujourd'hui
+            </h2>
             <button onClick={() => navigate('/planning')} style={{
               background: 'none', border: 'none', cursor: 'pointer',
               color: 'var(--teal)', fontSize: 12, fontWeight: 700,
@@ -113,17 +118,17 @@ export default function HomePage() {
           <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Actions rapides ⚡</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
-              { emoji: '🎙', label: 'Dicter', path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
-              { emoji: '📅', label: 'Semaine', path: '/week', color: 'rgba(43,92,230,0.1)', border: 'rgba(43,92,230,0.25)' },
-              { emoji: '🔔', label: 'Rappels', path: '/profil', color: 'rgba(0,229,212,0.1)', border: 'rgba(0,229,212,0.3)' },
-              { emoji: '📊', label: 'Stats', path: '/profil', color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
+              { icon: '/icon/Action rapide Dicter.png', label: 'Dicter', path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
+              { icon: '/icon/Action rapide Semaine.png', label: 'Semaine', path: '/week', color: 'rgba(43,92,230,0.1)', border: 'rgba(43,92,230,0.25)' },
+              { icon: '/icon/Action rapide Rappel.png', label: 'Rappels', path: '/profil', color: 'rgba(0,229,212,0.1)', border: 'rgba(0,229,212,0.3)' },
+              { icon: '/icon/Action rapide Stats.png', label: 'Stats', path: '/profil', color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
             ].map(a => (
               <button key={a.label} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 8, background: a.color,
                 border: `1.5px solid ${a.border}`, borderRadius: 20, padding: '18px 12px', cursor: 'pointer',
               }}>
-                <span style={{ fontSize: 26 }}>{a.emoji}</span>
+                <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)' }}>{a.label}</span>
               </button>
             ))}
