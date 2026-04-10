@@ -50,12 +50,19 @@ Texte : "${text}"`,
     icon: '/icon/smart-voyage.png',
     color: '#2B5CE6',
     gradient: 'linear-gradient(135deg, #2B5CE6, #00C2B8)',
-    consigne: 'Dis-moi ta destination, la durée du séjour, ton budget et ce que tu aimes (culture, gastronomie, nature, shopping…)',
+    consigne: 'Dis-moi ta destination, la durée, tes centres d\'intérêt (culture, gastronomie, nature, shopping…) et ton budget.',
     exemple: '"Paris, 3 jours, budget moyen, j\'aime l\'art et la bonne cuisine"',
-    prompt: (text) => `Tu es DayTalk, un assistant voyage intelligent. À partir de ce texte, crée un itinéraire de voyage complet.
-Retourne UNIQUEMENT un JSON valide (sans markdown) avec ce format exact :
-{"steps":[{"time":"Jour 1 - 09:00","duration":"2h","title":"Musée du Louvre","desc":"Collections impressionnistes, entrée 17€","emoji":"🏛️","color":"#2B5CE6"}]}
-Règles : structure par jours et heures, inclus restos/cafés, monuments, activités, conseils pratiques, emoji pertinent, alterne les couleurs.
+    prompt: (text) => `Tu es DayTalk, un expert voyage qui connaît parfaitement les destinations. Crée un itinéraire détaillé et concret.
+Retourne UNIQUEMENT un JSON valide (sans markdown) :
+{"steps":[{"time":"Jour 1 - 09:00","duration":"2h","title":"Musée d'Orsay","desc":"Chef-d'œuvre de l'impressionnisme. Réserve en ligne pour éviter la queue. Tarif : 16€. Métro : Solférino (L12).","emoji":"🖼️","color":"#2B5CE6"}]}
+Règles STRICTES :
+- Minimum 8 étapes, maximum 15
+- Chaque étape DOIT avoir un titre précis (vrai lieu/resto/activité), une description utile (prix, transport, conseil pratique, horaires réels)
+- Structure : matin/midi/après-midi/soir pour chaque jour
+- Inclus TOUJOURS 1-2 restaurants avec noms réels et spécialités
+- Adapte aux préférences mentionnées (culture, gastronomie, sport, nature...)
+- Donne des vrais conseils d'insider (meilleures heures, astuces, à éviter)
+- Alterne les couleurs : #2B5CE6 #00C2B8 #7C3AED #F59E0B #10B981
 Texte : "${text}"`,
   },
   projet: {
@@ -63,12 +70,20 @@ Texte : "${text}"`,
     icon: '/icon/smart-projet.png',
     color: '#7C3AED',
     gradient: 'linear-gradient(135deg, #7C3AED, #2B5CE6)',
-    consigne: 'Décris ton projet, sa deadline, les ressources disponibles et les obstacles potentiels.',
-    exemple: '"Créer un site web pour mon client, deadline dans 2 semaines, je travaille seul, pas de design fourni"',
-    prompt: (text) => `Tu es DayTalk, un assistant de gestion de projet. À partir de ce texte, crée un plan de projet structuré.
-Retourne UNIQUEMENT un JSON valide (sans markdown) avec ce format exact :
-{"steps":[{"time":"Étape 1","duration":"2 jours","title":"Brief & Maquettes","desc":"Définir les besoins et créer les wireframes","emoji":"📐","color":"#7C3AED"}]}
-Règles : décompose en étapes logiques avec durées estimées, identifie les priorités et dépendances, emoji pertinent, alterne les couleurs entre #7C3AED #2B5CE6 #00C2B8.
+    consigne: 'Décris ton projet, sa deadline, tes ressources disponibles et les obstacles potentiels.',
+    exemple: '"Lancer une boutique en ligne de vêtements, deadline 1 mois, seul, budget 500€"',
+    prompt: (text) => `Tu es DayTalk, un expert en gestion de projet et stratégie. Crée un plan de projet actionnable et détaillé.
+Retourne UNIQUEMENT un JSON valide (sans markdown) :
+{"steps":[{"time":"Semaine 1","duration":"3 jours","title":"Cadrage & Research","desc":"Définir le MVP, analyser les 3 concurrents principaux, identifier les risques clés. Livrables : brief projet + benchmark.","emoji":"🎯","color":"#7C3AED"}]}
+Règles STRICTES :
+- Minimum 7 étapes, maximum 12
+- Chaque étape a un livrable concret et des actions précises à faire
+- Identifie les dépendances (ex: "⚠️ Bloquant : avoir X avant de commencer")
+- Donne des outils/ressources recommandés (Figma, Notion, Stripe...)
+- Estime le temps de manière réaliste avec marge
+- Anticipe les risques pour chaque phase critique
+- Inclus une étape de validation/test avant le lancement
+- Alterne : #7C3AED #2B5CE6 #00C2B8 #F59E0B #EF4444
 Texte : "${text}"`,
   },
   weekend: {
@@ -89,12 +104,20 @@ Texte : "${text}"`,
     icon: '/icon/smart-sport.png',
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981, #00C2B8)',
-    consigne: 'Dis-moi ton objectif sportif, ton niveau actuel, le temps disponible et le matériel que tu as.',
-    exemple: '"Je veux perdre du poids, débutant, 45 minutes, juste des haltères à la maison"',
-    prompt: (text) => `Tu es DayTalk, un coach sportif intelligent. À partir de ce texte, crée une séance de sport structurée.
-Retourne UNIQUEMENT un JSON valide (sans markdown) avec ce format exact :
-{"steps":[{"time":"00:00","duration":"10 min","title":"Échauffement","desc":"Rotations articulaires + footing léger","emoji":"🔥","color":"#10B981"}]}
-Règles : structure en phases (échauffement, corps, récupération), adapte au niveau et matériel, donne les séries/reps si pertinent, emoji sportif.
+    consigne: 'Dis-moi ton objectif (perte de poids, muscle, endurance…), ton niveau, le temps dispo et le matériel.',
+    exemple: '"Perdre du ventre, débutant, 45 min, haltères 10kg à la maison"',
+    prompt: (text) => `Tu es DayTalk, un coach sportif certifié. Crée une séance d'entraînement complète, précise et adaptée.
+Retourne UNIQUEMENT un JSON valide (sans markdown) :
+{"steps":[{"time":"00:00","duration":"8 min","title":"Échauffement cardio","desc":"2 min jumping jacks → 2 min montées de genoux → 2 min talons-fesses → 2 min bras en croix. Objectif : élever le rythme cardiaque progressivement.","emoji":"🔥","color":"#10B981"}]}
+Règles STRICTES :
+- Minimum 6 étapes, maximum 10
+- Chaque exercice : nombre de séries × répétitions OU durée précise + temps de repos
+- Explique la technique correcte en 1 phrase pour éviter les blessures
+- Adapte EXACTEMENT au matériel disponible (si pas de matériel → exercices au poids du corps)
+- Adapte l'intensité au niveau (débutant = moins de volume, pro = plus d'intensité)
+- Inclus TOUJOURS : échauffement, exercices principaux par zones ciblées, récupération/étirements
+- Donne un conseil nutrition lié à l'objectif dans la dernière étape
+- Alterne : #10B981 #00C2B8 #2B5CE6 #F59E0B #EF4444
 Texte : "${text}"`,
   },
   courses: {
@@ -234,18 +257,71 @@ function MicButton({ status, onStart, onStop, color }) {
   )
 }
 
-/* ── Timeline ── */
-function TimelinePlan({ steps }) {
+/* ── Timeline avec édition ── */
+function TimelinePlan({ steps, onUpdate }) {
+  const [editing, setEditing] = useState(null) // index de l'étape en cours d'édition
+  const [draft,   setDraft]   = useState({})
+
+  function openEdit(i) {
+    setEditing(i)
+    setDraft({ title: steps[i].title, desc: steps[i].desc || '', time: steps[i].time, duration: steps[i].duration || '' })
+  }
+
+  function saveEdit() {
+    const updated = steps.map((s, i) => i === editing ? { ...s, ...draft } : s)
+    onUpdate(updated)
+    setEditing(null)
+  }
+
   return (
     <div style={{ width: '100%', padding: '0 4px' }}>
+      {/* Modal édition */}
+      {editing !== null && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 999,
+          background: 'rgba(13,27,75,0.5)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'flex-end',
+        }} onClick={() => setEditing(null)}>
+          <div onClick={e => e.stopPropagation()} style={{
+            width: '100%', background: 'white', borderRadius: '24px 24px 0 0',
+            padding: '24px 20px 40px', display: 'flex', flexDirection: 'column', gap: 14,
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Modifier l'étape</h3>
+              <button onClick={() => setEditing(null)} style={{ background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: 'var(--text-hint)' }}>×</button>
+            </div>
+            {[
+              { key: 'time', label: 'Heure / Moment' },
+              { key: 'duration', label: 'Durée' },
+              { key: 'title', label: 'Titre' },
+            ].map(f => (
+              <div key={f.key} className="field">
+                <label>{f.label}</label>
+                <input value={draft[f.key] || ''} onChange={e => setDraft(d => ({ ...d, [f.key]: e.target.value }))} />
+              </div>
+            ))}
+            <div className="field">
+              <label>Description / Notes</label>
+              <textarea value={draft.desc || ''} onChange={e => setDraft(d => ({ ...d, desc: e.target.value }))}
+                rows={3} style={{
+                  width: '100%', background: 'rgba(255,255,255,0.8)',
+                  border: '1.5px solid rgba(0,194,184,0.25)', borderRadius: 16,
+                  padding: '12px 16px', fontFamily: 'var(--font)', fontSize: 14,
+                  color: 'var(--text-dark)', outline: 'none', resize: 'none',
+                }}/>
+            </div>
+            <button onClick={saveEdit} className="btn btn-primary">Enregistrer</button>
+          </div>
+        </div>
+      )}
+
       {steps.map((step, i) => (
         <div key={i} style={{ display: 'flex', gap: 16, animation: `fadeInUp 0.4s ease ${i * 0.08}s both` }}>
           {/* Ligne verticale + point */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
             <div style={{
               width: 44, height: 44, borderRadius: '50%',
-              background: step.color + '22',
-              border: `2px solid ${step.color}`,
+              background: step.color + '22', border: `2px solid ${step.color}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 20, flexShrink: 0,
             }}>
@@ -260,23 +336,23 @@ function TimelinePlan({ steps }) {
             )}
           </div>
 
-          {/* Contenu */}
-          <div style={{
+          {/* Contenu — tap pour éditer */}
+          <div onClick={() => openEdit(i)} style={{
             flex: 1, background: 'rgba(255,255,255,0.7)',
             border: `1.5px solid ${step.color}33`,
-            borderRadius: 16, padding: '12px 16px',
-            marginBottom: i < steps.length - 1 ? 0 : 0,
+            borderRadius: 16, padding: '12px 16px', cursor: 'pointer',
+            marginBottom: 0, position: 'relative',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
               <p style={{ fontSize: 13, fontWeight: 800, color: step.color, margin: 0 }}>{step.time}</p>
-              {step.duration && (
-                <span style={{
-                  fontSize: 11, fontWeight: 600, color: step.color,
-                  background: step.color + '18', borderRadius: 20, padding: '2px 8px',
-                }}>
-                  {step.duration}
-                </span>
-              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                {step.duration && (
+                  <span style={{ fontSize: 11, fontWeight: 600, color: step.color, background: step.color + '18', borderRadius: 20, padding: '2px 8px' }}>
+                    {step.duration}
+                  </span>
+                )}
+                <span style={{ fontSize: 11, color: 'var(--text-hint)' }}>✏️</span>
+              </div>
             </div>
             <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-dark)', margin: '2px 0 4px' }}>{step.title}</p>
             {step.desc && <p style={{ fontSize: 12, color: 'var(--text-soft)', margin: 0, lineHeight: 1.5 }}>{step.desc}</p>}
@@ -450,7 +526,7 @@ export default function SmartPlanningPage() {
                 <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ton plan ✨</h2>
                 <span style={{ fontSize: 12, color: theme.color, fontWeight: 700 }}>{steps.length} étapes</span>
               </div>
-              <TimelinePlan steps={steps} />
+              <TimelinePlan steps={steps} onUpdate={updated => { setSteps(updated); if (user) savePlan(themeKey, updated, user.id) }} />
 
               {/* Export agenda */}
               <button onClick={() => exportToIcs(steps, theme.label, dateParam)} style={{

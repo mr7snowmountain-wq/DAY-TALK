@@ -64,17 +64,29 @@ function NotifButton() {
 
 function HistorySection({ userId }) {
   const navigate = useNavigate()
-  const [history, setHistory] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [history, setHistory]   = useState([])
+  const [loading, setLoading]   = useState(true)
+  const [filter,  setFilter]    = useState('all')
 
   useEffect(() => {
     if (!userId) return
     supabase.from('dt_plannings').select('id, date, theme, tasks')
       .eq('user_id', userId)
       .order('date', { ascending: false })
-      .limit(20)
+      .limit(50)
       .then(({ data }) => { setHistory(data || []); setLoading(false) })
   }, [userId])
+
+  const themes = ['all', ...Object.keys(THEME_CONFIG).filter(k => k !== 'default')]
+  const filtered = filter === 'all' ? history : history.filter(h => h.theme === filter)
+
+  // Grouper par mois
+  const grouped = filtered.reduce((acc, h) => {
+    const key = new Date(h.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+    if (!acc[key]) acc[key] = []
+    acc[key].push(h)
+    return acc
+  }, {})
 
   if (loading) return <p style={{ textAlign: 'center', color: 'var(--text-hint)', fontSize: 13, padding: '12px 0' }}>Chargement…</p>
   if (!history.length) return (
@@ -84,29 +96,62 @@ function HistorySection({ userId }) {
   )
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {history.map(h => {
-        const cfg = THEME_CONFIG[h.theme] || THEME_CONFIG.default
-        const date = new Date(h.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
-        const count = h.tasks?.length || 0
-        const path = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
-        return (
-          <button key={h.id} onClick={() => navigate(path)} style={{
-            display: 'flex', alignItems: 'center', gap: 14,
-            background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
-            borderRadius: 16, padding: '12px 16px', cursor: 'pointer', textAlign: 'left',
-          }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <img src={cfg.icon} alt="" style={{ width: 32, height: 32, objectFit: 'contain' }} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', margin: '0 0 2px' }}>{cfg.label}</p>
-              <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: 0 }}>{date} · {count} étape{count > 1 ? 's' : ''}</p>
-            </div>
-            <span style={{ fontSize: 12, color: cfg.color, fontWeight: 700 }}>→</span>
-          </button>
-        )
-      })}
+    <div>
+      {/* Filtres par thème */}
+      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8, marginBottom: 16, scrollbarWidth: 'none' }}>
+        {themes.map(t => {
+          const cfg = t === 'all' ? { color: '#00C2B8', label: 'Tous' } : THEME_CONFIG[t]
+          const active = filter === t
+          return (
+            <button key={t} onClick={() => setFilter(t)} style={{
+              flexShrink: 0, fontSize: 11, fontWeight: 700, padding: '5px 12px',
+              borderRadius: 20, border: `1.5px solid ${cfg.color}44`,
+              background: active ? cfg.color : cfg.color + '12',
+              color: active ? 'white' : cfg.color, cursor: 'pointer',
+            }}>
+              {cfg.label}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Plans groupés par mois */}
+      {Object.entries(grouped).map(([month, plans]) => (
+        <div key={month} style={{ marginBottom: 20 }}>
+          <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--text-hint)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>{month}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {plans.map(h => {
+              const cfg   = THEME_CONFIG[h.theme] || THEME_CONFIG.default
+              const date  = new Date(h.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
+              const count = h.tasks?.length || 0
+              const path  = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
+              const first = h.tasks?.[0]
+              const preview = first ? (first.title || first.tache || '') : ''
+              return (
+                <button key={h.id} onClick={() => navigate(path)} style={{
+                  display: 'flex', alignItems: 'center', gap: 12,
+                  background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
+                  borderRadius: 16, padding: '12px 14px', cursor: 'pointer', textAlign: 'left',
+                }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 11, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <img src={cfg.icon} alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>{date}</p>
+                      <span style={{ fontSize: 10, color: cfg.color, fontWeight: 700, background: cfg.color + '15', borderRadius: 10, padding: '2px 7px' }}>{count} étapes</span>
+                    </div>
+                    {preview && <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: '2px 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {h.tasks?.[0]?.emoji} {preview}…
+                    </p>}
+                  </div>
+                  <span style={{ fontSize: 14, color: cfg.color }}>→</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
