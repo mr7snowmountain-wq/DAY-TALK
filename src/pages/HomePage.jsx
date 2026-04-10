@@ -65,11 +65,11 @@ export default function HomePage() {
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginTop: 5 }}>{date}</p>
             </div>
             <button onClick={signOut} style={{
-              width: 44, height: 44, background: 'rgba(255,255,255,0.2)',
+              width: 56, height: 56, background: 'rgba(255,255,255,0.2)',
               border: '1px solid rgba(255,255,255,0.3)', borderRadius: '50%',
               cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, overflow: 'hidden',
             }}>
-              <img src="/icon/Bouton profil (HomePage).png" alt="profil" style={{ width: 36, height: 36, objectFit: 'contain' }} />
+              <img src="/icon/Bouton profil (HomePage).png" alt="profil" style={{ width: 50, height: 50, objectFit: 'contain' }} />
             </button>
           </div>
 

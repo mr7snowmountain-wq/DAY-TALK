@@ -271,7 +271,7 @@ export default function PlanningPage() {
           width: '100%',
           background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
           borderRadius: '0 0 28px 28px',
-          padding: '52px 24px 28px', marginBottom: 24,
+          padding: '28px 24px 20px', marginBottom: 24,
           color: '#fff', boxShadow: '0 6px 24px rgba(0,194,184,0.18)',
         }}>
           <button onClick={() => navigate('/home')}

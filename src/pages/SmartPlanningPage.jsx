@@ -318,7 +318,7 @@ export default function SmartPlanningPage() {
         {/* Header */}
         <div style={{
           width: '100%', background: theme.gradient,
-          borderRadius: '0 0 28px 28px', padding: '52px 24px 24px',
+          borderRadius: '0 0 28px 28px', padding: '28px 24px 20px',
           marginBottom: 24, boxShadow: `0 6px 24px ${theme.color}33`,
         }}>
           <button onClick={() => navigate('/home')} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>←</button>
