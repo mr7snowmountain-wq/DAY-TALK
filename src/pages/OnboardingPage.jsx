@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 const USAGES = [
-  { id: 'personal', emoji: '🏠', label: 'Personnel',    desc: 'Famille, courses, quotidien' },
-  { id: 'pro',      emoji: '💼', label: 'Professionnel', desc: 'Réunions, projets, deadlines' },
-  { id: 'both',     emoji: '⚡', label: 'Les deux',      desc: 'Mix perso et pro' },
+  { id: 'personal', icon: '/icon/Usage Personnel.png',      label: 'Personnel',     desc: 'Famille, courses, quotidien' },
+  { id: 'pro',      icon: '/icon/Usage Professionnel.png',  label: 'Professionnel', desc: 'Réunions, projets, deadlines' },
+  { id: 'both',     icon: '/icon/Usage Les deux.png',       label: 'Les deux',      desc: 'Mix perso et pro' },
 ]
 
 export default function OnboardingPage() {
@@ -73,7 +73,7 @@ export default function OnboardingPage() {
                   borderRadius: 16, padding: '16px 18px', cursor: 'pointer', textAlign: 'left',
                   transition: 'all 0.2s',
                 }}>
-                  <span style={{ fontSize: 26 }}>{u.emoji}</span>
+                  <img src={u.icon} alt={u.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                   <div>
                     <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-dark)' }}>{u.label}</p>
                     <p style={{ fontSize: 12, color: 'var(--text-soft)' }}>{u.desc}</p>
