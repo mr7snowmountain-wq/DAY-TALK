@@ -240,6 +240,7 @@ export default function SmartPlanningPage() {
   const [params] = useSearchParams()
   const { user }  = useAuth()
   const themeKey  = params.get('theme') || 'journee'
+  const dateParam = params.get('date')   // mode lecture historique
   const theme     = THEMES[themeKey] || THEMES.journee
 
   const [steps,      setSteps]      = useState([])
@@ -250,6 +251,19 @@ export default function SmartPlanningPage() {
   const statusRef          = useRef('idle')
   const finalTranscriptRef = useRef('')
   const isProcessingRef    = useRef(false)
+
+  // Mode lecture : charge le plan d'une date passée
+  useEffect(() => {
+    if (!dateParam || !user) return
+    supabase.from('dt_plannings').select('tasks')
+      .eq('user_id', user.id).eq('date', dateParam).single()
+      .then(({ data }) => {
+        if (data?.tasks?.length) {
+          setSteps(data.tasks)
+          setStatus('done'); statusRef.current = 'done'
+        }
+      })
+  }, [dateParam, user])
 
   useEffect(() => { return () => stopRec() }, [])
 

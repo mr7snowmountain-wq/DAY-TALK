@@ -89,7 +89,7 @@ function HistorySection({ userId }) {
         const cfg = THEME_CONFIG[h.theme] || THEME_CONFIG.default
         const date = new Date(h.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
         const count = h.tasks?.length || 0
-        const path = h.theme ? `/smart?theme=${h.theme}` : '/planning'
+        const path = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
         return (
           <button key={h.id} onClick={() => navigate(path)} style={{
             display: 'flex', alignItems: 'center', gap: 14,

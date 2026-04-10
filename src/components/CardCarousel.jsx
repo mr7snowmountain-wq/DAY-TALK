@@ -152,18 +152,23 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
                   {task.emoji}
                 </div>
 
-                {/* Texte */}
+                {/* Texte — supporte heure/tache (Planning) et time/title (Smart) */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--teal)', marginBottom: 3 }}>
-                    {task.heure}
+                    {task.heure || task.time}
                   </p>
                   <p style={{
                     fontSize: 14, fontWeight: 600, color: 'var(--text-dark)',
                     textDecoration: task.done ? 'line-through' : 'none',
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                   }}>
-                    {task.tache}
+                    {task.tache || task.title}
                   </p>
+                  {(task.desc) && (
+                    <p style={{ fontSize: 11, color: 'var(--text-soft)', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {task.desc}
+                    </p>
+                  )}
                 </div>
 
                 {/* Checkmark — carte active seulement */}
