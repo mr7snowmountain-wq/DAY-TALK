@@ -1,5 +1,23 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Supprime le cadre bleu de sélection sur mobile ── */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+}
+button { outline: none; }
+button:focus-visible { outline: none; }
+
+/* ── Animation rebond au clic ── */
+@keyframes tap-bounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.93); }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.tap-bounce { animation: tap-bounce 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
+
 :root {
   --teal:        #00C2B8;
   --teal-light:  #33D1C8;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useTap } from '../hooks/useTap'
 import BottomNav from '../components/BottomNav'
 import CardCarousel from '../components/CardCarousel'
 import { supabase } from '../lib/supabase'
@@ -29,6 +30,7 @@ export default function HomePage() {
   const [tasks, setTasks]     = useState([])
   const [loading, setLoading] = useState(true)
 
+  const tap     = useTap()
   const name    = profile?.display_name || 'toi'
   const message = MESSAGES[new Date().getDay() % MESSAGES.length]
   const date    = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
@@ -123,7 +125,7 @@ export default function HomePage() {
               color: 'white', borderRadius: 20, padding: '3px 10px',
             }}>🎁 FREE 1 MONTH</span>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
               { icon: '/icon/smart-journee.png', label: 'Ma Journée',  theme: 'journee', color: '#00C2B8' },
               { icon: '/icon/smart-voyage.png',  label: 'Mon Voyage',  theme: 'voyage',  color: '#2B5CE6' },
@@ -132,18 +134,18 @@ export default function HomePage() {
               { icon: '/icon/smart-sport.png',   label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
               { icon: '/icon/smart-courses.png', label: 'Mes Courses', theme: 'courses', color: '#EC4899' },
             ].map(a => (
-              <button key={a.theme} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
-                flex: '1 1 calc(33% - 8px)', display: 'flex', flexDirection: 'column',
-                alignItems: 'center', gap: 6,
+              <button key={a.theme} onPointerDown={tap} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
+                flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 8,
                 background: a.color + '12',
                 border: `1.5px solid ${a.color}44`,
-                borderRadius: 18, padding: '14px 8px', cursor: 'pointer',
+                borderRadius: 20, padding: '18px 12px', cursor: 'pointer',
                 position: 'relative', overflow: 'hidden',
               }}>
                 <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
-                <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
                 <div style={{
-                  position: 'absolute', top: 6, right: 6,
+                  position: 'absolute', top: 7, right: 7,
                   width: 7, height: 7, borderRadius: '50%',
                   background: a.color, boxShadow: `0 0 6px ${a.color}`,
                 }}/>
@@ -154,7 +156,14 @@ export default function HomePage() {
 
         {/* Actions rapides */}
         <section className="anim-3" style={{ width: '100%' }}>
-          <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Actions rapides ⚡</h2>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Actions rapides ⚡</h2>
+            <span style={{
+              fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
+              color: '#10B981', border: '1.5px solid #10B98144',
+              background: '#10B98112', borderRadius: 20, padding: '3px 10px',
+            }}>✅ Toujours gratuit</span>
+          </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
               { icon: '/icon/Action rapide Dicter.png', label: 'Dicter', path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
@@ -162,7 +171,7 @@ export default function HomePage() {
               { icon: '/icon/Action rapide Rappel.png', label: 'Rappels', path: '/profil', color: 'rgba(0,229,212,0.1)', border: 'rgba(0,229,212,0.3)' },
               { icon: '/icon/Action rapide Stats.png', label: 'Stats', path: '/profil', color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
             ].map(a => (
-              <button key={a.label} onClick={() => navigate(a.path)} style={{
+              <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 8, background: a.color,
                 border: `1.5px solid ${a.border}`, borderRadius: 20, padding: '18px 12px', cursor: 'pointer',
