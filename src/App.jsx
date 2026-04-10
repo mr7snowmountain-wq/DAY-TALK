@@ -23,13 +23,13 @@ function Loader() {
 
 function Guard({ children }) {
   const { user, loading } = useAuth()
-  if (true) return children // DEMO
   if (loading) return <Loader />
   return user ? children : <Navigate to="/" replace />
 }
 
 function AppRoutes() {
-  const { user, profile } = useAuth()
+  const { user, profile, loading } = useAuth()
+  if (loading) return <Loader />
   return (
     <Routes>
       <Route path="/" element={user ? <Navigate to={profile?.onboarding_complete ? '/home' : '/onboarding'} replace /> : <AuthPage />} />
