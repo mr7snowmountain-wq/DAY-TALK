@@ -19,26 +19,73 @@ function DropletLogo() {
   )
 }
 
+/* Toast de succès */
+function SuccessToast({ message }) {
+  return (
+    <div style={{
+      position: 'fixed', top: 24, left: '50%', transform: 'translateX(-50%)',
+      zIndex: 9999, animation: 'slideDown 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+    }}>
+      <style>{`
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+      `}</style>
+      <div style={{
+        background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+        borderRadius: 20, padding: '14px 24px',
+        boxShadow: '0 8px 32px rgba(0,194,184,0.35)',
+        display: 'flex', alignItems: 'center', gap: 12,
+        minWidth: 260,
+      }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: '50%',
+          background: 'rgba(255,255,255,0.2)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 18, flexShrink: 0,
+        }}>✓</div>
+        <div>
+          <p style={{ color: 'white', fontWeight: 800, fontSize: 14, margin: 0 }}>
+            Compte créé avec succès !
+          </p>
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 12, margin: '2px 0 0' }}>
+            {message}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function AuthPage() {
   const { signIn, signUp } = useAuth()
-  const [mode,  setMode]  = useState('signin')
-  const [email, setEmail] = useState('')
-  const [pass,  setPass]  = useState('')
-  const [err,   setErr]   = useState('')
+  const [mode,    setMode]    = useState('signin')
+  const [email,   setEmail]   = useState('')
+  const [pass,    setPass]    = useState('')
+  const [err,     setErr]     = useState('')
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
     setErr(''); setLoading(true)
     try {
-      if (mode === 'signup') await signUp(email, pass, '')
-      else await signIn(email, pass)
+      if (mode === 'signup') {
+        await signUp(email, pass, '')
+        setSuccess(true)
+        setTimeout(() => setSuccess(false), 3500)
+      } else {
+        await signIn(email, pass)
+      }
     } catch (e) { setErr(e.message) }
     setLoading(false)
   }
 
   return (
     <div className="app-shell">
+      {success && <SuccessToast message="Bienvenue sur DayTalk 🎙" />}
+
       <div className="screen" style={{ justifyContent: 'center', paddingTop: 40, paddingBottom: 40, gap: 0 }}>
 
         {/* Logo + titre */}
@@ -68,7 +115,7 @@ export default function AuthPage() {
               <input type="password" value={pass} onChange={e => setPass(e.target.value)} placeholder="••••••••" required />
             </div>
 
-            {err && <p style={{ color: 'var(--teal)', fontSize: 13, textAlign: 'center', fontWeight: 600 }}>{err}</p>}
+            {err && <p style={{ color: '#e55', fontSize: 13, textAlign: 'center', fontWeight: 600 }}>{err}</p>}
 
             <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: 6 }}>
               {loading ? '…' : mode === 'signin' ? 'Se connecter' : 'Créer mon compte'}
@@ -77,7 +124,7 @@ export default function AuthPage() {
 
           <p style={{ textAlign: 'center', marginTop: 16, fontSize: 13, color: 'var(--text-soft)' }}>
             {mode === 'signin' ? "Pas encore de compte ? " : "Déjà un compte ? "}
-            <button onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
+            <button onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setErr('') }}
               style={{ background: 'none', border: 'none', color: 'var(--teal)', fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font)', fontSize: 13 }}>
               {mode === 'signin' ? "S'inscrire" : "Se connecter"}
             </button>
