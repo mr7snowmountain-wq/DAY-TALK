@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
 import CardCarousel from '../components/CardCarousel'
 import { supabase } from '../lib/supabase'
@@ -49,9 +49,15 @@ Texte : "${text}"`,
   return JSON.parse(match[0])
 }
 
+/* ── Date locale ── */
+function localDate() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+}
+
 /* ── Export .ics ── */
 function exportToIcs(tasks) {
-  const today = new Date().toISOString().split('T')[0]
+  const today = localDate()
   const [year, month, day] = today.split('-').map(Number)
   const pad = n => String(n).padStart(2, '0')
 
@@ -86,13 +92,20 @@ function exportToIcs(tasks) {
 }
 
 /* ── Supabase ── */
-async function savePlanning(tasks, userId) {
-  const today = new Date().toISOString().split('T')[0]
-  const { error } = await supabase.from('dt_plannings').upsert(
-    { user_id: userId, date: today, tasks, updated_at: new Date().toISOString() },
-    { onConflict: 'user_id,date' }
-  )
-  if (error) console.error('Save error:', error)
+async function savePlanning(tasks, userId, date) {
+  const day = date || localDate()
+  const { data: existing } = await supabase
+    .from('dt_plannings').select('id')
+    .eq('user_id', userId).eq('date', day).eq('theme', 'planning')
+    .maybeSingle()
+  if (existing) {
+    await supabase.from('dt_plannings')
+      .update({ tasks, updated_at: new Date().toISOString() })
+      .eq('id', existing.id)
+  } else {
+    await supabase.from('dt_plannings')
+      .insert({ user_id: userId, date: day, tasks, theme: 'planning', updated_at: new Date().toISOString() })
+  }
 }
 
 /* ── Bouton micro ── */
@@ -164,8 +177,10 @@ function MicButton({ status, onStart, onStop }) {
 
 /* ── Page ── */
 export default function PlanningPage() {
-  const navigate = useNavigate()
+  const navigate  = useNavigate()
+  const [params]  = useSearchParams()
   const { user }  = useAuth()
+  const dateParam = params.get('date')
 
   const [tasks,      setTasks]      = useState([])
   const [status,     setStatus]     = useState('idle')
@@ -176,12 +191,12 @@ export default function PlanningPage() {
   const finalTranscriptRef = useRef('')
   const isProcessingRef    = useRef(false)
 
-  /* Charger planning du jour */
+  /* Charger planning (du jour ou historique) */
   useEffect(() => {
     if (!user) return
-    const today = new Date().toISOString().split('T')[0]
+    const day = dateParam || localDate()
     supabase.from('dt_plannings').select('tasks')
-      .eq('user_id', user.id).eq('date', today).single()
+      .eq('user_id', user.id).eq('date', day).eq('theme', 'planning').maybeSingle()
       .then(({ data }) => {
         if (data?.tasks?.length > 0) {
           setTasks(data.tasks)
@@ -189,7 +204,7 @@ export default function PlanningPage() {
         }
       })
     return () => stopCurrentRecognition()
-  }, [user])
+  }, [user, dateParam])
 
   function stopCurrentRecognition() {
     try { window.__daytalkRec?.stop() } catch {}
@@ -211,7 +226,7 @@ export default function PlanningPage() {
     try {
       const parsed = await transcriptToPlanning(text)
       setTasks(parsed)
-      if (user) await savePlanning(parsed, user.id)
+      if (user) await savePlanning(parsed, user.id, null)
       setStatus('done'); statusRef.current = 'done'
     } catch {
       setErrorMsg("Je n'ai pas réussi à analyser. Réessaie 🎙")
@@ -280,7 +295,7 @@ export default function PlanningPage() {
   function toggleTask(index) {
     setTasks(prev => {
       const updated = prev.map((t, i) => i === index ? { ...t, done: !t.done } : t)
-      if (user) savePlanning(updated, user.id)
+      if (user) savePlanning(updated, user.id, dateParam || null)
       return updated
     })
   }
@@ -290,9 +305,10 @@ export default function PlanningPage() {
     setStatus('idle'); statusRef.current = 'idle'
     finalTranscriptRef.current = ''; isProcessingRef.current = false
     setErrorMsg('')
-    if (user) {
-      const today = new Date().toISOString().split('T')[0]
-      supabase.from('dt_plannings').delete().eq('user_id', user.id).eq('date', today)
+    if (user && !dateParam) {
+      const day = localDate()
+      supabase.from('dt_plannings').delete()
+        .eq('user_id', user.id).eq('date', day).eq('theme', 'planning')
     }
   }
 

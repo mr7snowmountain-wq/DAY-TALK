@@ -211,11 +211,18 @@ function localDate() {
 
 async function savePlan(theme, steps, userId, date) {
   const day = date || localDate()
-  const { error } = await supabase.from('dt_plannings').upsert(
-    { user_id: userId, date: day, tasks: steps, theme, updated_at: new Date().toISOString() },
-    { onConflict: 'user_id,date,theme' }
-  )
-  if (error) console.error('Save error:', error)
+  const { data: existing } = await supabase
+    .from('dt_plannings').select('id')
+    .eq('user_id', userId).eq('date', day).eq('theme', theme)
+    .maybeSingle()
+  if (existing) {
+    await supabase.from('dt_plannings')
+      .update({ tasks: steps, updated_at: new Date().toISOString() })
+      .eq('id', existing.id)
+  } else {
+    await supabase.from('dt_plannings')
+      .insert({ user_id: userId, date: day, tasks: steps, theme, updated_at: new Date().toISOString() })
+  }
 }
 
 /* ── Bouton micro ── */

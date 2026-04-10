@@ -6,13 +6,14 @@ import { registerPush, isPushEnabled, unregisterPush } from '../lib/push'
 import { supabase } from '../lib/supabase'
 
 const THEME_CONFIG = {
-  journee: { label: 'Ma Journée',  color: '#00C2B8', icon: '/icon/smart-journee.png' },
-  voyage:  { label: 'Mon Voyage',  color: '#2B5CE6', icon: '/icon/smart-voyage.png' },
-  projet:  { label: 'Mon Projet',  color: '#7C3AED', icon: '/icon/smart-projet.png' },
-  weekend: { label: 'Mon Weekend', color: '#F59E0B', icon: '/icon/smart-weekend.png' },
-  sport:   { label: 'Mon Sport',   color: '#10B981', icon: '/icon/smart-sport.png' },
-  courses: { label: 'Mes Courses', color: '#EC4899', icon: '/icon/smart-courses.png' },
-  default: { label: 'Planning',    color: '#00C2B8', icon: '/icon/smart-journee.png' },
+  journee:  { label: 'Ma Journée',    color: '#00C2B8', icon: '/icon/smart-journee.png' },
+  voyage:   { label: 'Mon Voyage',    color: '#2B5CE6', icon: '/icon/smart-voyage.png' },
+  projet:   { label: 'Mon Projet',    color: '#7C3AED', icon: '/icon/smart-projet.png' },
+  weekend:  { label: 'Mon Weekend',   color: '#F59E0B', icon: '/icon/smart-weekend.png' },
+  sport:    { label: 'Mon Sport',     color: '#10B981', icon: '/icon/smart-sport.png' },
+  courses:  { label: 'Mes Courses',   color: '#EC4899', icon: '/icon/smart-courses.png' },
+  planning: { label: 'Mon Planning',  color: '#00C2B8', icon: '/icon/smart-journee.png' },
+  default:  { label: 'Planning',      color: '#00C2B8', icon: '/icon/smart-journee.png' },
 }
 
 function NotifButton() {
@@ -132,7 +133,9 @@ function HistorySection({ userId }) {
               const cfg   = THEME_CONFIG[h.theme] || THEME_CONFIG.default
               const date  = new Date(h.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
               const count = h.tasks?.length || 0
-              const path  = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
+              const path  = h.theme === 'planning'
+                ? `/planning?date=${h.date}`
+                : h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
               const first = h.tasks?.[0]
               const preview = first ? (first.title || first.tache || '') : ''
               const isDeleting = deleting === h.id
