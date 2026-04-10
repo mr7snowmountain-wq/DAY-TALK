@@ -69,7 +69,7 @@ export default function HomePage() {
               border: '1px solid rgba(255,255,255,0.3)', borderRadius: '50%',
               cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, overflow: 'hidden',
             }}>
-              <img src="/icon/Bouton profil (HomePage).png" alt="profil" style={{ width: 50, height: 50, objectFit: 'contain' }} />
+              <img src="/icon/bouton-profil.png" alt="profil" style={{ width: 50, height: 50, objectFit: 'contain' }} />
             </button>
           </div>
 
@@ -88,7 +88,7 @@ export default function HomePage() {
         <section className="anim-1" style={{ width: '100%', marginBottom: 24, position: 'relative' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <img src="/icon/Titre Aujourd'hui.png" alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
+              <img src="/icon/titre-aujourdhui.png" alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
               Aujourd'hui
             </h2>
             <button onClick={() => navigate('/planning')} style={{
@@ -166,10 +166,10 @@ export default function HomePage() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
-              { icon: '/icon/Action rapide Dicter.png', label: 'Dicter', path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
-              { icon: '/icon/Action rapide Semaine.png', label: 'Semaine', path: '/week', color: 'rgba(43,92,230,0.1)', border: 'rgba(43,92,230,0.25)' },
-              { icon: '/icon/Action rapide Rappel.png', label: 'Rappels', path: '/profil', color: 'rgba(0,229,212,0.1)', border: 'rgba(0,229,212,0.3)' },
-              { icon: '/icon/Action rapide Stats.png', label: 'Stats', path: '/profil', color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
+              { icon: '/icon/action-dicter.png',  label: 'Dicter',  path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
+              { icon: '/icon/action-semaine.png', label: 'Semaine', path: '/week',     color: 'rgba(43,92,230,0.1)',  border: 'rgba(43,92,230,0.25)' },
+              { icon: '/icon/action-rappel.png',  label: 'Rappels', path: '/profil',   color: 'rgba(0,229,212,0.1)',  border: 'rgba(0,229,212,0.3)' },
+              { icon: '/icon/action-stats.png',   label: 'Stats',   path: '/profil',   color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
             ].map(a => (
               <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',

@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 const USAGES = [
-  { id: 'personal', icon: '/icon/Usage Personnel.png',      label: 'Personnel',     desc: 'Famille, courses, quotidien' },
-  { id: 'pro',      icon: '/icon/Usage Professionnel.png',  label: 'Professionnel', desc: 'Réunions, projets, deadlines' },
-  { id: 'both',     icon: '/icon/Usage Les deux.png',       label: 'Les deux',      desc: 'Mix perso et pro' },
+  { id: 'personal', icon: '/icon/usage-personnel.png',      label: 'Personnel',     desc: 'Famille, courses, quotidien' },
+  { id: 'pro',      icon: '/icon/usage-professionnel.png',  label: 'Professionnel', desc: 'Réunions, projets, deadlines' },
+  { id: 'both',     icon: '/icon/usage-les-deux.png',       label: 'Les deux',      desc: 'Mix perso et pro' },
 ]
 
 export default function OnboardingPage() {
