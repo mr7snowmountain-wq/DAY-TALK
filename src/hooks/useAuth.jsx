@@ -50,9 +50,15 @@ export function AuthProvider({ children }) {
 
   async function saveProfile(updates) {
     if (!user) return
-    const { data } = await supabase.from('dt_profiles').upsert({ id: user.id, ...updates }).select().single()
-    setProfile(data)
-    return data
+    // Essai update d'abord, puis insert si la ligne n'existe pas encore
+    const { data: updated, error: updateErr } = await supabase
+      .from('dt_profiles').update(updates).eq('id', user.id).select().single()
+    if (updated) { setProfile(updated); return updated }
+    // Pas de ligne existante → insert
+    const { data: inserted } = await supabase
+      .from('dt_profiles').insert({ id: user.id, ...updates }).select().single()
+    if (inserted) setProfile(inserted)
+    return inserted
   }
 
   return (
