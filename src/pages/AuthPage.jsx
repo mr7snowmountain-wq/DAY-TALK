@@ -22,7 +22,6 @@ function DropletLogo() {
 export default function AuthPage() {
   const { signIn, signUp } = useAuth()
   const [mode,  setMode]  = useState('signin')
-  const [name,  setName]  = useState('')
   const [email, setEmail] = useState('')
   const [pass,  setPass]  = useState('')
   const [err,   setErr]   = useState('')
@@ -32,7 +31,7 @@ export default function AuthPage() {
     e.preventDefault()
     setErr(''); setLoading(true)
     try {
-      if (mode === 'signup') await signUp(email, pass, name)
+      if (mode === 'signup') await signUp(email, pass, '')
       else await signIn(email, pass)
     } catch (e) { setErr(e.message) }
     setLoading(false)
@@ -60,12 +59,6 @@ export default function AuthPage() {
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {mode === 'signup' && (
-              <div className="field">
-                <label>Prénom</label>
-                <input value={name} onChange={e => setName(e.target.value)} placeholder="Ton prénom" required />
-              </div>
-            )}
             <div className="field">
               <label>Email</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="ton@email.com" required />

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 const USAGES = [
@@ -9,6 +10,7 @@ const USAGES = [
 
 export default function OnboardingPage() {
   const { saveProfile, profile } = useAuth()
+  const navigate = useNavigate()
   const [step,  setStep]  = useState(1)
   const [name,  setName]  = useState(profile?.display_name || '')
   const [usage, setUsage] = useState('')
@@ -18,6 +20,7 @@ export default function OnboardingPage() {
     setLoading(true)
     await saveProfile({ display_name: name, usage_type: usage, onboarding_complete: true })
     setLoading(false)
+    navigate('/home', { replace: true })
   }
 
   return (
