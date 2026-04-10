@@ -46,17 +46,17 @@ function AppRoutes() {
 
 function GlobalTap() {
   useEffect(() => {
-    function handleClick(e) {
+    function handlePointer(e) {
       const el = e.target.closest('button, a, [role="button"]')
-      if (!el || el.disabled) return
+      if (!el || el.disabled || el.getAttribute('disabled') !== null) return
       playDrop()
       el.classList.remove('tap-bounce')
       void el.offsetWidth
       el.classList.add('tap-bounce')
       el.addEventListener('animationend', () => el.classList.remove('tap-bounce'), { once: true })
     }
-    document.addEventListener('click', handleClick)
-    return () => document.removeEventListener('click', handleClick)
+    document.addEventListener('pointerdown', handlePointer)
+    return () => document.removeEventListener('pointerdown', handlePointer)
   }, [])
   return null
 }

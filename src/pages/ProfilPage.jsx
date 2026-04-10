@@ -90,7 +90,7 @@ function HistorySection({ userId }) {
 
   // Grouper par mois
   const grouped = filtered.reduce((acc, h) => {
-    const key = new Date(h.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+    const key = new Date(h.date + 'T12:00:00').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
     if (!acc[key]) acc[key] = []
     acc[key].push(h)
     return acc
@@ -130,7 +130,7 @@ function HistorySection({ userId }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {plans.map(h => {
               const cfg   = THEME_CONFIG[h.theme] || THEME_CONFIG.default
-              const date  = new Date(h.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
+              const date  = new Date(h.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
               const count = h.tasks?.length || 0
               const path  = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
               const first = h.tasks?.[0]

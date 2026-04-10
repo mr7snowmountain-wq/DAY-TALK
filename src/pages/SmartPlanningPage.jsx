@@ -152,7 +152,7 @@ async function callClaude(prompt) {
 
 /* ── Export .ics ── */
 function exportToIcs(steps, label, date) {
-  const today = date || new Date().toISOString().split('T')[0]
+  const today = date || localDate()
   const [year, month, day] = today.split('-').map(Number)
 
   const lines = [
@@ -204,8 +204,13 @@ function exportToIcs(steps, label, date) {
 }
 
 /* ── Sauvegarder ── */
+function localDate() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+}
+
 async function savePlan(theme, steps, userId) {
-  const today = new Date().toISOString().split('T')[0]
+  const today = localDate()
   const { error } = await supabase.from('dt_plannings').upsert(
     { user_id: userId, date: today, tasks: steps, theme, updated_at: new Date().toISOString() },
     { onConflict: 'user_id,date,theme' }
