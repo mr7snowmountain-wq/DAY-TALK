@@ -3,6 +3,17 @@ import { useAuth } from '../hooks/useAuth'
 import BottomNav from '../components/BottomNav'
 import { useState, useEffect } from 'react'
 import { registerPush, isPushEnabled, unregisterPush } from '../lib/push'
+import { supabase } from '../lib/supabase'
+
+const THEME_CONFIG = {
+  journee: { label: 'Ma Journée',  color: '#00C2B8', icon: '/icon/Ma Journée Intelligente.png' },
+  voyage:  { label: 'Mon Voyage',  color: '#2B5CE6', icon: '/icon/Mon Voyage Intelligent.png' },
+  projet:  { label: 'Mon Projet',  color: '#7C3AED', icon: '/icon/Mon Projet Intelligent.png' },
+  weekend: { label: 'Mon Weekend', color: '#F59E0B', icon: '/icon/Mon Weekend Intelligent.png' },
+  sport:   { label: 'Mon Sport',   color: '#10B981', icon: '/icon/Mon Sport Intelligent.png' },
+  courses: { label: 'Mes Courses', color: '#EC4899', icon: '/icon/Mes Courses Intelligentes.png' },
+  default: { label: 'Planning',    color: '#00C2B8', icon: '/icon/Ma Journée Intelligente.png' },
+}
 
 function NotifButton() {
   const { user } = useAuth()
@@ -51,8 +62,57 @@ function NotifButton() {
   )
 }
 
+function HistorySection({ userId }) {
+  const navigate = useNavigate()
+  const [history, setHistory] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!userId) return
+    supabase.from('dt_plannings').select('id, date, theme, tasks')
+      .eq('user_id', userId)
+      .order('date', { ascending: false })
+      .limit(20)
+      .then(({ data }) => { setHistory(data || []); setLoading(false) })
+  }, [userId])
+
+  if (loading) return <p style={{ textAlign: 'center', color: 'var(--text-hint)', fontSize: 13, padding: '12px 0' }}>Chargement…</p>
+  if (!history.length) return (
+    <div style={{ textAlign: 'center', padding: '20px 0' }}>
+      <p style={{ fontSize: 13, color: 'var(--text-soft)' }}>Aucun plan pour l'instant</p>
+    </div>
+  )
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {history.map(h => {
+        const cfg = THEME_CONFIG[h.theme] || THEME_CONFIG.default
+        const date = new Date(h.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })
+        const count = h.tasks?.length || 0
+        const path = h.theme ? `/smart?theme=${h.theme}` : '/planning'
+        return (
+          <button key={h.id} onClick={() => navigate(path)} style={{
+            display: 'flex', alignItems: 'center', gap: 14,
+            background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
+            borderRadius: 16, padding: '12px 16px', cursor: 'pointer', textAlign: 'left',
+          }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <img src={cfg.icon} alt="" style={{ width: 32, height: 32, objectFit: 'contain' }} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', margin: '0 0 2px' }}>{cfg.label}</p>
+              <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: 0 }}>{date} · {count} étape{count > 1 ? 's' : ''}</p>
+            </div>
+            <span style={{ fontSize: 12, color: cfg.color, fontWeight: 700 }}>→</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 export default function ProfilPage() {
-  const { profile, signOut } = useAuth()
+  const { profile, user, signOut } = useAuth()
   const navigate = useNavigate()
   const name = profile?.display_name || '...'
 
@@ -74,6 +134,15 @@ export default function ProfilPage() {
         </div>
 
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+          {/* Historique */}
+          <div>
+            <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Mon Historique 📋</h2>
+            <HistorySection userId={user?.id} />
+          </div>
+
+          <div style={{ height: 1, background: 'rgba(0,194,184,0.15)', margin: '4px 0' }} />
+
           <NotifButton />
           <button onClick={signOut} style={{
             display: 'flex', alignItems: 'center', gap: 10, width: '100%',

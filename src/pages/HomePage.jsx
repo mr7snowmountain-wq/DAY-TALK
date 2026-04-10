@@ -113,8 +113,47 @@ export default function HomePage() {
           )}
         </section>
 
+        {/* Smart Planning */}
+        <section className="anim-2" style={{ width: '100%', marginBottom: 28 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning ✨</h2>
+            <span style={{
+              fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
+              background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+              color: 'white', borderRadius: 20, padding: '3px 10px',
+            }}>🎁 FREE 1 MONTH</span>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {[
+              { icon: '/icon/Ma Journée Intelligente.png',   label: 'Ma Journée',  theme: 'journee', color: '#00C2B8' },
+              { icon: '/icon/Mon Voyage Intelligent.png',    label: 'Mon Voyage',  theme: 'voyage',  color: '#2B5CE6' },
+              { icon: '/icon/Mon Projet Intelligent.png',    label: 'Mon Projet',  theme: 'projet',  color: '#7C3AED' },
+              { icon: '/icon/Mon Weekend Intelligent.png',   label: 'Mon Weekend', theme: 'weekend', color: '#F59E0B' },
+              { icon: '/icon/Mon Sport Intelligent.png',     label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
+              { icon: '/icon/Mes Courses Intelligentes.png', label: 'Mes Courses', theme: 'courses', color: '#EC4899' },
+            ].map(a => (
+              <button key={a.theme} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
+                flex: '1 1 calc(33% - 8px)', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 6,
+                background: a.color + '12',
+                border: `1.5px solid ${a.color}44`,
+                borderRadius: 18, padding: '14px 8px', cursor: 'pointer',
+                position: 'relative', overflow: 'hidden',
+              }}>
+                <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
+                <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
+                <div style={{
+                  position: 'absolute', top: 6, right: 6,
+                  width: 7, height: 7, borderRadius: '50%',
+                  background: a.color, boxShadow: `0 0 6px ${a.color}`,
+                }}/>
+              </button>
+            ))}
+          </div>
+        </section>
+
         {/* Actions rapides */}
-        <section className="anim-2" style={{ width: '100%' }}>
+        <section className="anim-3" style={{ width: '100%' }}>
           <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Actions rapides ⚡</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[

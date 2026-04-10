@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
-import AuthPage     from './pages/AuthPage'
-import OnboardingPage from './pages/OnboardingPage'
-import HomePage     from './pages/HomePage'
-import PlanningPage from './pages/PlanningPage'
-import WeekPage     from './pages/WeekPage'
-import ProfilPage   from './pages/ProfilPage'
+import AuthPage          from './pages/AuthPage'
+import OnboardingPage    from './pages/OnboardingPage'
+import HomePage          from './pages/HomePage'
+import PlanningPage      from './pages/PlanningPage'
+import SmartPlanningPage from './pages/SmartPlanningPage'
+import WeekPage          from './pages/WeekPage'
+import ProfilPage        from './pages/ProfilPage'
 
 function Loader() {
   return (
@@ -32,6 +33,7 @@ function AppRoutes() {
       <Route path="/onboarding" element={<Guard>{profile?.onboarding_complete ? <Navigate to="/home" replace /> : <OnboardingPage />}</Guard>} />
       <Route path="/home"     element={<Guard><HomePage /></Guard>} />
       <Route path="/planning" element={<Guard><PlanningPage /></Guard>} />
+      <Route path="/smart"    element={<Guard><SmartPlanningPage /></Guard>} />
       <Route path="/week"     element={<Guard><WeekPage /></Guard>} />
       <Route path="/profil"   element={<Guard><ProfilPage /></Guard>} />
       <Route path="*"         element={<Navigate to="/" replace />} />
