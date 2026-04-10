@@ -208,7 +208,7 @@ async function savePlan(theme, steps, userId) {
   const today = new Date().toISOString().split('T')[0]
   const { error } = await supabase.from('dt_plannings').upsert(
     { user_id: userId, date: today, tasks: steps, theme, updated_at: new Date().toISOString() },
-    { onConflict: 'user_id,date' }
+    { onConflict: 'user_id,date,theme' }
   )
   if (error) console.error('Save error:', error)
 }

@@ -64,9 +64,10 @@ function NotifButton() {
 
 function HistorySection({ userId }) {
   const navigate = useNavigate()
-  const [history, setHistory]   = useState([])
-  const [loading, setLoading]   = useState(true)
-  const [filter,  setFilter]    = useState('all')
+  const [history, setHistory]       = useState([])
+  const [loading, setLoading]       = useState(true)
+  const [filter,  setFilter]        = useState('all')
+  const [deleting, setDeleting]     = useState(null)
 
   useEffect(() => {
     if (!userId) return
@@ -76,6 +77,13 @@ function HistorySection({ userId }) {
       .limit(50)
       .then(({ data }) => { setHistory(data || []); setLoading(false) })
   }, [userId])
+
+  async function deletePlan(id) {
+    setDeleting(id)
+    await supabase.from('dt_plannings').delete().eq('id', id)
+    setHistory(h => h.filter(x => x.id !== id))
+    setDeleting(null)
+  }
 
   const themes = ['all', ...Object.keys(THEME_CONFIG).filter(k => k !== 'default')]
   const filtered = filter === 'all' ? history : history.filter(h => h.theme === filter)
@@ -127,26 +135,40 @@ function HistorySection({ userId }) {
               const path  = h.theme ? `/smart?theme=${h.theme}&date=${h.date}` : `/smart?theme=journee&date=${h.date}`
               const first = h.tasks?.[0]
               const preview = first ? (first.title || first.tache || '') : ''
+              const isDeleting = deleting === h.id
               return (
-                <button key={h.id} onClick={() => navigate(path)} style={{
-                  display: 'flex', alignItems: 'center', gap: 12,
-                  background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
-                  borderRadius: 16, padding: '12px 14px', cursor: 'pointer', textAlign: 'left',
-                }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 11, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <img src={cfg.icon} alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>{date}</p>
-                      <span style={{ fontSize: 10, color: cfg.color, fontWeight: 700, background: cfg.color + '15', borderRadius: 10, padding: '2px 7px' }}>{count} étapes</span>
+                <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button onClick={() => navigate(path)} style={{
+                    flex: 1, display: 'flex', alignItems: 'center', gap: 12,
+                    background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
+                    borderRadius: 16, padding: '12px 14px', cursor: 'pointer', textAlign: 'left',
+                  }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 11, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <img src={cfg.icon} alt="" style={{ width: 28, height: 28, objectFit: 'contain' }} />
                     </div>
-                    {preview && <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: '2px 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {h.tasks?.[0]?.emoji} {preview}…
-                    </p>}
-                  </div>
-                  <span style={{ fontSize: 14, color: cfg.color }}>→</span>
-                </button>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>{date}</p>
+                        <span style={{ fontSize: 10, color: cfg.color, fontWeight: 700, background: cfg.color + '15', borderRadius: 10, padding: '2px 7px' }}>{count} étapes</span>
+                      </div>
+                      {preview && <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: '2px 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {h.tasks?.[0]?.emoji} {preview}…
+                      </p>}
+                    </div>
+                    <span style={{ fontSize: 14, color: cfg.color }}>→</span>
+                  </button>
+                  <button
+                    onClick={() => { if (window.confirm('Supprimer ce planning ?')) deletePlan(h.id) }}
+                    disabled={isDeleting}
+                    style={{
+                      flexShrink: 0, width: 40, height: 40, borderRadius: 12,
+                      background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.2)',
+                      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 16, opacity: isDeleting ? 0.4 : 1, transition: 'all 0.2s',
+                    }}>
+                    {isDeleting ? '…' : '🗑'}
+                  </button>
+                </div>
               )
             })}
           </div>

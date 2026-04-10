@@ -6,7 +6,7 @@ function getCtx() {
   return _ctx
 }
 
-function playDrop() {
+export function playDrop() {
   try {
     const ctx  = getCtx()
     const osc  = ctx.createOscillator()
@@ -32,7 +32,7 @@ export function useTap() {
     playDrop()
     const el = e.currentTarget
     el.classList.remove('tap-bounce')
-    void el.offsetWidth // reflow pour relancer l'animation
+    void el.offsetWidth
     el.classList.add('tap-bounce')
     el.addEventListener('animationend', () => el.classList.remove('tap-bounce'), { once: true })
   }

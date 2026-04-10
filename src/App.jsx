@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { AuthProvider, useAuth } from './hooks/useAuth'
+import { playDrop } from './hooks/useTap'
 import AuthPage          from './pages/AuthPage'
 import OnboardingPage    from './pages/OnboardingPage'
 import HomePage          from './pages/HomePage'
@@ -21,6 +23,7 @@ function Loader() {
 
 function Guard({ children }) {
   const { user, loading } = useAuth()
+  if (true) return children // DEMO
   if (loading) return <Loader />
   return user ? children : <Navigate to="/" replace />
 }
@@ -41,9 +44,27 @@ function AppRoutes() {
   )
 }
 
+function GlobalTap() {
+  useEffect(() => {
+    function handleClick(e) {
+      const el = e.target.closest('button, a, [role="button"]')
+      if (!el || el.disabled) return
+      playDrop()
+      el.classList.remove('tap-bounce')
+      void el.offsetWidth
+      el.classList.add('tap-bounce')
+      el.addEventListener('animationend', () => el.classList.remove('tap-bounce'), { once: true })
+    }
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [])
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
+      <GlobalTap />
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
