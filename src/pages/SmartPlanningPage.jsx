@@ -127,6 +127,59 @@ async function callClaude(prompt) {
   return JSON.parse(match[0])
 }
 
+/* ── Export .ics ── */
+function exportToIcs(steps, label, date) {
+  const today = date || new Date().toISOString().split('T')[0]
+  const [year, month, day] = today.split('-').map(Number)
+
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//DayTalk//AI Planning//FR',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+  ]
+
+  steps.forEach((step, i) => {
+    // Extraire l'heure si format "HH:MM" ou "Jour X - HH:MM"
+    const timeMatch = (step.time || '').match(/(\d{1,2}):(\d{2})/)
+    let startH = 9 + i, startM = 0
+    if (timeMatch) { startH = parseInt(timeMatch[1]); startM = parseInt(timeMatch[2]) }
+
+    // Durée en minutes
+    const durMatch = (step.duration || '').match(/(\d+)\s*(h|min)/)
+    let durMin = 60
+    if (durMatch) durMin = durMatch[2] === 'h' ? parseInt(durMatch[1]) * 60 : parseInt(durMatch[1])
+
+    const pad = n => String(n).padStart(2, '0')
+    const dtStart = `${year}${pad(month)}${pad(day)}T${pad(startH)}${pad(startM)}00`
+    const endH = startH + Math.floor((startM + durMin) / 60)
+    const endM = (startM + durMin) % 60
+    const dtEnd = `${year}${pad(month)}${pad(day)}T${pad(endH)}${pad(endM)}00`
+
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:daytalk-${today}-${i}@daytalk.app`,
+      `DTSTAMP:${dtStart}`,
+      `DTSTART:${dtStart}`,
+      `DTEND:${dtEnd}`,
+      `SUMMARY:${step.emoji || ''} ${step.title || step.tache || ''}`.trim(),
+      `DESCRIPTION:${step.desc || ''}`,
+      'END:VEVENT',
+    )
+  })
+
+  lines.push('END:VCALENDAR')
+
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })
+  const url  = URL.createObjectURL(blob)
+  const a    = document.createElement('a')
+  a.href     = url
+  a.download = `daytalk-${label.toLowerCase().replace(/\s+/g, '-')}-${today}.ics`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 /* ── Sauvegarder ── */
 async function savePlan(theme, steps, userId) {
   const today = new Date().toISOString().split('T')[0]
@@ -398,9 +451,30 @@ export default function SmartPlanningPage() {
                 <span style={{ fontSize: 12, color: theme.color, fontWeight: 700 }}>{steps.length} étapes</span>
               </div>
               <TimelinePlan steps={steps} />
-              <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 24 }}>
-                🎙 Recommencer
+
+              {/* Export agenda */}
+              <button onClick={() => exportToIcs(steps, theme.label, dateParam)} style={{
+                width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                background: 'white', border: `1.5px solid ${theme.color}55`,
+                borderRadius: 16, padding: '14px', cursor: 'pointer',
+                boxShadow: `0 4px 16px ${theme.color}18`,
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="3" stroke={theme.color} strokeWidth="1.8"/>
+                  <path d="M3 9h18" stroke={theme.color} strokeWidth="1.8"/>
+                  <path d="M8 2v4M16 2v4" stroke={theme.color} strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M8 13h4m-4 4h8" stroke={theme.color} strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+                <span style={{ fontSize: 14, fontWeight: 700, color: theme.color }}>
+                  Ajouter à mon agenda
+                </span>
               </button>
+
+              {!dateParam && (
+                <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
+                  🎙 Recommencer
+                </button>
+              )}
             </>
           )}
 

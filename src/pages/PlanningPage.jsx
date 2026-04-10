@@ -49,6 +49,42 @@ Texte : "${text}"`,
   return JSON.parse(match[0])
 }
 
+/* ── Export .ics ── */
+function exportToIcs(tasks) {
+  const today = new Date().toISOString().split('T')[0]
+  const [year, month, day] = today.split('-').map(Number)
+  const pad = n => String(n).padStart(2, '0')
+
+  const lines = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0',
+    'PRODID:-//DayTalk//AI Planning//FR',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+  ]
+
+  tasks.forEach((task, i) => {
+    const m = (task.heure || '').match(/(\d{1,2}):(\d{2})/)
+    let h = 9 + i, min = 0
+    if (m) { h = parseInt(m[1]); min = parseInt(m[2]) }
+    const dtStart = `${year}${pad(month)}${pad(day)}T${pad(h)}${pad(min)}00`
+    const endH = h + 1
+    const dtEnd = `${year}${pad(month)}${pad(day)}T${pad(endH)}${pad(min)}00`
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:daytalk-${today}-${i}@daytalk.app`,
+      `DTSTAMP:${dtStart}`, `DTSTART:${dtStart}`, `DTEND:${dtEnd}`,
+      `SUMMARY:${task.emoji || ''} ${task.tache || ''}`.trim(),
+      'END:VEVENT',
+    )
+  })
+  lines.push('END:VCALENDAR')
+
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url; a.download = `daytalk-journee-${today}.ics`; a.click()
+  URL.revokeObjectURL(url)
+}
+
 /* ── Supabase ── */
 async function savePlanning(tasks, userId) {
   const today = new Date().toISOString().split('T')[0]
@@ -341,7 +377,25 @@ export default function PlanningPage() {
               {/* Carrousel swipeable */}
               <CardCarousel tasks={tasks} onToggle={toggleTask} />
 
-              <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 24 }}>
+              {/* Export agenda */}
+              <button onClick={() => exportToIcs(tasks)} style={{
+                width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                background: 'white', border: '1.5px solid rgba(0,194,184,0.35)',
+                borderRadius: 16, padding: '14px', cursor: 'pointer',
+                boxShadow: '0 4px 16px rgba(0,194,184,0.12)',
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="#00C2B8" strokeWidth="1.8"/>
+                  <path d="M3 9h18" stroke="#00C2B8" strokeWidth="1.8"/>
+                  <path d="M8 2v4M16 2v4" stroke="#00C2B8" strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M8 13h4m-4 4h8" stroke="#00C2B8" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--teal)' }}>
+                  Ajouter à mon agenda
+                </span>
+              </button>
+
+              <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
                 🎙 Nouveau planning
               </button>
             </>
