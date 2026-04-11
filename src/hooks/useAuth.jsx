@@ -50,12 +50,29 @@ export function AuthProvider({ children }) {
 
   async function saveProfile(updates) {
     if (!user) return
-    // Upsert fiable sur la clé primaire + rechargement depuis Supabase
-    await supabase
+    // UPDATE direct (la ligne existe toujours grâce au trigger dt_on_auth_user_created)
+    const { data, error } = await supabase
       .from('dt_profiles')
-      .upsert({ id: user.id, ...updates }, { onConflict: 'id' })
-    // Toujours recharger depuis la DB pour s'assurer que le contexte est à jour
-    await loadProfile(user.id)
+      .update(updates)
+      .eq('id', user.id)
+      .select()
+      .single()
+    if (error) {
+      console.error('[DayTalk] saveProfile UPDATE error:', error.message, error)
+      // Fallback upsert au cas où la ligne n'existerait pas
+      const { data: d2, error: e2 } = await supabase
+        .from('dt_profiles')
+        .upsert({ id: user.id, ...updates }, { onConflict: 'id' })
+        .select()
+        .single()
+      if (e2) console.error('[DayTalk] saveProfile upsert fallback error:', e2.message, e2)
+      if (d2) { setProfile(d2); return d2 }
+      await loadProfile(user.id)
+      return
+    }
+    // Mise à jour directe du contexte sans re-fetch
+    if (data) setProfile(data)
+    return data
   }
 
   return (
