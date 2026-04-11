@@ -50,15 +50,12 @@ export function AuthProvider({ children }) {
 
   async function saveProfile(updates) {
     if (!user) return
-    // Essai update d'abord, puis insert si la ligne n'existe pas encore
-    const { data: updated, error: updateErr } = await supabase
-      .from('dt_profiles').update(updates).eq('id', user.id).select().single()
-    if (updated) { setProfile(updated); return updated }
-    // Pas de ligne existante → insert
-    const { data: inserted } = await supabase
-      .from('dt_profiles').insert({ id: user.id, ...updates }).select().single()
-    if (inserted) setProfile(inserted)
-    return inserted
+    // Upsert fiable sur la clé primaire + rechargement depuis Supabase
+    await supabase
+      .from('dt_profiles')
+      .upsert({ id: user.id, ...updates }, { onConflict: 'id' })
+    // Toujours recharger depuis la DB pour s'assurer que le contexte est à jour
+    await loadProfile(user.id)
   }
 
   return (
