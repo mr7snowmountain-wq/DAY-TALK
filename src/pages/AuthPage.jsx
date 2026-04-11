@@ -63,6 +63,7 @@ export default function AuthPage() {
   const [mode,    setMode]    = useState('signin')
   const [email,   setEmail]   = useState('')
   const [pass,    setPass]    = useState('')
+  const [name,    setName]    = useState('')
   const [err,     setErr]     = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -72,7 +73,7 @@ export default function AuthPage() {
     setErr(''); setLoading(true)
     try {
       if (mode === 'signup') {
-        await signUp(email, pass, '')
+        await signUp(email, pass, name.trim())
         setSuccess(true)
         setTimeout(() => setSuccess(false), 3500)
       } else {
@@ -106,6 +107,12 @@ export default function AuthPage() {
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {mode === 'signup' && (
+              <div className="field">
+                <label>Prénom</label>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ton prénom" required autoFocus />
+              </div>
+            )}
             <div className="field">
               <label>Email</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="ton@email.com" required />

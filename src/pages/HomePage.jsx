@@ -31,7 +31,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
 
   const tap     = useTap()
-  const name    = profile?.display_name?.trim() || user?.email?.split('@')[0] || 'toi'
+  const name    = profile?.display_name?.trim() || 'toi'
   const message = MESSAGES[new Date().getDay() % MESSAGES.length]
   const date    = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
   const doneCount = tasks.filter(t => t.done).length
