@@ -92,11 +92,14 @@ export default function AuthPage() {
         {/* Logo + titre */}
         <div className="anim-0" style={{ textAlign: 'center', marginBottom: 36 }}>
           <DropletLogo />
-          <h1 style={{ fontSize: 30, fontWeight: 800, color: 'var(--navy)', marginTop: 12, letterSpacing: -0.5 }}>
+          <h1 style={{ fontSize: 38, fontWeight: 400, color: 'var(--navy)', marginTop: 12, letterSpacing: 3, fontFamily: 'var(--font-display)', textTransform: 'uppercase' }}>
             DAY TALK
           </h1>
           <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--teal)', letterSpacing: 3, textTransform: 'uppercase', marginTop: 2 }}>
             AI Planning
+          </p>
+          <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-soft)', marginTop: 10, fontStyle: 'italic', letterSpacing: 0.2 }}>
+            Tu dictes et j'organise
           </p>
         </div>
 

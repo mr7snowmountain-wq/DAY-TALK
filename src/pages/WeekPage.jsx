@@ -13,7 +13,7 @@ export default function WeekPage() {
         }}>← Retour</button>
         <div className="card" style={{ padding: '40px 28px', textAlign: 'center', width: '100%' }}>
           <div style={{ fontSize: 52, marginBottom: 16 }}>📅</div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 10 }}>Vue Semaine</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 400, color: 'var(--text-dark)', marginBottom: 10, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>VUE SEMAINE</h1>
           <p style={{ fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.6 }}>
             Bientôt disponible 🚀<br/>Planifie toute ta semaine d'un coup.
           </p>

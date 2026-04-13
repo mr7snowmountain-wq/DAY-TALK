@@ -330,7 +330,7 @@ export default function PlanningPage() {
             style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>
             ←
           </button>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>🎙 Mon Planning</h1>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 400, margin: 0, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>🎙 MON PLANNING</h1>
           <p style={{ margin: '6px 0 0', opacity: 0.85, fontSize: '0.9rem' }}>
             Dicte ta journée, je m'occupe du reste 🚀
           </p>

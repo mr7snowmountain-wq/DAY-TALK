@@ -480,7 +480,7 @@ export default function SmartPlanningPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <img src={theme.icon} alt="" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}/>
             <div>
-              <h1 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'white', margin: 0, lineHeight: 1.2 }}>{theme.label}</h1>
+              <h1 style={{ fontSize: '1.6rem', fontWeight: 400, color: 'white', margin: 0, lineHeight: 1.2, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>{theme.label}</h1>
               <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.8)', margin: '4px 0 0' }}>Dicte, je structure tout pour toi 🚀</p>
             </div>
           </div>

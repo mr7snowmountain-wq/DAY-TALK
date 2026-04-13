@@ -59,7 +59,7 @@ export default function HomePage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', marginBottom: 3 }}>{getGreeting()},</p>
-              <h1 style={{ fontSize: 28, fontWeight: 800, color: 'white', lineHeight: 1.1, letterSpacing: -0.5 }}>
+              <h1 style={{ fontSize: 34, fontWeight: 400, color: 'white', lineHeight: 1.1, letterSpacing: 2, fontFamily: 'var(--font-display)', textTransform: 'uppercase' }}>
                 {name} 👋
               </h1>
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginTop: 5 }}>{date}</p>
