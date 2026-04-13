@@ -374,7 +374,7 @@ export default function PlanningPage() {
           {tasks.length > 0 && (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                <h2 className="section-title" style={{ margin: 0 }}>Ta journée ✨</h2>
+                <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ta journée ✨</h2>
                 <span style={{ fontSize: '0.8rem', color: 'var(--teal)', fontWeight: 700 }}>
                   {doneCount}/{tasks.length} faites
                 </span>

@@ -40,7 +40,7 @@ export default function HomePage() {
     if (!user) return
     const today = new Date().toISOString().split('T')[0]
     supabase.from('dt_plannings').select('tasks')
-      .eq('user_id', user.id).eq('date', today).single()
+      .eq('user_id', user.id).eq('date', today).eq('theme', 'planning').maybeSingle()
       .then(({ data }) => { setTasks(data?.tasks || []); setLoading(false) })
   }, [user])
 

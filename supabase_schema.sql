@@ -29,11 +29,17 @@ create table public.dt_plannings (
   id         uuid default gen_random_uuid() primary key,
   user_id    uuid references auth.users on delete cascade not null,
   date       date not null default current_date,
+  theme      text not null default 'planning',
   tasks      jsonb not null default '[]',
   created_at timestamptz default now(),
   updated_at timestamptz default now(),
-  unique(user_id, date)
+  unique(user_id, date, theme)
 );
+
+-- ⚠️ Si la table existe déjà, lancer cette migration dans Supabase SQL Editor :
+-- ALTER TABLE public.dt_plannings ADD COLUMN IF NOT EXISTS theme text NOT NULL DEFAULT 'planning';
+-- ALTER TABLE public.dt_plannings DROP CONSTRAINT IF EXISTS dt_plannings_user_id_date_key;
+-- CREATE UNIQUE INDEX IF NOT EXISTS dt_plannings_user_id_date_theme_key ON public.dt_plannings(user_id, date, theme);
 alter table public.dt_plannings enable row level security;
 create policy "dt_lecture_planning"  on dt_plannings for select using (auth.uid() = user_id);
 create policy "dt_insert_planning"   on dt_plannings for insert with check (auth.uid() = user_id);

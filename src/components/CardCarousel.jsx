@@ -90,7 +90,7 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
   }
 
   return (
-    <div style={{ userSelect: 'none' }}>
+    <div style={{ userSelect: 'none', position: 'relative' }}>
 
       {/* ── Zone des cartes avec perspective globale ── */}
       <div

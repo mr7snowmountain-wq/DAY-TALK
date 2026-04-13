@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   async function loadProfile(uid) {
-    const { data } = await supabase.from('dt_profiles').select('*').eq('id', uid).single()
+    const { data } = await supabase.from('dt_profiles').select('*').eq('id', uid).maybeSingle()
     setProfile(data)
   }
 
