@@ -58,15 +58,18 @@ Texte : "${text}"`,
     exemple: '"Paris, 3 jours, budget moyen, j\'aime l\'art et la bonne cuisine"',
     prompt: (text) => `Tu es DayTalk, un expert voyage qui connaît parfaitement les destinations. Crée un itinéraire détaillé et concret.
 Retourne UNIQUEMENT un JSON valide (sans markdown) :
-{"steps":[{"time":"Jour 1 - 09:00","duration":"2h","title":"Musée d'Orsay","desc":"Chef-d'œuvre de l'impressionnisme. Réserve en ligne pour éviter la queue. Tarif : 16€. Métro : Solférino (L12).","emoji":"🖼️","color":"#6D28D9"}]}
-Règles STRICTES :
+{"steps":[{"time":"20/05 - 09:00","duration":"2h","title":"Musée d'Orsay","desc":"Chef-d'œuvre de l'impressionnisme. Réserve en ligne pour éviter la queue. Tarif : 16€. Métro : Solférino (L12).","color":"#6D28D9"}]}
+Règles STRICTES sur le champ "time" :
+- Si le texte mentionne des dates précises (ex: "20 mai", "le 15", "du 3 au 7 juin"), utilise le format JJ/MM - HH:MM (ex: "20/05 - 09:00", "21/05 - 14:00")
+- Si aucune date précise n'est donnée, utilise "Jour 1 - HH:MM", "Jour 2 - HH:MM", etc.
+- Structure : matin/midi/après-midi/soir pour chaque jour
 - Minimum 8 étapes, maximum 15
 - Chaque étape DOIT avoir un titre précis (vrai lieu/resto/activité), une description utile (prix, transport, conseil pratique, horaires réels)
-- Structure : matin/midi/après-midi/soir pour chaque jour
 - Inclus TOUJOURS 1-2 restaurants avec noms réels et spécialités
 - Adapte aux préférences mentionnées (culture, gastronomie, sport, nature...)
 - Donne des vrais conseils d'insider (meilleures heures, astuces, à éviter)
 - Alterne les couleurs : #6D28D9 #8B5CF6 #7C3AED #F59E0B #10B981
+- Pas d'emoji dans les champs title ou desc
 Texte : "${text}"`,
   },
   projet: {
@@ -99,8 +102,12 @@ Texte : "${text}"`,
     exemple: '"Weekend en famille avec 2 enfants à Lyon, on aime les parcs et la bonne bouffe"',
     prompt: (text) => `Tu es DayTalk, un assistant de planification de weekend. À partir de ce texte, crée un programme de weekend équilibré.
 Retourne UNIQUEMENT un JSON valide (sans markdown) avec ce format exact :
-{"steps":[{"time":"Samedi 10:00","duration":"2h","title":"Parc de la Tête d'Or","desc":"Promenade et pique-nique en famille","emoji":"🌳","color":"#F59E0B"}]}
-Règles : équilibre activités et repos, adapte au profil (famille/couple/solo), inclus repas et moments de détente, emoji chaleureux.
+{"steps":[{"time":"14/06 - 10:00","duration":"2h","title":"Parc de la Tête d'Or","desc":"Promenade et pique-nique en famille","color":"#F59E0B"}]}
+Règles STRICTES sur le champ "time" :
+- Si le texte mentionne des dates précises, utilise le format JJ/MM - HH:MM (ex: "14/06 - 10:00", "15/06 - 09:00")
+- Si aucune date précise, utilise "Samedi - HH:MM" et "Dimanche - HH:MM"
+- Équilibre activités et repos, adapte au profil (famille/couple/solo), inclus repas et moments de détente
+- Pas d'emoji dans les champs title ou desc
 Texte : "${text}"`,
   },
   sport: {
@@ -164,23 +171,32 @@ function addDays(yyyymmdd, n) {
 
 const FR_DAYS = { lundi:1, mardi:2, mercredi:3, jeudi:4, vendredi:5, samedi:6, dimanche:0 }
 
-function getDayOffset(timeStr, startDate) {
+// Retourne une date YYYY-MM-DD à partir du champ time d'une étape
+function getEventDate(timeStr, startDate) {
   const t = (timeStr || '').toLowerCase()
-  // "Jour 1", "Jour 2", "Day 1"…
+  const pad = n => String(n).padStart(2, '0')
+
+  // "JJ/MM" ou "JJ/MM/YYYY" — date explicite fournie par l'IA
+  const dmMatch = (timeStr || '').match(/(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?/)
+  if (dmMatch) {
+    const year = dmMatch[3] ? parseInt(dmMatch[3]) : parseInt(startDate.split('-')[0])
+    return `${year}-${pad(parseInt(dmMatch[2]))}-${pad(parseInt(dmMatch[1]))}`
+  }
+  // "Jour X" → startDate + (X-1) jours
   const jourM = t.match(/(?:jour|day)\s*(\d+)/)
-  if (jourM) return parseInt(jourM[1]) - 1
-  // "Semaine 1", "Semaine 2"…
+  if (jourM) return addDays(startDate, parseInt(jourM[1]) - 1)
+  // "Semaine X" → startDate + (X-1)*7 jours
   const semM = t.match(/semaine\s*(\d+)/)
-  if (semM) return (parseInt(semM[1]) - 1) * 7
+  if (semM) return addDays(startDate, (parseInt(semM[1]) - 1) * 7)
   // "Samedi", "Dimanche"…
   for (const [name, dow] of Object.entries(FR_DAYS)) {
     if (t.includes(name)) {
       const [y, m, d] = startDate.split('-').map(Number)
-      const baseDow = new Date(y, m - 1, d).getDay()
-      return (dow - baseDow + 7) % 7
+      const diff = (dow - new Date(y, m - 1, d).getDay() + 7) % 7
+      return addDays(startDate, diff)
     }
   }
-  return 0
+  return startDate // fallback : même jour
 }
 
 /* ── Export .ics ── */
@@ -193,8 +209,7 @@ function exportToIcs(steps, label, startDate) {
   ]
 
   steps.forEach((step, i) => {
-    const offset   = getDayOffset(step.time, startDate)
-    const eventDay = addDays(startDate, offset)
+    const eventDay  = getEventDate(step.time, startDate)
     const [y, m, d] = eventDay.split('-').map(Number)
 
     const timeMatch = (step.time || '').match(/(\d{1,2}):(\d{2})/)
