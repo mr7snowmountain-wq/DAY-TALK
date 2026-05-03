@@ -125,29 +125,30 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
                 alignItems          : 'center',
                 gap                 : 12,
                 background          : task.done
-                  ? 'rgba(255,255,255,0.55)'
-                  : 'rgba(255,255,255,0.82)',
-                backdropFilter      : 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                  ? 'rgba(18, 12, 36, 0.75)'
+                  : isActive
+                    ? 'rgba(28, 16, 56, 0.96)'
+                    : 'rgba(18, 12, 36, 0.88)',
                 border              : isActive
-                  ? '1.5px solid rgba(139,92,246,0.3)'
-                  : '1.5px solid rgba(255,255,255,0.75)',
-                borderRadius        : 20,
+                  ? '1px solid rgba(139,92,246,0.48)'
+                  : '1px solid rgba(139,92,246,0.14)',
+                borderRadius        : 12,
                 padding             : '14px 16px',
                 boxShadow           : isActive
-                  ? '0 8px 28px rgba(139,92,246,0.18)'
-                  : '0 2px 8px rgba(139,92,246,0.06)',
-                opacity             : task.done ? 0.65 : 1,
+                  ? '0 8px 28px rgba(139,92,246,0.18), inset 0 1px 0 rgba(255,255,255,0.04)'
+                  : '0 2px 10px rgba(0,0,0,0.35)',
+                opacity             : task.done ? 0.55 : 1,
               }}>
 
                 {/* Emoji */}
                 <div style={{
-                  width: 42, height: 42, borderRadius: 8, flexShrink: 0,
+                  width: 40, height: 40, borderRadius: 8, flexShrink: 0,
                   background: task.done
-                    ? 'linear-gradient(135deg,rgba(109,40,217,.45),rgba(139,92,246,.45))'
-                    : 'rgba(139,92,246,0.1)',
+                    ? 'rgba(139,92,246,0.2)'
+                    : 'rgba(139,92,246,0.12)',
+                  border: '1px solid rgba(139,92,246,0.22)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 20,
+                  fontSize: 18,
                 }}>
                   {task.emoji}
                 </div>
