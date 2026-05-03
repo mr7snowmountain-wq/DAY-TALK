@@ -105,8 +105,9 @@ export default function HomePage() {
             <CardCarousel tasks={tasks} onToggle={() => navigate('/planning')} onCardTap={() => navigate('/planning')} />
           ) : (
             <div onClick={() => navigate('/planning')} style={{
-              background: 'rgba(139,92,246,0.07)', border: '1.5px dashed rgba(139,92,246,0.32)',
-              borderRadius: 20, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
+              background: 'linear-gradient(145deg, rgba(18,12,36,0.9), rgba(12,8,24,0.9))',
+              border: '1px dashed rgba(139,92,246,0.32)',
+              borderRadius: 10, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
             }}>
               <div style={{ fontSize: 32, marginBottom: 8 }}></div>
               <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-dark)', marginBottom: 4 }}>Aucun planning aujourd'hui</p>
@@ -122,7 +123,7 @@ export default function HomePage() {
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
               background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
-              color: 'white', borderRadius: 20, padding: '3px 10px',
+              color: 'white', borderRadius: 6, padding: '3px 10px',
             }}>FREE 1 MONTH</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
@@ -137,16 +138,17 @@ export default function HomePage() {
               <button key={a.theme} onPointerDown={tap} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 8,
-                background: a.color + '12',
-                border: `1.5px solid ${a.color}44`,
-                borderRadius: 20, padding: '18px 12px', cursor: 'pointer',
+                background: `linear-gradient(145deg, rgba(18,12,36,0.95), rgba(12,8,24,0.95))`,
+                border: `1px solid ${a.color}38`,
+                borderRadius: 10, padding: '18px 12px', cursor: 'pointer',
                 position: 'relative', overflow: 'hidden',
+                boxShadow: `0 4px 16px rgba(0,0,0,0.3)`,
               }}>
                 <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
                 <div style={{
                   position: 'absolute', top: 7, right: 7,
-                  width: 7, height: 7, borderRadius: '50%',
+                  width: 6, height: 6, borderRadius: '50%',
                   background: a.color, boxShadow: `0 0 6px ${a.color}`,
                 }}/>
               </button>
@@ -161,7 +163,7 @@ export default function HomePage() {
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
               color: '#10B981', border: '1.5px solid #10B98144',
-              background: '#10B98112', borderRadius: 20, padding: '3px 10px',
+              background: '#10B98112', borderRadius: 6, padding: '3px 10px',
             }}>Toujours gratuit</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
@@ -173,8 +175,10 @@ export default function HomePage() {
             ].map(a => (
               <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
-                alignItems: 'center', gap: 8, background: a.color,
-                border: `1.5px solid ${a.border}`, borderRadius: 20, padding: '18px 12px', cursor: 'pointer',
+                alignItems: 'center', gap: 8,
+                background: 'linear-gradient(145deg, rgba(18,12,36,0.95), rgba(12,8,24,0.95))',
+                border: `1px solid ${a.border}`, borderRadius: 10, padding: '18px 12px', cursor: 'pointer',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
               }}>
                 <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)' }}>{a.label}</span>
