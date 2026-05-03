@@ -122,40 +122,34 @@ export default function HomePage() {
         {/* Smart Planning */}
         <section className="anim-2" style={{ width: '100%', marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning </h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning</h2>
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
               background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
               color: 'white', borderRadius: 6, padding: '3px 10px',
             }}>FREE 1 MONTH</span>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
-              { icon: '/icon/smart-journee.png', label: 'Ma Journée',  theme: 'journee', color: '#8B5CF6' },
-              { icon: '/icon/smart-voyage.png',  label: 'Mon Voyage',  theme: 'voyage',  color: '#6D28D9' },
-              { icon: '/icon/smart-projet.png',  label: 'Mon Projet',  theme: 'projet',  color: '#7C3AED' },
-              { icon: '/icon/smart-weekend.png', label: 'Mon Weekend', theme: 'weekend', color: '#F59E0B' },
-              { icon: '/icon/smart-sport.png',   label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
-              { icon: '/icon/smart-courses.png', label: 'Mes Courses', theme: 'courses', color: '#EC4899' },
+              { label: 'Ma Journée',  theme: 'journee', svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg> },
+              { label: 'Mon Voyage',  theme: 'voyage',  svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> },
+              { label: 'Mon Projet',  theme: 'projet',  svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v5M9.5 14.5l2.5-2.5 2.5 2.5"/></svg> },
+              { label: 'Mon Weekend', theme: 'weekend', svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg> },
+              { label: 'Mon Sport',   theme: 'sport',   svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6l-3 4M12 13l3 4M7 9l-2 2 3 1M17 9l2 2-3 1"/></svg> },
+              { label: 'Mes Courses', theme: 'courses', svg: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg> },
             ].map(a => (
               <button key={a.theme} onPointerDown={tap} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
-                flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
-                alignItems: 'center', gap: 8,
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                border: `1px solid rgba(255,255,255,0.1)`,
-                borderRadius: 14, padding: '18px 12px', cursor: 'pointer',
-                position: 'relative', overflow: 'hidden',
-                boxShadow: `0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.09)`,
+                flex: '1 1 calc(50% - 5px)', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 10,
+                background: 'linear-gradient(145deg, rgba(139,92,246,0.13) 0%, rgba(7,5,18,0.75) 100%)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                border: '1px solid rgba(139,92,246,0.22)',
+                borderRadius: 14, padding: '20px 12px', cursor: 'pointer',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.07)',
               }}>
-                <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
-                <div style={{
-                  position: 'absolute', top: 7, right: 7,
-                  width: 6, height: 6, borderRadius: '50%',
-                  background: a.color, boxShadow: `0 0 6px ${a.color}`,
-                }}/>
+                {a.svg}
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.75)', textAlign: 'center', lineHeight: 1.3, letterSpacing: 0.2 }}>{a.label}</span>
               </button>
             ))}
           </div>
@@ -164,32 +158,32 @@ export default function HomePage() {
         {/* Actions rapides */}
         <section className="anim-3" style={{ width: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Actions rapides </h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Actions rapides</h2>
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
-              color: '#10B981', border: '1.5px solid #10B98144',
-              background: '#10B98112', borderRadius: 6, padding: '3px 10px',
+              color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.1)',
+              background: 'rgba(255,255,255,0.05)', borderRadius: 6, padding: '3px 10px',
             }}>Toujours gratuit</span>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
-              { icon: '/icon/action-dicter.png',  label: 'Dicter',  path: '/planning', color: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.28)' },
-              { icon: '/icon/action-semaine.png', label: 'Semaine', path: '/week',     color: 'rgba(79,70,229,0.1)',   border: 'rgba(79,70,229,0.25)'  },
-              { icon: '/icon/action-rappel.png',  label: 'Rappels', path: '/profil',   color: 'rgba(124,58,237,0.1)', border: 'rgba(124,58,237,0.25)' },
-              { icon: '/icon/action-stats.png',   label: 'Stats',   path: '/profil',   color: 'rgba(196,181,253,0.07)',border: 'rgba(196,181,253,0.18)'},
+              { label: 'Dicter',  path: '/planning', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0M12 19v3M9 22h6"/></svg> },
+              { label: 'Semaine', path: '/week',     svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg> },
+              { label: 'Rappels', path: '/profil',   svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg> },
+              { label: 'Stats',   path: '/profil',   svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg> },
             ].map(a => (
               <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
-                flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
-                alignItems: 'center', gap: 8,
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 14, padding: '18px 12px', cursor: 'pointer',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.09)',
+                flex: '1 1 calc(50% - 5px)', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', gap: 10,
+                background: 'linear-gradient(145deg, rgba(139,92,246,0.13) 0%, rgba(7,5,18,0.75) 100%)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                border: '1px solid rgba(139,92,246,0.22)',
+                borderRadius: 14, padding: '20px 12px', cursor: 'pointer',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.07)',
               }}>
-                <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)' }}>{a.label}</span>
+                {a.svg}
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.75)', textAlign: 'center', letterSpacing: 0.2 }}>{a.label}</span>
               </button>
             ))}
           </div>
