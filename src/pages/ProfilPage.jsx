@@ -45,7 +45,11 @@ function NotifButton() {
       borderRadius: 16, padding: '14px 18px', cursor: loading ? 'not-allowed' : 'pointer',
       backdropFilter: 'blur(16px)', transition: 'all 0.3s', opacity: loading ? 0.7 : 1,
     }}>
-      <span style={{ fontSize: 20 }}>{enabled ? '🔔' : '🔕'}</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={enabled ? 'white' : 'var(--teal)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 01-3.46 0"/>
+        {!enabled && <line x1="1" y1="1" x2="23" y2="23"/>}
+      </svg>
       <div style={{ textAlign: 'left' }}>
         <p style={{ fontSize: 14, fontWeight: 700, color: enabled ? 'white' : 'var(--text-dark)', marginBottom: 2 }}>
           {loading ? 'Chargement…' : enabled ? 'Notifications activées' : 'Activer les notifications'}
@@ -155,7 +159,7 @@ function HistorySection({ userId }) {
                         <span style={{ fontSize: 10, color: cfg.color, fontWeight: 700, background: cfg.color + '15', borderRadius: 10, padding: '2px 7px' }}>{count} étapes</span>
                       </div>
                       {preview && <p style={{ fontSize: 11, color: 'var(--text-soft)', margin: '2px 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {h.tasks?.[0]?.emoji} {preview}…
+                        {preview}…
                       </p>}
                     </div>
                     <span style={{ fontSize: 14, color: cfg.color }}>→</span>
@@ -169,7 +173,11 @@ function HistorySection({ userId }) {
                       cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: 16, opacity: isDeleting ? 0.4 : 1, transition: 'all 0.2s',
                     }}>
-                    {isDeleting ? '…' : '🗑'}
+                    {isDeleting ? '…' : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(239,68,68,0.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+                      </svg>
+                    )}
                   </button>
                 </div>
               )
@@ -196,10 +204,14 @@ export default function ProfilPage() {
           boxShadow: '0 8px 32px rgba(139,92,246,0.2), inset 0 -1px 0 rgba(139,92,246,0.28)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, marginBottom: 12, border: '2px solid rgba(255,255,255,0.4)' }}>👤</div>
+            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(139,92,246,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12, border: '1px solid rgba(139,92,246,0.35)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
             <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>{name}</h1>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>
-              {profile?.usage_type === 'pro' ? '💼 Pro' : profile?.usage_type === 'personal' ? '🏠 Personnel' : ' Perso & Pro'}
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4, letterSpacing: 0.3 }}>
+              {profile?.usage_type === 'pro' ? 'Professionnel' : profile?.usage_type === 'personal' ? 'Personnel' : 'Perso & Pro'}
             </p>
           </div>
         </div>
@@ -208,7 +220,7 @@ export default function ProfilPage() {
 
           {/* Historique */}
           <div>
-            <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Mon Historique 📋</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 12 }}>Mon Historique</h2>
             <HistorySection userId={user?.id} />
           </div>
 
@@ -217,10 +229,12 @@ export default function ProfilPage() {
           <NotifButton />
           <button onClick={signOut} style={{
             display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-            background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(139,92,246,0.2)',
-            borderRadius: 16, padding: '14px 18px', cursor: 'pointer', backdropFilter: 'blur(16px)',
+            background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(139,92,246,0.2)',
+            borderRadius: 12, padding: '14px 18px', cursor: 'pointer', backdropFilter: 'blur(16px)',
           }}>
-            <span style={{ fontSize: 20 }}>🚪</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
             <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-dark)' }}>Se déconnecter</p>
           </button>
         </div>
