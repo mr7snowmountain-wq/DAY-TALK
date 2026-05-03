@@ -57,7 +57,7 @@ export default function OnboardingPage() {
             opacity: !usage || loading ? 0.5 : 1, transition: 'opacity 0.2s',
             boxShadow: '0 6px 24px rgba(139,92,246,0.4)', letterSpacing: 0.3,
           }}>
-            {loading ? '…' : "C'est parti ! 🚀"}
+            {loading ? '…' : "C'est parti ! "}
           </button>
         </div>
 

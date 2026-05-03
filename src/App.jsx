@@ -14,7 +14,13 @@ function Loader() {
   return (
     <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ width: 56, height: 56, margin: '0 auto 16px', background: 'linear-gradient(135deg,#8B5CF6,#6D28D9)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, animation: 'pulse 1.5s ease-in-out infinite' }}>🎙</div>
+        <div style={{ width: 64, height: 64, margin: '0 auto 20px', background: 'radial-gradient(circle at 38% 32%, rgba(196,181,253,0.18) 0%, rgba(26,18,50,0.95) 100%)', border: '1px solid rgba(139,92,246,0.4)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(139,92,246,0.4)', animation: 'pulse 1.5s ease-in-out infinite' }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="2" width="6" height="11" rx="3" fill="rgba(255,255,255,0.85)"/>
+            <path d="M5 10a7 7 0 0014 0" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M12 19v3M9 22h6" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        </div>
         <p style={{ fontFamily: 'var(--font)', fontStyle: 'italic', color: 'var(--text-soft)' }}>Chargement…</p>
       </div>
     </div>

@@ -85,7 +85,7 @@ export default function AuthPage() {
 
   return (
     <div className="app-shell">
-      {success && <SuccessToast message="Bienvenue sur DayTalk 🎙" />}
+      {success && <SuccessToast message="Bienvenue sur DayTalk " />}
 
       <div className="screen" style={{ justifyContent: 'center', paddingTop: 40, paddingBottom: 40, gap: 0 }}>
 
@@ -106,7 +106,7 @@ export default function AuthPage() {
         {/* Formulaire */}
         <div className="card anim-1" style={{ padding: '28px 24px', width: '100%' }}>
           <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 20, textAlign: 'center' }}>
-            {mode === 'signin' ? 'Bon retour 👋' : 'Créer un compte'}
+            {mode === 'signin' ? 'Bon retour ' : 'Créer un compte'}
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>

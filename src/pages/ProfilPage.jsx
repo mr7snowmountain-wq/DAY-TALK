@@ -198,7 +198,7 @@ export default function ProfilPage() {
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, marginBottom: 12, border: '2px solid rgba(255,255,255,0.4)' }}>👤</div>
             <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>{name}</h1>
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>
-              {profile?.usage_type === 'pro' ? '💼 Pro' : profile?.usage_type === 'personal' ? '🏠 Personnel' : '⚡ Perso & Pro'}
+              {profile?.usage_type === 'pro' ? '💼 Pro' : profile?.usage_type === 'personal' ? '🏠 Personnel' : ' Perso & Pro'}
             </p>
           </div>
         </div>

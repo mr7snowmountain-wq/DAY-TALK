@@ -74,7 +74,7 @@ Texte : "${text}"`,
     exemple: '"Lancer une boutique en ligne de vêtements, deadline 1 mois, seul, budget 500€"',
     prompt: (text) => `Tu es DayTalk, un expert en gestion de projet et stratégie. Crée un plan de projet actionnable et détaillé.
 Retourne UNIQUEMENT un JSON valide (sans markdown) :
-{"steps":[{"time":"Semaine 1","duration":"3 jours","title":"Cadrage & Research","desc":"Définir le MVP, analyser les 3 concurrents principaux, identifier les risques clés. Livrables : brief projet + benchmark.","emoji":"🎯","color":"#7C3AED"}]}
+{"steps":[{"time":"Semaine 1","duration":"3 jours","title":"Cadrage & Research","desc":"Définir le MVP, analyser les 3 concurrents principaux, identifier les risques clés. Livrables : brief projet + benchmark.","emoji":"","color":"#7C3AED"}]}
 Règles STRICTES :
 - Minimum 7 étapes, maximum 12
 - Chaque étape a un livrable concret et des actions précises à faire
@@ -255,7 +255,7 @@ function MicButton({ status, onStart, onStop, color }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: '1.8rem', opacity: isLoading ? 0.85 : 1, transition: 'background 0.3s',
       }}>
-        {isLoading ? '🎙' : isListening ? (
+        {isLoading ? '' : isListening ? (
           <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
         ) : (
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
@@ -426,7 +426,7 @@ export default function SmartPlanningPage() {
       if (user) await savePlan(themeKey, result.steps || [], user.id, null)
       setStatus('done'); statusRef.current = 'done'
     } catch {
-      setErrorMsg("Je n'ai pas réussi à analyser. Réessaie 🎙")
+      setErrorMsg("Je n'ai pas réussi à analyser. Réessaie ")
       setStatus('error'); statusRef.current = 'error'
     }
     isProcessingRef.current = false
@@ -481,7 +481,7 @@ export default function SmartPlanningPage() {
             <img src={theme.icon} alt="" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}/>
             <div>
               <h1 style={{ fontSize: '1.6rem', fontWeight: 400, color: 'white', margin: 0, lineHeight: 1.2, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>{theme.label}</h1>
-              <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.8)', margin: '4px 0 0' }}>Dicte, je structure tout pour toi 🚀</p>
+              <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.8)', margin: '4px 0 0' }}>Dicte, je structure tout pour toi </p>
             </div>
           </div>
         </div>
@@ -499,7 +499,7 @@ export default function SmartPlanningPage() {
                   border: `1.5px solid ${theme.color}33`,
                   borderRadius: 16, padding: '14px 18px', marginBottom: 24,
                 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: theme.color, marginBottom: 6 }}>💡 Comment dicter ?</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: theme.color, marginBottom: 6 }}> Comment dicter ?</p>
                   <p style={{ fontSize: 13, color: 'var(--text-soft)', margin: '0 0 8px', lineHeight: 1.55 }}>{theme.consigne}</p>
                   <p style={{ fontSize: 12, color: 'var(--text-hint)', margin: 0, fontStyle: 'italic' }}>Ex : {theme.exemple}</p>
                 </div>
@@ -509,7 +509,7 @@ export default function SmartPlanningPage() {
 
               <p style={{ marginTop: 8, color: 'var(--text-soft)', fontSize: '0.85rem', textAlign: 'center', minHeight: 22 }}>
                 {status === 'idle'      && 'Appuie et dicte'}
-                {status === 'listening' && '🔴 Je t\'écoute… appuie ⏹ pour terminer'}
+                {status === 'listening' && 'Je t\'écoute… appuie ⏹ pour terminer'}
                 {status === 'loading'   && 'Je structure ton plan…'}
               </p>
 
@@ -535,7 +535,7 @@ export default function SmartPlanningPage() {
           {steps.length > 0 && (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ton plan ✨</h2>
+                <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ton plan </h2>
                 <span style={{ fontSize: 12, color: theme.color, fontWeight: 700 }}>{steps.length} étapes</span>
               </div>
               <TimelinePlan steps={steps} onUpdate={updated => { setSteps(updated); if (user) savePlan(themeKey, updated, user.id, dateParam || null) }} />
@@ -560,7 +560,7 @@ export default function SmartPlanningPage() {
 
               {!dateParam && (
                 <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
-                  🎙 Recommencer
+                   Recommencer
                 </button>
               )}
             </>

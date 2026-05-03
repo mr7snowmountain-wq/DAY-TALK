@@ -7,13 +7,13 @@ import { useAuth } from '../hooks/useAuth'
 
 /* ── Keyframes ── */
 const STYLES = `
-@keyframes sonar {
-  0%   { transform: scale(1);   opacity: 0.65; }
-  100% { transform: scale(2.8); opacity: 0;    }
+@keyframes neoRing {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(3.2); opacity: 0;   }
 }
 @keyframes mic-float {
-  0%, 100% { transform: translateY(0)   scale(1);    }
-  50%       { transform: translateY(-5px) scale(1.03); }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
 }
 @keyframes spin-ring {
   from { transform: rotate(0deg); }
@@ -108,69 +108,87 @@ async function savePlanning(tasks, userId, date) {
   }
 }
 
-/* ── Bouton micro ── */
+/* ── Bouton micro NeoAI ── */
 function MicButton({ status, onStart, onStop }) {
   const isListening = status === 'listening'
   const isLoading   = status === 'loading'
 
   return (
-    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 130, height: 130 }}>
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 200, height: 200 }}>
 
-      {/* Anneaux sonar quand on écoute */}
+      {/* Halo ambiant permanent */}
+      <div style={{
+        position: 'absolute', width: 190, height: 190, borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)',
+        animation: 'orbPulse 3s ease-in-out infinite',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Anneaux NeoAI en écoute */}
       {isListening && [0, 1, 2].map(i => (
         <span key={i} style={{
-          position: 'absolute', width: 84, height: 84, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139,92,246,0.3), rgba(109,40,217,0.08))',
-          animation: `sonar 2s ease-out ${i * 0.65}s infinite`,
+          position: 'absolute', width: 110, height: 110, borderRadius: '50%',
+          border: '1.5px solid rgba(139,92,246,0.65)',
+          animation: `neoRing 2.2s ease-out ${i * 0.74}s infinite`,
           pointerEvents: 'none',
         }} />
       ))}
 
-      {/* Spinner de chargement */}
+      {/* Spinner chargement */}
       {isLoading && (
         <span style={{
-          position: 'absolute', width: 100, height: 100, borderRadius: '50%',
-          border: '3px solid rgba(139,92,246,0.15)',
-          borderTopColor: 'var(--teal)',
-          borderRightColor: 'var(--blue)',
-          animation: 'spin-ring 1s linear infinite',
+          position: 'absolute', width: 130, height: 130, borderRadius: '50%',
+          border: '1.5px solid rgba(139,92,246,0.12)',
+          borderTopColor: '#8B5CF6',
+          animation: 'spin-ring 1.2s linear infinite',
           pointerEvents: 'none',
         }} />
       )}
 
-      <button
-        onClick={isListening ? onStop : onStart}
-        disabled={isLoading}
+      {/* Orbe principale NeoAI */}
+      <div
+        onClick={isLoading ? undefined : isListening ? onStop : onStart}
         style={{
           position: 'relative', zIndex: 2,
-          width: 84, height: 84, borderRadius: '50%', border: 'none',
-          background: isListening
-            ? 'linear-gradient(135deg, #0D8A84, #00A89E)'
-            : 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
-          color: '#fff',
+          width: 110, height: 110, borderRadius: '50%',
           cursor: isLoading ? 'not-allowed' : 'pointer',
+          background: isListening
+            ? 'radial-gradient(circle at 38% 32%, rgba(196,181,253,0.35) 0%, rgba(109,40,217,0.9) 60%, rgba(79,40,180,0.95) 100%)'
+            : 'radial-gradient(circle at 38% 32%, rgba(196,181,253,0.18) 0%, rgba(26,18,50,0.95) 60%, rgba(13,11,26,0.98) 100%)',
+          border: '1px solid rgba(139,92,246,0.45)',
           boxShadow: isListening
-            ? '0 0 0 5px rgba(139,92,246,0.2), 0 6px 24px rgba(109,40,217,0.45)'
-            : '0 6px 28px rgba(139,92,246,0.5)',
-          transition: 'background 0.3s, box-shadow 0.3s',
-          animation: (!isListening && !isLoading) ? 'mic-float 3s ease-in-out infinite' : 'none',
+            ? '0 0 0 1px rgba(139,92,246,0.3), 0 0 50px rgba(139,92,246,0.65), inset 0 1px 0 rgba(255,255,255,0.18)'
+            : '0 0 0 1px rgba(139,92,246,0.15), 0 0 35px rgba(139,92,246,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: isLoading ? '1.6rem' : '1.8rem',
-          opacity: isLoading ? 0.85 : 1,
+          transition: 'all 0.4s ease',
+          animation: (!isListening && !isLoading) ? 'mic-float 3.5s ease-in-out infinite' : 'none',
+          opacity: isLoading ? 0.7 : 1,
         }}
       >
-        {isLoading ? '🎙' : isListening ? (
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-            <rect x="6" y="6" width="12" height="12" rx="2"/>
+        {/* Reflet glassy */}
+        <div style={{
+          position: 'absolute', top: 12, left: 18, width: 30, height: 16, borderRadius: '50%',
+          background: 'rgba(255,255,255,0.12)', filter: 'blur(3px)', pointerEvents: 'none',
+        }} />
+
+        {isListening ? (
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <rect x="7" y="7" width="10" height="10" rx="2.5" fill="rgba(255,255,255,0.92)"/>
+          </svg>
+        ) : isLoading ? (
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="3" fill="rgba(139,92,246,0.7)"/>
+            <circle cx="12" cy="6"  r="1.5" fill="rgba(139,92,246,0.4)"/>
+            <circle cx="12" cy="18" r="1.5" fill="rgba(139,92,246,0.4)"/>
           </svg>
         ) : (
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <rect x="9" y="2" width="6" height="11" rx="3" fill="white"/>
-            <path d="M5 10a7 7 0 0014 0" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-            <path d="M12 19v3M9 22h6" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="2" width="6" height="11" rx="3" fill="rgba(255,255,255,0.88)"/>
+            <path d="M5 10a7 7 0 0014 0" stroke="rgba(255,255,255,0.88)" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M12 19v3M9 22h6" stroke="rgba(255,255,255,0.88)" strokeWidth="2" strokeLinecap="round"/>
           </svg>
         )}
-      </button>
+      </div>
     </div>
   )
 }
@@ -229,7 +247,7 @@ export default function PlanningPage() {
       if (user) await savePlanning(parsed, user.id, null)
       setStatus('done'); statusRef.current = 'done'
     } catch {
-      setErrorMsg("Je n'ai pas réussi à analyser. Réessaie 🎙")
+      setErrorMsg("Je n'ai pas réussi à analyser. Réessaie ")
       setStatus('error'); statusRef.current = 'error'
     }
     isProcessingRef.current = false
@@ -330,9 +348,9 @@ export default function PlanningPage() {
             style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>
             ←
           </button>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 400, margin: 0, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>🎙 MON PLANNING</h1>
-          <p style={{ margin: '6px 0 0', opacity: 0.85, fontSize: '0.9rem' }}>
-            Dicte ta journée, je m'occupe du reste 🚀
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 400, margin: 0, fontFamily: 'var(--font-display)', letterSpacing: 2, textTransform: 'uppercase' }}>MON PLANNING</h1>
+          <p style={{ margin: '6px 0 0', opacity: 0.75, fontSize: '0.85rem', fontWeight: 500 }}>
+            Dicte ta journée, je m'occupe du reste
           </p>
         </div>
 
@@ -345,7 +363,7 @@ export default function PlanningPage() {
 
               <p style={{ marginTop: 8, color: 'var(--text-soft)', fontSize: '0.85rem', textAlign: 'center', minHeight: 22 }}>
                 {status === 'idle'      && 'Appuie et dicte ta journée'}
-                {status === 'listening' && '🔴 Je t\'écoute… appuie ⏹ quand tu as fini'}
+                {status === 'listening' && "Je t'écoute — appuie pour terminer"}
                 {status === 'loading'   && 'DayTalk prépare ton planning…'}
               </p>
 
@@ -374,7 +392,7 @@ export default function PlanningPage() {
           {tasks.length > 0 && (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ta journée ✨</h2>
+                <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Ta journée </h2>
                 <span style={{ fontSize: '0.8rem', color: 'var(--teal)', fontWeight: 700 }}>
                   {doneCount}/{tasks.length} faites
                 </span>
@@ -412,7 +430,7 @@ export default function PlanningPage() {
               </button>
 
               <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
-                🎙 Nouveau planning
+                 Nouveau planning
               </button>
             </>
           )}

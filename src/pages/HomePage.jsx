@@ -7,13 +7,13 @@ import CardCarousel from '../components/CardCarousel'
 import { supabase } from '../lib/supabase'
 
 const MESSAGES = [
-  "Chaque tâche accomplie est une victoire. 🎯",
-  "Organise ta journée, libère ton esprit. ✨",
-  "Un plan clair, une journée maîtrisée. 💡",
-  "Dicte, planifie, accomplis. 🚀",
-  "Ta productivité commence ici. ⚡",
-  "Parle, DayTalk s'occupe du reste. 🎙",
-  "Une journée bien planifiée = sérénité. 🌊",
+  "Chaque tâche accomplie est une victoire. ",
+  "Organise ta journée, libère ton esprit. ",
+  "Un plan clair, une journée maîtrisée. ",
+  "Dicte, planifie, accomplis. ",
+  "Ta productivité commence ici. ",
+  "Parle, DayTalk s'occupe du reste. ",
+  "Une journée bien planifiée = sérénité. ",
 ]
 
 function getGreeting() {
@@ -60,7 +60,7 @@ export default function HomePage() {
             <div>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', marginBottom: 3 }}>{getGreeting()},</p>
               <h1 style={{ fontSize: 34, fontWeight: 400, color: 'white', lineHeight: 1.1, letterSpacing: 2, fontFamily: 'var(--font-display)', textTransform: 'uppercase' }}>
-                {name} 👋
+                {name} 
               </h1>
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginTop: 5 }}>{date}</p>
             </div>
@@ -108,7 +108,7 @@ export default function HomePage() {
               background: 'rgba(139,92,246,0.07)', border: '1.5px dashed rgba(139,92,246,0.32)',
               borderRadius: 20, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
             }}>
-              <div style={{ fontSize: 32, marginBottom: 8 }}>🎙</div>
+              <div style={{ fontSize: 32, marginBottom: 8 }}></div>
               <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-dark)', marginBottom: 4 }}>Aucun planning aujourd'hui</p>
               <p style={{ fontSize: 12, color: 'var(--text-soft)' }}>Appuie pour dicter ta journée</p>
             </div>
@@ -118,12 +118,12 @@ export default function HomePage() {
         {/* Smart Planning */}
         <section className="anim-2" style={{ width: '100%', marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning ✨</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning </h2>
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
               background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
               color: 'white', borderRadius: 20, padding: '3px 10px',
-            }}>🎁 FREE 1 MONTH</span>
+            }}>FREE 1 MONTH</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
@@ -157,12 +157,12 @@ export default function HomePage() {
         {/* Actions rapides */}
         <section className="anim-3" style={{ width: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Actions rapides ⚡</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Actions rapides </h2>
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
               color: '#10B981', border: '1.5px solid #10B98144',
               background: '#10B98112', borderRadius: 20, padding: '3px 10px',
-            }}>✅ Toujours gratuit</span>
+            }}>Toujours gratuit</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
