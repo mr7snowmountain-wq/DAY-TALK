@@ -36,8 +36,8 @@ export default function OnboardingPage() {
             {USAGES.map(u => (
               <button key={u.id} onClick={() => setUsage(u.id)} style={{
                 display: 'flex', alignItems: 'center', gap: 14,
-                background: usage === u.id ? 'linear-gradient(135deg,rgba(0,194,184,0.12),rgba(43,92,230,0.08))' : 'rgba(255,255,255,0.7)',
-                border: usage === u.id ? '2px solid var(--teal)' : '1.5px solid rgba(0,194,184,0.2)',
+                background: usage === u.id ? 'linear-gradient(135deg,rgba(139,92,246,0.12),rgba(109,40,217,0.08))' : 'rgba(255,255,255,0.06)',
+                border: usage === u.id ? '2px solid var(--teal)' : '1.5px solid rgba(139,92,246,0.2)',
                 borderRadius: 16, padding: '16px 18px', cursor: 'pointer', textAlign: 'left',
                 transition: 'all 0.2s',
               }}>
@@ -52,10 +52,10 @@ export default function OnboardingPage() {
           </div>
           <button onClick={finish} disabled={!usage || loading} style={{
             width: '100%', padding: '18px', border: 'none', borderRadius: 20,
-            background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+            background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
             color: 'white', fontSize: 16, fontWeight: 800, cursor: !usage || loading ? 'not-allowed' : 'pointer',
             opacity: !usage || loading ? 0.5 : 1, transition: 'opacity 0.2s',
-            boxShadow: '0 6px 24px rgba(0,194,184,0.4)', letterSpacing: 0.3,
+            boxShadow: '0 6px 24px rgba(139,92,246,0.4)', letterSpacing: 0.3,
           }}>
             {loading ? '…' : "C'est parti ! 🚀"}
           </button>

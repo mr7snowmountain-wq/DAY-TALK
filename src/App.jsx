@@ -14,7 +14,7 @@ function Loader() {
   return (
     <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ width: 56, height: 56, margin: '0 auto 16px', background: 'linear-gradient(135deg,#00C2B8,#2B5CE6)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, animation: 'pulse 1.5s ease-in-out infinite' }}>🎙</div>
+        <div style={{ width: 56, height: 56, margin: '0 auto 16px', background: 'linear-gradient(135deg,#8B5CF6,#6D28D9)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, animation: 'pulse 1.5s ease-in-out infinite' }}>🎙</div>
         <p style={{ fontFamily: 'var(--font)', fontStyle: 'italic', color: 'var(--text-soft)' }}>Chargement…</p>
       </div>
     </div>

@@ -6,8 +6,8 @@ function DropletLogo() {
     <svg width="64" height="72" viewBox="0 0 64 72" fill="none">
       <defs>
         <linearGradient id="dg" x1="32" y1="0" x2="32" y2="72" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#00E5D4"/>
-          <stop offset="100%" stopColor="#2B5CE6"/>
+          <stop offset="0%" stopColor="#C4B5FD"/>
+          <stop offset="100%" stopColor="#6D28D9"/>
         </linearGradient>
       </defs>
       <path d="M32 2C32 2 8 28 8 44a24 24 0 0048 0C56 28 32 2 32 2z" fill="url(#dg)"/>
@@ -33,9 +33,9 @@ function SuccessToast({ message }) {
         }
       `}</style>
       <div style={{
-        background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+        background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
         borderRadius: 20, padding: '14px 24px',
-        boxShadow: '0 8px 32px rgba(0,194,184,0.35)',
+        boxShadow: '0 8px 32px rgba(139,92,246,0.35)',
         display: 'flex', alignItems: 'center', gap: 12,
         minWidth: 260,
       }}>

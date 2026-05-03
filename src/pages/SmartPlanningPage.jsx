@@ -35,26 +35,26 @@ const THEMES = {
   journee: {
     label: 'Ma Journée Intelligente',
     icon: '/icon/smart-journee.png',
-    color: '#00C2B8',
-    gradient: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+    color: '#8B5CF6',
+    gradient: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
     consigne: 'Dis-moi tes tâches, réunions et priorités du jour. Mentionne les horaires si tu les connais.',
     exemple: '"Réunion à 9h, finir le rapport avant midi, déjeuner avec Marie, call client 15h"',
     prompt: (text) => `Tu es DayTalk, un assistant de planning intelligent. À partir de ce texte, crée un plan de journée optimisé.
 Retourne UNIQUEMENT un JSON valide (sans markdown) avec ce format exact :
-{"steps":[{"time":"09:00","duration":"1h","title":"Réunion équipe","desc":"Point hebdomadaire","emoji":"👥","color":"#00C2B8"}]}
-Règles : ordonne par heure logique, estime la durée si non précisée, emoji pertinent, alterne les couleurs entre #00C2B8 #2B5CE6 #00E5D4 #0D1B4B.
+{"steps":[{"time":"09:00","duration":"1h","title":"Réunion équipe","desc":"Point hebdomadaire","emoji":"👥","color":"#8B5CF6"}]}
+Règles : ordonne par heure logique, estime la durée si non précisée, emoji pertinent, alterne les couleurs entre #8B5CF6 #6D28D9 #C4B5FD #F0EEFF.
 Texte : "${text}"`,
   },
   voyage: {
     label: 'Mon Voyage Intelligent',
     icon: '/icon/smart-voyage.png',
-    color: '#2B5CE6',
-    gradient: 'linear-gradient(135deg, #2B5CE6, #00C2B8)',
+    color: '#6D28D9',
+    gradient: 'linear-gradient(135deg, #6D28D9, #8B5CF6)',
     consigne: 'Dis-moi ta destination, la durée, tes centres d\'intérêt (culture, gastronomie, nature, shopping…) et ton budget.',
     exemple: '"Paris, 3 jours, budget moyen, j\'aime l\'art et la bonne cuisine"',
     prompt: (text) => `Tu es DayTalk, un expert voyage qui connaît parfaitement les destinations. Crée un itinéraire détaillé et concret.
 Retourne UNIQUEMENT un JSON valide (sans markdown) :
-{"steps":[{"time":"Jour 1 - 09:00","duration":"2h","title":"Musée d'Orsay","desc":"Chef-d'œuvre de l'impressionnisme. Réserve en ligne pour éviter la queue. Tarif : 16€. Métro : Solférino (L12).","emoji":"🖼️","color":"#2B5CE6"}]}
+{"steps":[{"time":"Jour 1 - 09:00","duration":"2h","title":"Musée d'Orsay","desc":"Chef-d'œuvre de l'impressionnisme. Réserve en ligne pour éviter la queue. Tarif : 16€. Métro : Solférino (L12).","emoji":"🖼️","color":"#6D28D9"}]}
 Règles STRICTES :
 - Minimum 8 étapes, maximum 15
 - Chaque étape DOIT avoir un titre précis (vrai lieu/resto/activité), une description utile (prix, transport, conseil pratique, horaires réels)
@@ -62,14 +62,14 @@ Règles STRICTES :
 - Inclus TOUJOURS 1-2 restaurants avec noms réels et spécialités
 - Adapte aux préférences mentionnées (culture, gastronomie, sport, nature...)
 - Donne des vrais conseils d'insider (meilleures heures, astuces, à éviter)
-- Alterne les couleurs : #2B5CE6 #00C2B8 #7C3AED #F59E0B #10B981
+- Alterne les couleurs : #6D28D9 #8B5CF6 #7C3AED #F59E0B #10B981
 Texte : "${text}"`,
   },
   projet: {
     label: 'Mon Projet Intelligent',
     icon: '/icon/smart-projet.png',
     color: '#7C3AED',
-    gradient: 'linear-gradient(135deg, #7C3AED, #2B5CE6)',
+    gradient: 'linear-gradient(135deg, #7C3AED, #6D28D9)',
     consigne: 'Décris ton projet, sa deadline, tes ressources disponibles et les obstacles potentiels.',
     exemple: '"Lancer une boutique en ligne de vêtements, deadline 1 mois, seul, budget 500€"',
     prompt: (text) => `Tu es DayTalk, un expert en gestion de projet et stratégie. Crée un plan de projet actionnable et détaillé.
@@ -83,7 +83,7 @@ Règles STRICTES :
 - Estime le temps de manière réaliste avec marge
 - Anticipe les risques pour chaque phase critique
 - Inclus une étape de validation/test avant le lancement
-- Alterne : #7C3AED #2B5CE6 #00C2B8 #F59E0B #EF4444
+- Alterne : #7C3AED #6D28D9 #8B5CF6 #F59E0B #EF4444
 Texte : "${text}"`,
   },
   weekend: {
@@ -103,7 +103,7 @@ Texte : "${text}"`,
     label: 'Mon Sport Intelligent',
     icon: '/icon/smart-sport.png',
     color: '#10B981',
-    gradient: 'linear-gradient(135deg, #10B981, #00C2B8)',
+    gradient: 'linear-gradient(135deg, #10B981, #8B5CF6)',
     consigne: 'Dis-moi ton objectif (perte de poids, muscle, endurance…), ton niveau, le temps dispo et le matériel.',
     exemple: '"Perdre du ventre, débutant, 45 min, haltères 10kg à la maison"',
     prompt: (text) => `Tu es DayTalk, un coach sportif certifié. Crée une séance d'entraînement complète, précise et adaptée.
@@ -117,7 +117,7 @@ Règles STRICTES :
 - Adapte l'intensité au niveau (débutant = moins de volume, pro = plus d'intensité)
 - Inclus TOUJOURS : échauffement, exercices principaux par zones ciblées, récupération/étirements
 - Donne un conseil nutrition lié à l'objectif dans la dernière étape
-- Alterne : #10B981 #00C2B8 #2B5CE6 #F59E0B #EF4444
+- Alterne : #10B981 #8B5CF6 #6D28D9 #F59E0B #EF4444
 Texte : "${text}"`,
   },
   courses: {
@@ -291,11 +291,11 @@ function TimelinePlan({ steps, onUpdate }) {
       {editing !== null && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 999,
-          background: 'rgba(13,27,75,0.5)', backdropFilter: 'blur(4px)',
+          background: 'rgba(139,92,246,0.5)', backdropFilter: 'blur(4px)',
           display: 'flex', alignItems: 'flex-end',
         }} onClick={() => setEditing(null)}>
           <div onClick={e => e.stopPropagation()} style={{
-            width: '100%', background: 'white', borderRadius: '24px 24px 0 0',
+            width: '100%', background: 'rgba(255,255,255,0.08)', borderRadius: '24px 24px 0 0',
             padding: '24px 20px 40px', display: 'flex', flexDirection: 'column', gap: 14,
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
@@ -317,7 +317,7 @@ function TimelinePlan({ steps, onUpdate }) {
               <textarea value={draft.desc || ''} onChange={e => setDraft(d => ({ ...d, desc: e.target.value }))}
                 rows={3} style={{
                   width: '100%', background: 'rgba(255,255,255,0.8)',
-                  border: '1.5px solid rgba(0,194,184,0.25)', borderRadius: 16,
+                  border: '1.5px solid rgba(139,92,246,0.25)', borderRadius: 16,
                   padding: '12px 16px', fontFamily: 'var(--font)', fontSize: 14,
                   color: 'var(--text-dark)', outline: 'none', resize: 'none',
                 }}/>
@@ -350,7 +350,7 @@ function TimelinePlan({ steps, onUpdate }) {
 
           {/* Contenu — tap pour éditer */}
           <div onClick={() => openEdit(i)} style={{
-            flex: 1, background: 'rgba(255,255,255,0.7)',
+            flex: 1, background: 'rgba(255,255,255,0.06)',
             border: `1.5px solid ${step.color}33`,
             borderRadius: 16, padding: '12px 16px', cursor: 'pointer',
             marginBottom: 0, position: 'relative',
@@ -543,7 +543,7 @@ export default function SmartPlanningPage() {
               {/* Export agenda */}
               <button onClick={() => exportToIcs(steps, theme.label, dateParam)} style={{
                 width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                background: 'white', border: `1.5px solid ${theme.color}55`,
+                background: 'rgba(255,255,255,0.08)', border: `1.5px solid ${theme.color}55`,
                 borderRadius: 16, padding: '14px', cursor: 'pointer',
                 boxShadow: `0 4px 16px ${theme.color}18`,
               }}>

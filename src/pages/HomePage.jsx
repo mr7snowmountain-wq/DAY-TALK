@@ -51,10 +51,10 @@ export default function HomePage() {
         {/* Hero */}
         <div className="anim-0" style={{
           width: '100%',
-          background: 'linear-gradient(135deg, #00C2B8 0%, #2B5CE6 100%)',
+          background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
           borderRadius: '0 0 32px 32px',
           padding: '52px 24px 28px', marginBottom: 24,
-          boxShadow: '0 6px 24px rgba(0,194,184,0.25)',
+          boxShadow: '0 6px 32px rgba(139,92,246,0.35)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
@@ -105,7 +105,7 @@ export default function HomePage() {
             <CardCarousel tasks={tasks} onToggle={() => navigate('/planning')} onCardTap={() => navigate('/planning')} />
           ) : (
             <div onClick={() => navigate('/planning')} style={{
-              background: 'rgba(255,255,255,0.6)', border: '1.5px dashed rgba(0,194,184,0.35)',
+              background: 'rgba(139,92,246,0.07)', border: '1.5px dashed rgba(139,92,246,0.32)',
               borderRadius: 20, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
             }}>
               <div style={{ fontSize: 32, marginBottom: 8 }}>🎙</div>
@@ -121,14 +121,14 @@ export default function HomePage() {
             <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Smart Planning ✨</h2>
             <span style={{
               fontSize: 10, fontWeight: 800, letterSpacing: 0.5,
-              background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+              background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
               color: 'white', borderRadius: 20, padding: '3px 10px',
             }}>🎁 FREE 1 MONTH</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
-              { icon: '/icon/smart-journee.png', label: 'Ma Journée',  theme: 'journee', color: '#00C2B8' },
-              { icon: '/icon/smart-voyage.png',  label: 'Mon Voyage',  theme: 'voyage',  color: '#2B5CE6' },
+              { icon: '/icon/smart-journee.png', label: 'Ma Journée',  theme: 'journee', color: '#8B5CF6' },
+              { icon: '/icon/smart-voyage.png',  label: 'Mon Voyage',  theme: 'voyage',  color: '#6D28D9' },
               { icon: '/icon/smart-projet.png',  label: 'Mon Projet',  theme: 'projet',  color: '#7C3AED' },
               { icon: '/icon/smart-weekend.png', label: 'Mon Weekend', theme: 'weekend', color: '#F59E0B' },
               { icon: '/icon/smart-sport.png',   label: 'Mon Sport',   theme: 'sport',   color: '#10B981' },
@@ -166,10 +166,10 @@ export default function HomePage() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {[
-              { icon: '/icon/action-dicter.png',  label: 'Dicter',  path: '/planning', color: 'rgba(0,194,184,0.12)', border: 'rgba(0,194,184,0.3)' },
-              { icon: '/icon/action-semaine.png', label: 'Semaine', path: '/week',     color: 'rgba(43,92,230,0.1)',  border: 'rgba(43,92,230,0.25)' },
-              { icon: '/icon/action-rappel.png',  label: 'Rappels', path: '/profil',   color: 'rgba(0,229,212,0.1)',  border: 'rgba(0,229,212,0.3)' },
-              { icon: '/icon/action-stats.png',   label: 'Stats',   path: '/profil',   color: 'rgba(13,27,75,0.07)', border: 'rgba(13,27,75,0.15)' },
+              { icon: '/icon/action-dicter.png',  label: 'Dicter',  path: '/planning', color: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.28)' },
+              { icon: '/icon/action-semaine.png', label: 'Semaine', path: '/week',     color: 'rgba(79,70,229,0.1)',   border: 'rgba(79,70,229,0.25)'  },
+              { icon: '/icon/action-rappel.png',  label: 'Rappels', path: '/profil',   color: 'rgba(124,58,237,0.1)', border: 'rgba(124,58,237,0.25)' },
+              { icon: '/icon/action-stats.png',   label: 'Stats',   path: '/profil',   color: 'rgba(196,181,253,0.07)',border: 'rgba(196,181,253,0.18)'},
             ].map(a => (
               <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',

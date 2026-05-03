@@ -120,7 +120,7 @@ function MicButton({ status, onStart, onStop }) {
       {isListening && [0, 1, 2].map(i => (
         <span key={i} style={{
           position: 'absolute', width: 84, height: 84, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,194,184,0.3), rgba(43,92,230,0.08))',
+          background: 'radial-gradient(circle, rgba(139,92,246,0.3), rgba(109,40,217,0.08))',
           animation: `sonar 2s ease-out ${i * 0.65}s infinite`,
           pointerEvents: 'none',
         }} />
@@ -130,7 +130,7 @@ function MicButton({ status, onStart, onStop }) {
       {isLoading && (
         <span style={{
           position: 'absolute', width: 100, height: 100, borderRadius: '50%',
-          border: '3px solid rgba(0,194,184,0.15)',
+          border: '3px solid rgba(139,92,246,0.15)',
           borderTopColor: 'var(--teal)',
           borderRightColor: 'var(--blue)',
           animation: 'spin-ring 1s linear infinite',
@@ -146,12 +146,12 @@ function MicButton({ status, onStart, onStop }) {
           width: 84, height: 84, borderRadius: '50%', border: 'none',
           background: isListening
             ? 'linear-gradient(135deg, #0D8A84, #00A89E)'
-            : 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+            : 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
           color: '#fff',
           cursor: isLoading ? 'not-allowed' : 'pointer',
           boxShadow: isListening
-            ? '0 0 0 5px rgba(0,194,184,0.2), 0 6px 24px rgba(13,138,132,0.45)'
-            : '0 6px 28px rgba(0,194,184,0.5)',
+            ? '0 0 0 5px rgba(139,92,246,0.2), 0 6px 24px rgba(109,40,217,0.45)'
+            : '0 6px 28px rgba(139,92,246,0.5)',
           transition: 'background 0.3s, box-shadow 0.3s',
           animation: (!isListening && !isLoading) ? 'mic-float 3s ease-in-out infinite' : 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -321,10 +321,10 @@ export default function PlanningPage() {
         {/* Header */}
         <div style={{
           width: '100%',
-          background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+          background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
           borderRadius: '0 0 28px 28px',
           padding: '28px 24px 20px', marginBottom: 24,
-          color: '#fff', boxShadow: '0 6px 24px rgba(0,194,184,0.18)',
+          color: '#fff', boxShadow: '0 6px 24px rgba(139,92,246,0.18)',
         }}>
           <button onClick={() => navigate('/home')}
             style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>
@@ -381,7 +381,7 @@ export default function PlanningPage() {
               </div>
 
               {/* Barre de progression */}
-              <div style={{ height: 7, background: 'rgba(0,194,184,0.1)', borderRadius: 10, marginBottom: 20, overflow: 'hidden' }}>
+              <div style={{ height: 7, background: 'rgba(139,92,246,0.1)', borderRadius: 10, marginBottom: 20, overflow: 'hidden' }}>
                 <div style={{
                   height: '100%',
                   width: `${tasks.length ? (doneCount / tasks.length) * 100 : 0}%`,
@@ -396,15 +396,15 @@ export default function PlanningPage() {
               {/* Export agenda */}
               <button onClick={() => exportToIcs(tasks)} style={{
                 width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                background: 'white', border: '1.5px solid rgba(0,194,184,0.35)',
+                background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(139,92,246,0.35)',
                 borderRadius: 16, padding: '14px', cursor: 'pointer',
-                boxShadow: '0 4px 16px rgba(0,194,184,0.12)',
+                boxShadow: '0 4px 16px rgba(139,92,246,0.12)',
               }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="#00C2B8" strokeWidth="1.8"/>
-                  <path d="M3 9h18" stroke="#00C2B8" strokeWidth="1.8"/>
-                  <path d="M8 2v4M16 2v4" stroke="#00C2B8" strokeWidth="1.8" strokeLinecap="round"/>
-                  <path d="M8 13h4m-4 4h8" stroke="#00C2B8" strokeWidth="1.8" strokeLinecap="round"/>
+                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="#8B5CF6" strokeWidth="1.8"/>
+                  <path d="M3 9h18" stroke="#8B5CF6" strokeWidth="1.8"/>
+                  <path d="M8 2v4M16 2v4" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M8 13h4m-4 4h8" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round"/>
                 </svg>
                 <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--teal)' }}>
                   Ajouter à mon agenda

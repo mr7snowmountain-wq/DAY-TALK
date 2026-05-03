@@ -6,14 +6,14 @@ import { registerPush, isPushEnabled, unregisterPush } from '../lib/push'
 import { supabase } from '../lib/supabase'
 
 const THEME_CONFIG = {
-  journee:  { label: 'Ma Journée',    color: '#00C2B8', icon: '/icon/smart-journee.png' },
-  voyage:   { label: 'Mon Voyage',    color: '#2B5CE6', icon: '/icon/smart-voyage.png' },
+  journee:  { label: 'Ma Journée',    color: '#8B5CF6', icon: '/icon/smart-journee.png' },
+  voyage:   { label: 'Mon Voyage',    color: '#6D28D9', icon: '/icon/smart-voyage.png' },
   projet:   { label: 'Mon Projet',    color: '#7C3AED', icon: '/icon/smart-projet.png' },
   weekend:  { label: 'Mon Weekend',   color: '#F59E0B', icon: '/icon/smart-weekend.png' },
   sport:    { label: 'Mon Sport',     color: '#10B981', icon: '/icon/smart-sport.png' },
   courses:  { label: 'Mes Courses',   color: '#EC4899', icon: '/icon/smart-courses.png' },
-  planning: { label: 'Mon Planning',  color: '#00C2B8', icon: '/icon/smart-journee.png' },
-  default:  { label: 'Planning',      color: '#00C2B8', icon: '/icon/smart-journee.png' },
+  planning: { label: 'Mon Planning',  color: '#8B5CF6', icon: '/icon/smart-journee.png' },
+  default:  { label: 'Planning',      color: '#8B5CF6', icon: '/icon/smart-journee.png' },
 }
 
 function NotifButton() {
@@ -40,14 +40,14 @@ function NotifButton() {
   return (
     <button onClick={toggle} disabled={loading} style={{
       display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-      background: enabled ? 'linear-gradient(135deg, #00C2B8, #2B5CE6)' : 'rgba(255,255,255,0.75)',
-      border: enabled ? 'none' : '1.5px solid rgba(0,194,184,0.25)',
+      background: enabled ? 'linear-gradient(135deg, #8B5CF6, #6D28D9)' : 'rgba(255,255,255,0.07)',
+      border: enabled ? 'none' : '1.5px solid rgba(139,92,246,0.25)',
       borderRadius: 16, padding: '14px 18px', cursor: loading ? 'not-allowed' : 'pointer',
       backdropFilter: 'blur(16px)', transition: 'all 0.3s', opacity: loading ? 0.7 : 1,
     }}>
       <span style={{ fontSize: 20 }}>{enabled ? '🔔' : '🔕'}</span>
       <div style={{ textAlign: 'left' }}>
-        <p style={{ fontSize: 14, fontWeight: 700, color: enabled ? 'white' : 'var(--text-dark)', marginBottom: 2 }}>
+        <p style={{ fontSize: 14, fontWeight: 700, color: enabled ? 'rgba(255,255,255,0.08)' : 'var(--text-dark)', marginBottom: 2 }}>
           {loading ? 'Chargement…' : enabled ? 'Notifications activées' : 'Activer les notifications'}
         </p>
         <p style={{ fontSize: 11, color: enabled ? 'rgba(255,255,255,0.8)' : 'var(--text-soft)' }}>
@@ -55,8 +55,8 @@ function NotifButton() {
         </p>
       </div>
       <div style={{ marginLeft: 'auto' }}>
-        <div style={{ width: 38, height: 22, borderRadius: 11, background: enabled ? 'rgba(255,255,255,0.25)' : 'rgba(0,194,184,0.12)', border: '1.5px solid rgba(0,194,184,0.2)', position: 'relative' }}>
-          <div style={{ position: 'absolute', top: 2, left: enabled ? 18 : 2, width: 14, height: 14, borderRadius: '50%', background: enabled ? 'white' : 'var(--teal)', transition: 'left 0.3s ease' }} />
+        <div style={{ width: 38, height: 22, borderRadius: 11, background: enabled ? 'rgba(255,255,255,0.25)' : 'rgba(139,92,246,0.12)', border: '1.5px solid rgba(139,92,246,0.2)', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: 2, left: enabled ? 18 : 2, width: 14, height: 14, borderRadius: '50%', background: enabled ? 'rgba(255,255,255,0.08)' : 'var(--teal)', transition: 'left 0.3s ease' }} />
         </div>
       </div>
     </button>
@@ -109,14 +109,14 @@ function HistorySection({ userId }) {
       {/* Filtres par thème */}
       <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 8, marginBottom: 16, scrollbarWidth: 'none' }}>
         {themes.map(t => {
-          const cfg = t === 'all' ? { color: '#00C2B8', label: 'Tous' } : THEME_CONFIG[t]
+          const cfg = t === 'all' ? { color: '#8B5CF6', label: 'Tous' } : THEME_CONFIG[t]
           const active = filter === t
           return (
             <button key={t} onClick={() => setFilter(t)} style={{
               flexShrink: 0, fontSize: 11, fontWeight: 700, padding: '5px 12px',
               borderRadius: 20, border: `1.5px solid ${cfg.color}44`,
               background: active ? cfg.color : cfg.color + '12',
-              color: active ? 'white' : cfg.color, cursor: 'pointer',
+              color: active ? 'rgba(255,255,255,0.08)' : cfg.color, cursor: 'pointer',
             }}>
               {cfg.label}
             </button>
@@ -143,7 +143,7 @@ function HistorySection({ userId }) {
                 <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <button onClick={() => navigate(path)} style={{
                     flex: 1, display: 'flex', alignItems: 'center', gap: 12,
-                    background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${cfg.color}33`,
+                    background: 'rgba(255,255,255,0.06)', border: `1.5px solid ${cfg.color}33`,
                     borderRadius: 16, padding: '12px 14px', cursor: 'pointer', textAlign: 'left',
                   }}>
                     <div style={{ width: 40, height: 40, borderRadius: 11, background: cfg.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -190,14 +190,14 @@ export default function ProfilPage() {
     <div className="app-shell">
       <div className="screen" style={{ paddingTop: 0, paddingBottom: 100, gap: 0, justifyContent: 'flex-start' }}>
         <div style={{
-          width: '100%', background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
+          width: '100%', background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
           borderRadius: '0 0 32px 32px', padding: '52px 24px 32px', marginBottom: 28,
-          boxShadow: '0 6px 24px rgba(0,194,184,0.2)',
+          boxShadow: '0 6px 24px rgba(139,92,246,0.2)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, marginBottom: 12, border: '2px solid rgba(255,255,255,0.4)' }}>👤</div>
             <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>{name}</h1>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 4 }}>
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>
               {profile?.usage_type === 'pro' ? '💼 Pro' : profile?.usage_type === 'personal' ? '🏠 Personnel' : '⚡ Perso & Pro'}
             </p>
           </div>
@@ -211,12 +211,12 @@ export default function ProfilPage() {
             <HistorySection userId={user?.id} />
           </div>
 
-          <div style={{ height: 1, background: 'rgba(0,194,184,0.15)', margin: '4px 0' }} />
+          <div style={{ height: 1, background: 'rgba(139,92,246,0.15)', margin: '4px 0' }} />
 
           <NotifButton />
           <button onClick={signOut} style={{
             display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-            background: 'rgba(255,255,255,0.75)', border: '1.5px solid rgba(0,194,184,0.2)',
+            background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(139,92,246,0.2)',
             borderRadius: 16, padding: '14px 18px', cursor: 'pointer', backdropFilter: 'blur(16px)',
           }}>
             <span style={{ fontSize: 20 }}>🚪</span>

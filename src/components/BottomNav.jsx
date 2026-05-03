@@ -9,31 +9,31 @@ const TABS = [
 ]
 
 function HomeIcon({ active }) {
-  const s = active ? '#00C2B8' : '#9BB5D0'
+  const s = active ? '#8B5CF6' : 'rgba(240,238,255,0.32)'
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <path d="M3 10L12 3l9 7v10a1 1 0 01-1 1H5a1 1 0 01-1-1V10z" stroke={s} strokeWidth="1.8" strokeLinejoin="round" fill={active ? 'rgba(0,194,184,0.12)' : 'none'}/>
+    <path d="M3 10L12 3l9 7v10a1 1 0 01-1 1H5a1 1 0 01-1-1V10z" stroke={s} strokeWidth="1.8" strokeLinejoin="round" fill={active ? 'rgba(139,92,246,0.12)' : 'none'}/>
     <path d="M9 21V13h6v8" stroke={s} strokeWidth="1.8" strokeLinecap="round"/>
   </svg>
 }
 function CalIcon({ active }) {
-  const s = active ? '#00C2B8' : '#9BB5D0'
+  const s = active ? '#8B5CF6' : 'rgba(240,238,255,0.32)'
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <rect x="3" y="4" width="18" height="17" rx="3" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(0,194,184,0.1)' : 'none'}/>
+    <rect x="3" y="4" width="18" height="17" rx="3" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(139,92,246,0.1)' : 'none'}/>
     <path d="M3 9h18M8 2v4M16 2v4" stroke={s} strokeWidth="1.8" strokeLinecap="round"/>
     <circle cx="8" cy="14" r="1.2" fill={s}/><circle cx="12" cy="14" r="1.2" fill={s}/><circle cx="16" cy="14" r="1.2" fill={s}/>
   </svg>
 }
 function WeekIcon({ active }) {
-  const s = active ? '#00C2B8' : '#9BB5D0'
+  const s = active ? '#8B5CF6' : 'rgba(240,238,255,0.32)'
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <rect x="3" y="3" width="18" height="18" rx="3" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(0,194,184,0.1)' : 'none'}/>
+    <rect x="3" y="3" width="18" height="18" rx="3" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(139,92,246,0.1)' : 'none'}/>
     <path d="M3 9h18M9 3v18" stroke={s} strokeWidth="1.8" strokeLinecap="round"/>
   </svg>
 }
 function UserIcon({ active }) {
-  const s = active ? '#00C2B8' : '#9BB5D0'
+  const s = active ? '#8B5CF6' : 'rgba(240,238,255,0.32)'
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <circle cx="12" cy="8" r="4" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(0,194,184,0.1)' : 'none'}/>
+    <circle cx="12" cy="8" r="4" stroke={s} strokeWidth="1.8" fill={active ? 'rgba(139,92,246,0.1)' : 'none'}/>
     <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke={s} strokeWidth="1.8" strokeLinecap="round"/>
   </svg>
 }
@@ -44,22 +44,22 @@ export default function BottomNav() {
   return (
     <nav style={{
       position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
-      background: 'rgba(255,255,255,0.82)',
+      background: 'rgba(13,11,26,0.88)',
       backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
-      borderTop: '1px solid rgba(0,194,184,0.2)',
+      borderTop: '1px solid rgba(139,92,246,0.22)',
       display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       padding: '8px 8px calc(8px + env(safe-area-inset-bottom))',
-      boxShadow: '0 -4px 24px rgba(0,194,184,0.07)',
+      boxShadow: '0 -4px 24px rgba(139,92,246,0.12)',
     }}>
       {TABS.map((tab, i) => {
         if (tab.fab) return (
           <button key="fab" onClick={() => navigate('/planning')} style={{
             width: 52, height: 52,
-            background: 'linear-gradient(135deg, #00C2B8, #2B5CE6)',
-            border: '3px solid white', borderRadius: '50%',
+            background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
+            border: '3px solid rgba(255,255,255,0.15)', borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', marginTop: -20,
-            boxShadow: '0 4px 18px rgba(0,194,184,0.45)',
+            boxShadow: '0 4px 22px rgba(139,92,246,0.55)',
           }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <rect x="9" y="2" width="6" height="11" rx="3" fill="white"/>
@@ -77,7 +77,7 @@ export default function BottomNav() {
           }}>
             <div style={{
               width: 34, height: 34, borderRadius: 10,
-              background: active ? 'rgba(0,194,184,0.1)' : 'transparent',
+              background: active ? 'rgba(139,92,246,0.15)' : 'transparent',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <tab.Icon active={active} />

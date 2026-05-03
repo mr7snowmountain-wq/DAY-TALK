@@ -130,13 +130,13 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
                 backdropFilter      : 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 border              : isActive
-                  ? '1.5px solid rgba(0,194,184,0.3)'
+                  ? '1.5px solid rgba(139,92,246,0.3)'
                   : '1.5px solid rgba(255,255,255,0.75)',
                 borderRadius        : 20,
                 padding             : '14px 16px',
                 boxShadow           : isActive
-                  ? '0 8px 28px rgba(0,194,184,0.18)'
-                  : '0 2px 8px rgba(0,194,184,0.06)',
+                  ? '0 8px 28px rgba(139,92,246,0.18)'
+                  : '0 2px 8px rgba(139,92,246,0.06)',
                 opacity             : task.done ? 0.65 : 1,
               }}>
 
@@ -144,8 +144,8 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
                 <div style={{
                   width: 42, height: 42, borderRadius: 13, flexShrink: 0,
                   background: task.done
-                    ? 'linear-gradient(135deg,rgba(43,92,230,.45),rgba(0,194,184,.45))'
-                    : 'rgba(0,194,184,0.1)',
+                    ? 'linear-gradient(135deg,rgba(109,40,217,.45),rgba(139,92,246,.45))'
+                    : 'rgba(139,92,246,0.1)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 20,
                 }}>
@@ -180,7 +180,7 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
                       background: task.done
                         ? 'linear-gradient(135deg,var(--teal),var(--blue))'
                         : 'transparent',
-                      border: task.done ? 'none' : '2px solid rgba(0,194,184,0.35)',
+                      border: task.done ? 'none' : '2px solid rgba(139,92,246,0.35)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'all 0.25s',
                     }}
@@ -220,7 +220,7 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
               width       : 5,
               borderRadius: 3,
               height      : i === idx ? 20 : 5,
-              background  : i === idx ? 'var(--teal)' : 'rgba(0,194,184,0.22)',
+              background  : i === idx ? 'var(--teal)' : 'rgba(139,92,246,0.22)',
               transition  : 'all 0.3s ease',
               cursor      : 'pointer',
             }}
