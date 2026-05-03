@@ -472,9 +472,11 @@ export default function SmartPlanningPage() {
 
         {/* Header */}
         <div style={{
-          width: '100%', background: theme.gradient,
-          borderRadius: '0 0 28px 28px', padding: '28px 24px 20px',
-          marginBottom: 24, boxShadow: `0 6px 24px ${theme.color}33`,
+          width: '100%',
+          background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+          borderRadius: '0 0 20px 20px', padding: '28px 24px 20px',
+          marginBottom: 24,
+          boxShadow: `0 8px 32px ${theme.color}28, inset 0 -1px 0 ${theme.color}44`,
         }}>
           <button onClick={() => navigate('/home')} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>←</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>

@@ -142,7 +142,7 @@ export default function CardCarousel({ tasks, onToggle, onCardTap }) {
 
                 {/* Emoji */}
                 <div style={{
-                  width: 42, height: 42, borderRadius: 13, flexShrink: 0,
+                  width: 42, height: 42, borderRadius: 8, flexShrink: 0,
                   background: task.done
                     ? 'linear-gradient(135deg,rgba(109,40,217,.45),rgba(139,92,246,.45))'
                     : 'rgba(139,92,246,0.1)',

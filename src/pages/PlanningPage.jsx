@@ -339,10 +339,10 @@ export default function PlanningPage() {
         {/* Header */}
         <div style={{
           width: '100%',
-          background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
-          borderRadius: '0 0 28px 28px',
+          background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+          borderRadius: '0 0 20px 20px',
           padding: '28px 24px 20px', marginBottom: 24,
-          color: '#fff', boxShadow: '0 6px 24px rgba(139,92,246,0.18)',
+          color: '#fff', boxShadow: '0 8px 32px rgba(139,92,246,0.2), inset 0 -1px 0 rgba(139,92,246,0.28)',
         }}>
           <button onClick={() => navigate('/home')}
             style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', marginBottom: 8 }}>

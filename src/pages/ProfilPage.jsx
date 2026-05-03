@@ -47,7 +47,7 @@ function NotifButton() {
     }}>
       <span style={{ fontSize: 20 }}>{enabled ? '🔔' : '🔕'}</span>
       <div style={{ textAlign: 'left' }}>
-        <p style={{ fontSize: 14, fontWeight: 700, color: enabled ? 'rgba(255,255,255,0.08)' : 'var(--text-dark)', marginBottom: 2 }}>
+        <p style={{ fontSize: 14, fontWeight: 700, color: enabled ? 'white' : 'var(--text-dark)', marginBottom: 2 }}>
           {loading ? 'Chargement…' : enabled ? 'Notifications activées' : 'Activer les notifications'}
         </p>
         <p style={{ fontSize: 11, color: enabled ? 'rgba(255,255,255,0.8)' : 'var(--text-soft)' }}>
@@ -56,7 +56,7 @@ function NotifButton() {
       </div>
       <div style={{ marginLeft: 'auto' }}>
         <div style={{ width: 38, height: 22, borderRadius: 11, background: enabled ? 'rgba(255,255,255,0.25)' : 'rgba(139,92,246,0.12)', border: '1.5px solid rgba(139,92,246,0.2)', position: 'relative' }}>
-          <div style={{ position: 'absolute', top: 2, left: enabled ? 18 : 2, width: 14, height: 14, borderRadius: '50%', background: enabled ? 'rgba(255,255,255,0.08)' : 'var(--teal)', transition: 'left 0.3s ease' }} />
+          <div style={{ position: 'absolute', top: 2, left: enabled ? 18 : 2, width: 14, height: 14, borderRadius: '50%', background: enabled ? 'white' : 'var(--teal)', transition: 'left 0.3s ease' }} />
         </div>
       </div>
     </button>
@@ -116,7 +116,7 @@ function HistorySection({ userId }) {
               flexShrink: 0, fontSize: 11, fontWeight: 700, padding: '5px 12px',
               borderRadius: 20, border: `1.5px solid ${cfg.color}44`,
               background: active ? cfg.color : cfg.color + '12',
-              color: active ? 'rgba(255,255,255,0.08)' : cfg.color, cursor: 'pointer',
+              color: active ? 'white' : cfg.color, cursor: 'pointer',
             }}>
               {cfg.label}
             </button>
@@ -190,9 +190,10 @@ export default function ProfilPage() {
     <div className="app-shell">
       <div className="screen" style={{ paddingTop: 0, paddingBottom: 100, gap: 0, justifyContent: 'flex-start' }}>
         <div style={{
-          width: '100%', background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
-          borderRadius: '0 0 32px 32px', padding: '52px 24px 32px', marginBottom: 28,
-          boxShadow: '0 6px 24px rgba(139,92,246,0.2)',
+          width: '100%',
+          background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+          borderRadius: '0 0 20px 20px', padding: '52px 24px 32px', marginBottom: 28,
+          boxShadow: '0 8px 32px rgba(139,92,246,0.2), inset 0 -1px 0 rgba(139,92,246,0.28)',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, marginBottom: 12, border: '2px solid rgba(255,255,255,0.4)' }}>👤</div>

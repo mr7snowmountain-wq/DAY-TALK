@@ -51,10 +51,10 @@ export default function HomePage() {
         {/* Hero */}
         <div className="anim-0" style={{
           width: '100%',
-          background: 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)',
-          borderRadius: '0 0 32px 32px',
+          background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+          borderRadius: '0 0 20px 20px',
           padding: '52px 24px 28px', marginBottom: 24,
-          boxShadow: '0 6px 32px rgba(139,92,246,0.35)',
+          boxShadow: '0 8px 32px rgba(139,92,246,0.2), inset 0 -1px 0 rgba(139,92,246,0.28)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
@@ -75,8 +75,8 @@ export default function HomePage() {
 
           {/* Message */}
           <div style={{
-            background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: 16, padding: '12px 16px', marginTop: 16, backdropFilter: 'blur(10px)',
+            background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.28)',
+            borderRadius: 12, padding: '12px 16px', marginTop: 16, backdropFilter: 'blur(10px)',
           }}>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.9)', lineHeight: 1.55, fontStyle: 'italic', fontWeight: 500 }}>
               "{message}"

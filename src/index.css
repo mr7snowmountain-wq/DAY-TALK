@@ -29,8 +29,8 @@ button:focus-visible { outline: none; }
   --cyan:        #C4B5FD;
   --navy:        #F0EEFF;
 
-  --grad-bg:     linear-gradient(160deg, #0D0B1A 0%, #130D2E 50%, #0D0B1A 100%);
-  --grad-hero:   linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+  --grad-bg:     linear-gradient(180deg, #07060F 0%, #0F0A24 40%, #07060F 100%);
+  --grad-hero:   linear-gradient(160deg, #1a0f3d 0%, #0f0b24 100%);
   --grad-btn:    linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
   --grad-card:   linear-gradient(145deg, rgba(255,255,255,0.06), rgba(139,92,246,0.04));
 
@@ -43,10 +43,10 @@ button:focus-visible { outline: none; }
   --text-soft:   rgba(240,238,255,0.52);
   --text-hint:   rgba(240,238,255,0.32);
 
-  --r-sm: 14px;
-  --r-md: 20px;
-  --r-lg: 28px;
-  --r-xl: 36px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 14px;
+  --r-xl: 18px;
   --r-full: 9999px;
 
   --font: 'Inter', system-ui, sans-serif;
@@ -72,9 +72,9 @@ body {
   content: '';
   position: fixed; inset: 0;
   background:
-    radial-gradient(circle at 15% 15%, rgba(139,92,246,0.22) 0%, transparent 50%),
-    radial-gradient(circle at 85% 80%, rgba(79,70,229,0.16)  0%, transparent 50%),
-    radial-gradient(circle at 60% 5%,  rgba(124,58,237,0.12) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 10%, rgba(139,92,246,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(79,70,229,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(109,40,217,0.08) 0%, transparent 60%);
   pointer-events: none; z-index: 0;
 }
 
@@ -101,7 +101,7 @@ body {
 
 .btn {
   display: flex; align-items: center; justify-content: center;
-  width: 100%; border: none; border-radius: var(--r-full);
+  width: 100%; border: none; border-radius: var(--r-md);
   font-family: var(--font); font-weight: 700;
   cursor: pointer; transition: transform .15s, box-shadow .15s, opacity .15s;
   position: relative; overflow: hidden;
