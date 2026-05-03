@@ -105,9 +105,12 @@ export default function HomePage() {
             <CardCarousel tasks={tasks} onToggle={() => navigate('/planning')} onCardTap={() => navigate('/planning')} />
           ) : (
             <div onClick={() => navigate('/planning')} style={{
-              background: 'linear-gradient(145deg, rgba(18,12,36,0.9), rgba(12,8,24,0.9))',
-              border: '1px dashed rgba(139,92,246,0.32)',
-              borderRadius: 10, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px dashed rgba(139,92,246,0.35)',
+              borderRadius: 14, padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
             }}>
               <div style={{ fontSize: 32, marginBottom: 8 }}></div>
               <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-dark)', marginBottom: 4 }}>Aucun planning aujourd'hui</p>
@@ -138,11 +141,13 @@ export default function HomePage() {
               <button key={a.theme} onPointerDown={tap} onClick={() => navigate(`/smart?theme=${a.theme}`)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 8,
-                background: `linear-gradient(145deg, rgba(18,12,36,0.95), rgba(12,8,24,0.95))`,
-                border: `1px solid ${a.color}38`,
-                borderRadius: 10, padding: '18px 12px', cursor: 'pointer',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: `1px solid rgba(255,255,255,0.1)`,
+                borderRadius: 14, padding: '18px 12px', cursor: 'pointer',
                 position: 'relative', overflow: 'hidden',
-                boxShadow: `0 4px 16px rgba(0,0,0,0.3)`,
+                boxShadow: `0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.09)`,
               }}>
                 <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)', textAlign: 'center', lineHeight: 1.3 }}>{a.label}</span>
@@ -176,9 +181,12 @@ export default function HomePage() {
               <button key={a.label} onPointerDown={tap} onClick={() => navigate(a.path)} style={{
                 flex: '1 1 calc(50% - 6px)', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 8,
-                background: 'linear-gradient(145deg, rgba(18,12,36,0.95), rgba(12,8,24,0.95))',
-                border: `1px solid ${a.border}`, borderRadius: 10, padding: '18px 12px', cursor: 'pointer',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 14, padding: '18px 12px', cursor: 'pointer',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.09)',
               }}>
                 <img src={a.icon} alt={a.label} style={{ width: 44, height: 44, objectFit: 'contain' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-dark)' }}>{a.label}</span>
