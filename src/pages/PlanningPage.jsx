@@ -56,9 +56,9 @@ function localDate() {
 }
 
 /* ── Export .ics ── */
-function exportToIcs(tasks) {
-  const today = localDate()
-  const [year, month, day] = today.split('-').map(Number)
+function exportToIcs(tasks, baseDate) {
+  const day = baseDate || localDate()
+  const [year, month, dayN] = day.split('-').map(Number)
   const pad = n => String(n).padStart(2, '0')
 
   const lines = [
@@ -71,14 +71,14 @@ function exportToIcs(tasks) {
     const m = (task.heure || '').match(/(\d{1,2}):(\d{2})/)
     let h = 9 + i, min = 0
     if (m) { h = parseInt(m[1]); min = parseInt(m[2]) }
-    const dtStart = `${year}${pad(month)}${pad(day)}T${pad(h)}${pad(min)}00`
+    const dtStart = `${year}${pad(month)}${pad(dayN)}T${pad(h)}${pad(min)}00`
     const endH = h + 1
-    const dtEnd = `${year}${pad(month)}${pad(day)}T${pad(endH)}${pad(min)}00`
+    const dtEnd = `${year}${pad(month)}${pad(dayN)}T${pad(endH)}${pad(min)}00`
     lines.push(
       'BEGIN:VEVENT',
-      `UID:daytalk-${today}-${i}@daytalk.app`,
+      `UID:daytalk-${day}-${i}@daytalk.app`,
       `DTSTAMP:${dtStart}`, `DTSTART:${dtStart}`, `DTEND:${dtEnd}`,
-      `SUMMARY:${task.emoji || ''} ${task.tache || ''}`.trim(),
+      `SUMMARY:${task.tache || ''}`.trim(),
       'END:VEVENT',
     )
   })
@@ -87,7 +87,7 @@ function exportToIcs(tasks) {
   const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
-  a.href = url; a.download = `daytalk-journee-${today}.ics`; a.click()
+  a.href = url; a.download = `daytalk-journee-${day}.ics`; a.click()
   URL.revokeObjectURL(url)
 }
 
@@ -200,10 +200,12 @@ export default function PlanningPage() {
   const { user }  = useAuth()
   const dateParam = params.get('date')
 
-  const [tasks,      setTasks]      = useState([])
-  const [status,     setStatus]     = useState('idle')
-  const [errorMsg,   setErrorMsg]   = useState('')
-  const [transcript, setTranscript] = useState('')
+  const [tasks,           setTasks]           = useState([])
+  const [status,          setStatus]          = useState('idle')
+  const [errorMsg,        setErrorMsg]        = useState('')
+  const [transcript,      setTranscript]      = useState('')
+  const [showExportModal, setShowExportModal] = useState(false)
+  const [exportDate,      setExportDate]      = useState(dateParam || localDate())
 
   const statusRef          = useRef('idle')
   const finalTranscriptRef = useRef('')
@@ -412,22 +414,40 @@ export default function PlanningPage() {
               <CardCarousel tasks={tasks} onToggle={toggleTask} />
 
               {/* Export agenda */}
-              <button onClick={() => exportToIcs(tasks)} style={{
+              <button onClick={() => { setExportDate(dateParam || localDate()); setShowExportModal(true) }} style={{
                 width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(139,92,246,0.35)',
-                borderRadius: 16, padding: '14px', cursor: 'pointer',
-                boxShadow: '0 4px 16px rgba(139,92,246,0.12)',
+                background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(139,92,246,0.35)',
+                borderRadius: 12, padding: '14px', cursor: 'pointer',
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="#8B5CF6" strokeWidth="1.8"/>
-                  <path d="M3 9h18" stroke="#8B5CF6" strokeWidth="1.8"/>
-                  <path d="M8 2v4M16 2v4" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round"/>
-                  <path d="M8 13h4m-4 4h8" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round"/>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>
                 </svg>
-                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--teal)' }}>
-                  Ajouter à mon agenda
-                </span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--teal)' }}>Ajouter à mon agenda</span>
               </button>
+
+              {/* Modale choix de date */}
+              {showExportModal && (
+                <div style={{ position: 'fixed', inset: 0, zIndex: 999, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'flex-end' }}
+                  onClick={() => setShowExportModal(false)}>
+                  <div onClick={e => e.stopPropagation()} style={{
+                    width: '100%', maxWidth: 480, margin: '0 auto',
+                    background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+                    border: '1px solid rgba(139,92,246,0.3)', borderRadius: '20px 20px 0 0',
+                    padding: '24px 20px 48px', display: 'flex', flexDirection: 'column', gap: 16,
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Quel jour ?</h3>
+                      <button onClick={() => setShowExportModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-hint)', fontSize: 24, cursor: 'pointer', lineHeight: 1 }}>×</button>
+                    </div>
+                    <p style={{ fontSize: 13, color: 'var(--text-soft)', margin: 0 }}>Choisis la date à laquelle ajouter ce planning dans ton agenda.</p>
+                    <input type="date" value={exportDate} onChange={e => setExportDate(e.target.value)}
+                      style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(139,92,246,0.3)', borderRadius: 12, padding: '14px 18px', fontFamily: 'var(--font)', fontSize: 15, color: 'var(--text-dark)', outline: 'none', colorScheme: 'dark' }} />
+                    <button onClick={() => { exportToIcs(tasks, exportDate); setShowExportModal(false) }} className="btn btn-primary">
+                      Exporter vers mon agenda
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
                  Nouveau planning

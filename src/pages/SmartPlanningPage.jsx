@@ -154,55 +154,77 @@ async function callClaude(prompt) {
   return JSON.parse(match[0])
 }
 
-/* ── Export .ics ── */
-function exportToIcs(steps, label, date) {
-  const today = date || localDate()
-  const [year, month, day] = today.split('-').map(Number)
+/* ── Helpers date ── */
+function addDays(yyyymmdd, n) {
+  const [y, m, d] = yyyymmdd.split('-').map(Number)
+  const date = new Date(y, m - 1, d + n)
+  const pad = x => String(x).padStart(2, '0')
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+}
 
+const FR_DAYS = { lundi:1, mardi:2, mercredi:3, jeudi:4, vendredi:5, samedi:6, dimanche:0 }
+
+function getDayOffset(timeStr, startDate) {
+  const t = (timeStr || '').toLowerCase()
+  // "Jour 1", "Jour 2", "Day 1"…
+  const jourM = t.match(/(?:jour|day)\s*(\d+)/)
+  if (jourM) return parseInt(jourM[1]) - 1
+  // "Semaine 1", "Semaine 2"…
+  const semM = t.match(/semaine\s*(\d+)/)
+  if (semM) return (parseInt(semM[1]) - 1) * 7
+  // "Samedi", "Dimanche"…
+  for (const [name, dow] of Object.entries(FR_DAYS)) {
+    if (t.includes(name)) {
+      const [y, m, d] = startDate.split('-').map(Number)
+      const baseDow = new Date(y, m - 1, d).getDay()
+      return (dow - baseDow + 7) % 7
+    }
+  }
+  return 0
+}
+
+/* ── Export .ics ── */
+function exportToIcs(steps, label, startDate) {
+  const pad = n => String(n).padStart(2, '0')
   const lines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
+    'BEGIN:VCALENDAR', 'VERSION:2.0',
     'PRODID:-//DayTalk//AI Planning//FR',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
   ]
 
   steps.forEach((step, i) => {
-    // Extraire l'heure si format "HH:MM" ou "Jour X - HH:MM"
+    const offset   = getDayOffset(step.time, startDate)
+    const eventDay = addDays(startDate, offset)
+    const [y, m, d] = eventDay.split('-').map(Number)
+
     const timeMatch = (step.time || '').match(/(\d{1,2}):(\d{2})/)
     let startH = 9 + i, startM = 0
     if (timeMatch) { startH = parseInt(timeMatch[1]); startM = parseInt(timeMatch[2]) }
 
-    // Durée en minutes
     const durMatch = (step.duration || '').match(/(\d+)\s*(h|min)/)
     let durMin = 60
     if (durMatch) durMin = durMatch[2] === 'h' ? parseInt(durMatch[1]) * 60 : parseInt(durMatch[1])
 
-    const pad = n => String(n).padStart(2, '0')
-    const dtStart = `${year}${pad(month)}${pad(day)}T${pad(startH)}${pad(startM)}00`
-    const endH = startH + Math.floor((startM + durMin) / 60)
-    const endM = (startM + durMin) % 60
-    const dtEnd = `${year}${pad(month)}${pad(day)}T${pad(endH)}${pad(endM)}00`
+    const dtStart = `${y}${pad(m)}${pad(d)}T${pad(startH)}${pad(startM)}00`
+    const endTotalMin = startH * 60 + startM + durMin
+    const dtEnd = `${y}${pad(m)}${pad(d)}T${pad(Math.floor(endTotalMin/60))}${pad(endTotalMin%60)}00`
 
     lines.push(
       'BEGIN:VEVENT',
-      `UID:daytalk-${today}-${i}@daytalk.app`,
-      `DTSTAMP:${dtStart}`,
-      `DTSTART:${dtStart}`,
-      `DTEND:${dtEnd}`,
-      `SUMMARY:${step.emoji || ''} ${step.title || step.tache || ''}`.trim(),
+      `UID:daytalk-${eventDay}-${i}@daytalk.app`,
+      `DTSTAMP:${dtStart}`, `DTSTART:${dtStart}`, `DTEND:${dtEnd}`,
+      `SUMMARY:${step.title || step.tache || ''}`.trim(),
       `DESCRIPTION:${step.desc || ''}`,
       'END:VEVENT',
     )
   })
 
   lines.push('END:VCALENDAR')
-
   const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })
   const url  = URL.createObjectURL(blob)
   const a    = document.createElement('a')
-  a.href     = url
-  a.download = `daytalk-${label.toLowerCase().replace(/\s+/g, '-')}-${today}.ics`
+  a.href = url
+  a.download = `daytalk-${label.toLowerCase().replace(/\s+/g, '-')}-${startDate}.ics`
   a.click()
   URL.revokeObjectURL(url)
 }
@@ -427,10 +449,12 @@ export default function SmartPlanningPage() {
   const dateParam = params.get('date')   // mode lecture historique
   const theme     = THEMES[themeKey] || THEMES.journee
 
-  const [steps,      setSteps]      = useState([])
-  const [status,     setStatus]     = useState('idle')
-  const [transcript, setTranscript] = useState('')
-  const [errorMsg,   setErrorMsg]   = useState('')
+  const [steps,           setSteps]           = useState([])
+  const [status,          setStatus]          = useState('idle')
+  const [transcript,      setTranscript]      = useState('')
+  const [errorMsg,        setErrorMsg]        = useState('')
+  const [showExportModal, setShowExportModal] = useState(false)
+  const [exportDate,      setExportDate]      = useState(dateParam || localDate())
 
   const statusRef          = useRef('idle')
   const finalTranscriptRef = useRef('')
@@ -586,26 +610,46 @@ export default function SmartPlanningPage() {
               <TimelinePlan steps={steps} onUpdate={updated => { setSteps(updated); if (user) savePlan(themeKey, updated, user.id, dateParam || null) }} />
 
               {/* Export agenda */}
-              <button onClick={() => exportToIcs(steps, theme.label, dateParam)} style={{
+              <button onClick={() => { setExportDate(dateParam || localDate()); setShowExportModal(true) }} style={{
                 width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                background: 'rgba(255,255,255,0.08)', border: `1.5px solid ${theme.color}55`,
-                borderRadius: 16, padding: '14px', cursor: 'pointer',
-                boxShadow: `0 4px 16px ${theme.color}18`,
+                background: 'rgba(255,255,255,0.08)', border: `1px solid rgba(139,92,246,0.35)`,
+                borderRadius: 12, padding: '14px', cursor: 'pointer',
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="18" rx="3" stroke={theme.color} strokeWidth="1.8"/>
-                  <path d="M3 9h18" stroke={theme.color} strokeWidth="1.8"/>
-                  <path d="M8 2v4M16 2v4" stroke={theme.color} strokeWidth="1.8" strokeLinecap="round"/>
-                  <path d="M8 13h4m-4 4h8" stroke={theme.color} strokeWidth="1.8" strokeLinecap="round"/>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.8" strokeLinecap="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>
                 </svg>
-                <span style={{ fontSize: 14, fontWeight: 700, color: theme.color }}>
-                  Ajouter à mon agenda
-                </span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--teal)' }}>Ajouter à mon agenda</span>
               </button>
+
+              {/* Modale choix de date */}
+              {showExportModal && (
+                <div style={{ position: 'fixed', inset: 0, zIndex: 999, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'flex-end' }}
+                  onClick={() => setShowExportModal(false)}>
+                  <div onClick={e => e.stopPropagation()} style={{
+                    width: '100%', maxWidth: 480, margin: '0 auto',
+                    background: 'linear-gradient(160deg, #1a0f3d 0%, #0d0b1a 100%)',
+                    border: '1px solid rgba(139,92,246,0.3)', borderRadius: '20px 20px 0 0',
+                    padding: '24px 20px 48px', display: 'flex', flexDirection: 'column', gap: 16,
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-dark)', margin: 0 }}>Date de départ</h3>
+                      <button onClick={() => setShowExportModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-hint)', fontSize: 24, cursor: 'pointer', lineHeight: 1 }}>×</button>
+                    </div>
+                    <p style={{ fontSize: 13, color: 'var(--text-soft)', margin: 0 }}>
+                      Quel jour commence ce planning ? Les étapes "Jour 2", "Jour 3"… seront automatiquement décalées.
+                    </p>
+                    <input type="date" value={exportDate} onChange={e => setExportDate(e.target.value)}
+                      style={{ width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(139,92,246,0.3)', borderRadius: 12, padding: '14px 18px', fontFamily: 'var(--font)', fontSize: 15, color: 'var(--text-dark)', outline: 'none', colorScheme: 'dark' }} />
+                    <button onClick={() => { exportToIcs(steps, theme.label, exportDate); setShowExportModal(false) }} className="btn btn-primary">
+                      Exporter vers mon agenda
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {!dateParam && (
                 <button onClick={reset} className="btn btn-ghost" style={{ width: '100%', marginTop: 10 }}>
-                   Recommencer
+                  Recommencer
                 </button>
               )}
             </>
