@@ -9,6 +9,7 @@ import PlanningPage      from './pages/PlanningPage'
 import SmartPlanningPage from './pages/SmartPlanningPage'
 import WeekPage          from './pages/WeekPage'
 import ProfilPage        from './pages/ProfilPage'
+import PaywallPage       from './pages/PaywallPage'
 
 function Loader() {
   return (
@@ -28,9 +29,11 @@ function Loader() {
 }
 
 function Guard({ children }) {
-  const { user, loading } = useAuth()
+  const { user, loading, isPremium, trialExpired } = useAuth()
   if (loading) return <Loader />
-  return user ? children : <Navigate to="/" replace />
+  if (!user) return <Navigate to="/" replace />
+  if (trialExpired && !isPremium) return <Navigate to="/paywall" replace />
+  return children
 }
 
 function AppRoutes() {
@@ -45,6 +48,7 @@ function AppRoutes() {
       <Route path="/smart"    element={<Guard><SmartPlanningPage /></Guard>} />
       <Route path="/week"     element={<Guard><WeekPage /></Guard>} />
       <Route path="/profil"   element={<Guard><ProfilPage /></Guard>} />
+      <Route path="/paywall"  element={<PaywallPage />} />
       <Route path="*"         element={<Navigate to="/" replace />} />
     </Routes>
   )

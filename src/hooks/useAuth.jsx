@@ -75,8 +75,17 @@ export function AuthProvider({ children }) {
     return data
   }
 
+  // Calcul trial
+  const TRIAL_DAYS = 30
+  const createdAt  = user ? new Date(user.created_at) : null
+  const trialDaysLeft = createdAt
+    ? Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - createdAt.getTime()) / 86400000))
+    : TRIAL_DAYS
+  const trialExpired = trialDaysLeft === 0
+  const isPremium    = profile?.is_premium === true
+
   return (
-    <AuthCtx.Provider value={{ user, profile, loading, signUp, signIn, signOut, saveProfile }}>
+    <AuthCtx.Provider value={{ user, profile, loading, signUp, signIn, signOut, saveProfile, isPremium, trialExpired, trialDaysLeft }}>
       {children}
     </AuthCtx.Provider>
   )
