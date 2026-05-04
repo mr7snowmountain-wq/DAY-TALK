@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 /* ── Logo identique à AuthPage ── */
 function Logo({ size = 40 }) {
@@ -118,6 +119,62 @@ const FEATURES = [
   { title: 'Historique illimité', desc: 'Tous tes plannings sauvegardés, consultables et modifiables à tout moment.' },
   { title: '100% mobile', desc: 'PWA installable sur iPhone et Android. Aussi rapide qu\'une app native.' },
 ]
+
+/* ── Bannière installation PWA ── */
+function InstallBanner() {
+  const [show,    setShow]    = useState(false)
+  const [isIOS,   setIsIOS]   = useState(false)
+  const [dismiss, setDismiss] = useState(false)
+
+  useEffect(() => {
+    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone
+    setIsIOS(ios)
+    if (ios) { setShow(true); return }
+    if (window.__pwaInstallPrompt) { setShow(true); return }
+    window.addEventListener('pwa-installable', () => setShow(true))
+    return () => window.removeEventListener('pwa-installable', () => setShow(true))
+  }, [])
+
+  async function install() {
+    if (!window.__pwaInstallPrompt) return
+    window.__pwaInstallPrompt.prompt()
+    const { outcome } = await window.__pwaInstallPrompt.userChoice
+    if (outcome === 'accepted') setDismiss(true)
+  }
+
+  if (!show || dismiss) return null
+
+  return (
+    <div style={{
+      position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 200,
+      background: 'linear-gradient(135deg, #1a0f3d, #0d0b1a)',
+      borderTop: '1px solid rgba(139,92,246,0.4)',
+      padding: '16px 20px',
+      display: 'flex', alignItems: 'center', gap: 14,
+      backdropFilter: 'blur(20px)',
+      boxShadow: '0 -8px 32px rgba(0,0,0,0.4)',
+    }}>
+      <div style={{ width: 44, height: 44, borderRadius: 12, overflow: 'hidden', flexShrink: 0 }}>
+        <img src="/icon.svg" alt="DayTalk" style={{ width: '100%', height: '100%' }} />
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ fontSize: 13, fontWeight: 800, color: 'white', margin: 0 }}>Installer DayTalk</p>
+        {isIOS
+          ? <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', margin: '2px 0 0' }}>Appuie sur <strong style={{ color: '#A78BFA' }}>Partager</strong> puis <strong style={{ color: '#A78BFA' }}>"Sur l'écran d'accueil"</strong></p>
+          : <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', margin: '2px 0 0' }}>Ajoute l'app à ton écran d'accueil</p>
+        }
+      </div>
+      {!isIOS && (
+        <button onClick={install} style={{
+          padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
+          background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
+          color: 'white', fontSize: 13, fontWeight: 700, flexShrink: 0,
+        }}>Installer</button>
+      )}
+      <button onClick={() => setDismiss(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', fontSize: 20, cursor: 'pointer', flexShrink: 0, lineHeight: 1 }}>×</button>
+    </div>
+  )
+}
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -402,6 +459,9 @@ export default function LandingPage() {
       <footer style={{ background: '#07060f', padding: '24px', textAlign: 'center', borderTop: '1px solid rgba(139,92,246,0.1)' }}>
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', margin: 0 }}>© 2025 DayTalk · Le planneur vocal</p>
       </footer>
+
+      {/* ── Bannière install PWA fixée en bas ── */}
+      <InstallBanner />
 
     </div>
   )

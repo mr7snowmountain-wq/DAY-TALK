@@ -1,14 +1,18 @@
 {
-  "name": "DayTalk",
+  "name": "DayTalk — AI Planning",
   "short_name": "DayTalk",
-  "description": "AI Planning — Dicte ta journée",
+  "description": "Le seul planneur vocal qui sync avec ton agenda. Dicte, planifie, accomplis.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F0FFFE",
-  "theme_color": "#00C2B8",
+  "background_color": "#0d0b1a",
+  "theme_color": "#0d0b1a",
   "orientation": "portrait",
+  "categories": ["productivity", "lifestyle"],
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ]
 }
