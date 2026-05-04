@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
   }
 
   // Calcul trial
-  const TRIAL_DAYS = 30
+  const TRIAL_DAYS = 14
   const createdAt  = user ? new Date(user.created_at) : null
   const trialDaysLeft = createdAt
     ? Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - createdAt.getTime()) / 86400000))

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { playDrop } from './hooks/useTap'
 import AuthPage          from './pages/AuthPage'
+import LandingPage       from './pages/LandingPage'
 import OnboardingPage    from './pages/OnboardingPage'
 import HomePage          from './pages/HomePage'
 import PlanningPage      from './pages/PlanningPage'
@@ -41,7 +42,8 @@ function AppRoutes() {
   if (loading) return <Loader />
   return (
     <Routes>
-      <Route path="/" element={user ? <Navigate to={profile?.onboarding_complete ? '/home' : '/onboarding'} replace /> : <AuthPage />} />
+      <Route path="/" element={user ? <Navigate to={profile?.onboarding_complete ? '/home' : '/onboarding'} replace /> : <LandingPage />} />
+      <Route path="/auth" element={user ? <Navigate to={profile?.onboarding_complete ? '/home' : '/onboarding'} replace /> : <AuthPage />} />
       <Route path="/onboarding" element={<Guard>{profile?.onboarding_complete ? <Navigate to="/home" replace /> : <OnboardingPage />}</Guard>} />
       <Route path="/home"     element={<Guard><HomePage /></Guard>} />
       <Route path="/planning" element={<Guard><PlanningPage /></Guard>} />

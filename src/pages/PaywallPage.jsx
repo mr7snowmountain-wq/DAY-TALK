@@ -72,7 +72,7 @@ export default function PaywallPage() {
             Ton mois d'essai est terminé
           </h1>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', margin: 0, lineHeight: 1.6 }}>
-            Tu as créé <span style={{ color: '#A78BFA', fontWeight: 700 }}>{planCount} planning{planCount > 1 ? 's' : ''}</span> avec DayTalk.{'\n'}Continue à planifier sans limite.
+            Tu as créé <span style={{ color: '#A78BFA', fontWeight: 700 }}>{planCount} planning{planCount > 1 ? 's' : ''}</span> avec DayTalk pendant ton essai.{'\n'}Continue à planifier sans limite.
           </p>
         </div>
 
