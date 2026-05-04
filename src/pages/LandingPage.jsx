@@ -248,29 +248,53 @@ export default function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════ */}
-      {/* SECTION 2 — PROBLÈME (BLANC)          */}
+      {/* SECTION 2 — PROBLÈME                 */}
       {/* ══════════════════════════════════════ */}
-      <section style={{ background: '#ffffff', padding: '72px 24px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 480, margin: '0 auto' }}>
+      <section style={{
+        background: 'linear-gradient(160deg, #faf7ff 0%, #f0ebff 50%, #faf7ff 100%)',
+        padding: '80px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden',
+      }}>
+        {/* Glow décoratif */}
+        <div style={{ position: 'absolute', top: -60, right: -80, width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: -40, left: -60, width: 260, height: 260, borderRadius: '50%', background: 'radial-gradient(circle, rgba(109,40,217,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
           <p style={{ fontSize: 12, fontWeight: 800, color: '#8B5CF6', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Le vrai problème</p>
-          <h2 style={{ fontSize: 28, fontWeight: 900, color: '#0d0b1a', lineHeight: 1.2, margin: '0 0 20px' }}>
-            Tu passes plus de temps à planifier qu'à agir
+          <h2 style={{ fontSize: 28, fontWeight: 900, color: '#0d0b1a', lineHeight: 1.2, margin: '0 0 16px' }}>
+            Tu passes plus de temps<br/>à planifier qu'à agir
           </h2>
-          <p style={{ fontSize: 16, color: '#64748b', lineHeight: 1.7, margin: '0 0 40px' }}>
-            Tu ouvres ton planner, tu tapes tes tâches une par une, tu réorganises, tu oublies de sync l'agenda… <strong style={{ color: '#0d0b1a' }}>20 minutes perdues</strong> avant même de commencer ta journée.
+          <p style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.7, margin: '0 0 40px' }}>
+            Tu ouvres ton planner, tu tapes tout une par une, tu réorganises, tu oublies le sync…<br/>
+            <strong style={{ color: '#0d0b1a' }}>20 minutes perdues</strong> avant même de commencer.
           </p>
 
-          {/* Pain points */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'left' }}>
+          {/* Pain points — glass clair */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left' }}>
             {[
-              'Tu tapes tes tâches une par une au lieu de juste les dire',
-              'Ton planning ne sync pas automatiquement avec ton agenda',
-              'Tu dois changer d\'app selon le type de planning (voyage, sport, projet…)',
-              'Tu oublies des tâches importantes faute de rappels intelligents',
+              { icon: '⌨️', text: 'Tu tapes tes tâches une par une au lieu de juste les dire' },
+              { icon: '📅', text: 'Ton planning ne sync pas automatiquement avec ton agenda' },
+              { icon: '🔀', text: 'Tu changes d\'app selon le planning : voyage, sport, projet…' },
+              { icon: '🔔', text: 'Tu oublies des tâches importantes faute de rappels' },
             ].map((p, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: '#faf5ff', border: '1px solid #e9d5ff', borderRadius: 12, padding: '14px 16px' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0, marginTop: 1 }}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                <p style={{ fontSize: 14, color: '#374151', margin: 0, lineHeight: 1.5 }}>{p}</p>
+              <div key={i} style={{
+                display: 'flex', alignItems: 'center', gap: 14,
+                background: 'rgba(255,255,255,0.65)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(139,92,246,0.18)',
+                borderRadius: 14, padding: '14px 16px',
+                boxShadow: '0 2px 16px rgba(139,92,246,0.07), inset 0 1px 0 rgba(255,255,255,0.9)',
+              }}>
+                {/* Icône tag coloré */}
+                <div style={{
+                  width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+                  background: 'linear-gradient(135deg, rgba(239,68,68,0.12), rgba(239,68,68,0.05))',
+                  border: '1px solid rgba(239,68,68,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
+                }}>{p.icon}</div>
+                <p style={{ fontSize: 14, color: '#374151', margin: 0, lineHeight: 1.5, fontWeight: 500 }}>{p.text}</p>
+                {/* Dash décoratif */}
+                <div style={{ marginLeft: 'auto', width: 20, height: 2, borderRadius: 2, background: 'rgba(239,68,68,0.35)', flexShrink: 0 }} />
               </div>
             ))}
           </div>
@@ -287,23 +311,40 @@ export default function LandingPage() {
             De la voix à l'agenda<br/>en 3 étapes
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {STEPS.map((s, i) => (
               <div key={i} style={{
                 display: 'flex', alignItems: 'flex-start', gap: 16, textAlign: 'left',
-                background: 'linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(7,5,18,0.6) 100%)',
-                backdropFilter: 'blur(20px)', border: '1px solid rgba(139,92,246,0.2)',
-                borderRadius: 14, padding: '20px 18px',
+                background: 'linear-gradient(135deg, rgba(139,92,246,0.13) 0%, rgba(13,11,26,0.7) 100%)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                border: '1px solid rgba(139,92,246,0.25)',
+                borderRadius: 16, padding: '20px 18px',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)',
               }}>
-                <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: 12, background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {s.svg}
-                </div>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, color: 'rgba(139,92,246,0.6)', letterSpacing: 1 }}>{s.n}</span>
-                    <h3 style={{ fontSize: 16, fontWeight: 800, color: 'white', margin: 0 }}>{s.title}</h3>
+                {/* Numéro absolu + icône */}
+                <div style={{ flexShrink: 0, position: 'relative' }}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: 14,
+                    background: 'linear-gradient(135deg, rgba(139,92,246,0.3) 0%, rgba(109,40,217,0.15) 100%)',
+                    border: '1px solid rgba(139,92,246,0.4)',
+                    boxShadow: '0 0 20px rgba(139,92,246,0.2)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    {s.svg}
                   </div>
-                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: 1.6 }}>{s.desc}</p>
+                  <div style={{
+                    position: 'absolute', top: -6, right: -6,
+                    width: 18, height: 18, borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 9, fontWeight: 900, color: 'white', fontFamily: 'Inter, sans-serif',
+                    boxShadow: '0 2px 8px rgba(139,92,246,0.5)',
+                  }}>{i + 1}</div>
+                </div>
+                <div style={{ paddingTop: 2 }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 800, color: 'white', margin: '0 0 6px' }}>{s.title}</h3>
+                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0, lineHeight: 1.6 }}>{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -317,40 +358,83 @@ export default function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════ */}
-      {/* SECTION 4 — USE CASES (BLANC)         */}
+      {/* SECTION 4 — USE CASES                */}
       {/* ══════════════════════════════════════ */}
-      <section style={{ background: '#f8fafc', padding: '72px 24px' }}>
-        <div style={{ maxWidth: 480, margin: '0 auto' }}>
+      <section style={{
+        background: 'linear-gradient(180deg, #f5f0ff 0%, #ede8ff 50%, #f5f0ff 100%)',
+        padding: '80px 24px', position: 'relative', overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translateX(-50%)', width: 500, height: 300, background: 'radial-gradient(ellipse, rgba(139,92,246,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
           <p style={{ fontSize: 12, fontWeight: 800, color: '#8B5CF6', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12, textAlign: 'center' }}>Pour tous tes besoins</p>
           <h2 style={{ fontSize: 28, fontWeight: 900, color: '#0d0b1a', lineHeight: 1.2, margin: '0 0 8px', textAlign: 'center' }}>
             Un seul outil.<br/>Toutes les situations.
           </h2>
-          <p style={{ fontSize: 15, color: '#64748b', textAlign: 'center', margin: '0 0 40px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 15, color: '#6b7280', textAlign: 'center', margin: '0 0 40px', lineHeight: 1.6 }}>
             Arrête de jongler entre 6 apps différentes.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {USE_CASES.map((u, i) => (
-              <div key={i} style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', border: '1px solid #f1f5f9' }}>
+              <div key={i} style={{
+                background: 'rgba(255,255,255,0.7)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderRadius: 20, overflow: 'hidden',
+                border: '1px solid rgba(139,92,246,0.15)',
+                boxShadow: '0 8px 40px rgba(139,92,246,0.1), inset 0 1px 0 rgba(255,255,255,0.95)',
+              }}>
                 {/* Screenshot placeholder */}
-                <div style={{ background: '#0d0b1a', height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8 }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(139,92,246,0.4)" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                  <p style={{ fontSize: 11, color: 'rgba(139,92,246,0.4)', margin: 0, fontFamily: 'Inter, sans-serif' }}>{u.screen}</p>
+                <div style={{
+                  background: 'linear-gradient(135deg, #0f0824 0%, #1a0f3d 100%)',
+                  height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8,
+                  position: 'relative', overflow: 'hidden',
+                }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 70%)' }} />
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(139,92,246,0.5)" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                  <p style={{ fontSize: 11, color: 'rgba(167,139,250,0.6)', margin: 0, fontFamily: 'Inter, sans-serif' }}>{u.screen}</p>
                 </div>
-                <div style={{ padding: '20px 18px' }}>
-                  <span style={{ fontSize: 10, fontWeight: 800, color: '#8B5CF6', letterSpacing: 1, textTransform: 'uppercase', background: '#f3f0ff', padding: '3px 10px', borderRadius: 20 }}>{u.tag}</span>
-                  <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                      <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                      </div>
+
+                <div style={{ padding: '18px 18px 20px' }}>
+                  {/* Tag badge */}
+                  <span style={{
+                    fontSize: 10, fontWeight: 800, color: 'white', letterSpacing: 1.2, textTransform: 'uppercase',
+                    background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)',
+                    padding: '4px 12px', borderRadius: 20,
+                    boxShadow: '0 2px 10px rgba(139,92,246,0.35)',
+                  }}>{u.tag}</span>
+
+                  <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 0 }}>
+                    {/* AVANT */}
+                    <div style={{
+                      display: 'flex', gap: 12, alignItems: 'flex-start',
+                      background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.12)',
+                      borderRadius: '10px 10px 0 0', padding: '12px 14px',
+                    }}>
+                      <div style={{
+                        flexShrink: 0, padding: '2px 8px', borderRadius: 6,
+                        background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+                        fontSize: 9, fontWeight: 900, color: '#ef4444', letterSpacing: 1, lineHeight: '16px',
+                      }}>AVANT</div>
                       <p style={{ fontSize: 13, color: '#6b7280', margin: 0, lineHeight: 1.5, fontStyle: 'italic' }}>{u.before}</p>
                     </div>
-                    <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                      <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                      </div>
-                      <p style={{ fontSize: 13, color: '#111827', margin: 0, lineHeight: 1.5, fontWeight: 500 }}>{u.after}</p>
+                    {/* Séparateur flèche */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 28, background: 'rgba(139,92,246,0.04)', borderLeft: '1px solid rgba(139,92,246,0.1)', borderRight: '1px solid rgba(139,92,246,0.1)' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(139,92,246,0.5)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </div>
+                    {/* APRÈS */}
+                    <div style={{
+                      display: 'flex', gap: 12, alignItems: 'flex-start',
+                      background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)',
+                      borderRadius: '0 0 10px 10px', padding: '12px 14px',
+                    }}>
+                      <div style={{
+                        flexShrink: 0, padding: '2px 8px', borderRadius: 6,
+                        background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)',
+                        fontSize: 9, fontWeight: 900, color: '#10b981', letterSpacing: 1, lineHeight: '16px',
+                      }}>APRÈS</div>
+                      <p style={{ fontSize: 13, color: '#111827', margin: 0, lineHeight: 1.5, fontWeight: 600 }}>{u.after}</p>
                     </div>
                   </div>
                 </div>
@@ -369,17 +453,25 @@ export default function LandingPage() {
           <h2 style={{ fontSize: 28, fontWeight: 900, color: 'white', lineHeight: 1.2, margin: '0 0 40px', textAlign: 'center' }}>
             Tout ce qu'un planneur<br/>devrait faire
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {FEATURES.map((f, i) => (
               <div key={i} style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-                backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 14, padding: '18px 14px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
+                background: 'linear-gradient(145deg, rgba(139,92,246,0.14) 0%, rgba(13,11,26,0.75) 100%)',
+                backdropFilter: 'blur(28px)',
+                WebkitBackdropFilter: 'blur(28px)',
+                border: '1px solid rgba(139,92,246,0.22)',
+                borderRadius: 16, padding: '18px 15px',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.09)',
+                position: 'relative', overflow: 'hidden',
               }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#8B5CF6', boxShadow: '0 0 8px rgba(139,92,246,0.8)', marginBottom: 10 }} />
-                <h3 style={{ fontSize: 13, fontWeight: 800, color: 'white', margin: '0 0 6px', lineHeight: 1.3 }}>{f.title}</h3>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0, lineHeight: 1.55 }}>{f.desc}</p>
+                {/* Glow coin */}
+                <div style={{ position: 'absolute', top: -20, right: -20, width: 80, height: 80, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                {/* Icône ligne stylée */}
+                <div style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+                  <div style={{ width: 12, height: 12, borderRadius: '50%', background: 'linear-gradient(135deg, #C4B5FD, #8B5CF6)', boxShadow: '0 0 10px rgba(139,92,246,0.7)' }} />
+                </div>
+                <h3 style={{ fontSize: 13, fontWeight: 800, color: 'white', margin: '0 0 7px', lineHeight: 1.3 }}>{f.title}</h3>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0, lineHeight: 1.6 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -393,39 +485,67 @@ export default function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════ */}
-      {/* SECTION 6 — PRICING (BLANC)           */}
+      {/* SECTION 6 — PRICING                  */}
       {/* ══════════════════════════════════════ */}
-      <section style={{ background: '#ffffff', padding: '72px 24px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 480, margin: '0 auto' }}>
+      <section style={{
+        background: 'linear-gradient(160deg, #f5f0ff 0%, #ede8ff 60%, #f8f5ff 100%)',
+        padding: '80px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', bottom: -60, left: '50%', transform: 'translateX(-50%)', width: 400, height: 300, background: 'radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: 420, margin: '0 auto', position: 'relative' }}>
           <p style={{ fontSize: 12, fontWeight: 800, color: '#8B5CF6', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Tarif</p>
           <h2 style={{ fontSize: 28, fontWeight: 900, color: '#0d0b1a', lineHeight: 1.2, margin: '0 0 8px' }}>
             Moins cher qu'un café.<br/>Bien plus utile.
           </h2>
-          <p style={{ fontSize: 15, color: '#64748b', margin: '0 0 32px', lineHeight: 1.6 }}>
-            14 jours gratuits pour tester sans engagement. Aucune carte bancaire requise.
+          <p style={{ fontSize: 15, color: '#6b7280', margin: '0 0 36px', lineHeight: 1.6 }}>
+            14 jours gratuits, sans carte bancaire.
           </p>
 
-          <div style={{ background: 'linear-gradient(135deg, #f3f0ff, #faf5ff)', border: '2px solid #c4b5fd', borderRadius: 20, padding: '32px 24px', marginBottom: 16 }}>
-            <div style={{ display: 'inline-block', background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)', color: 'white', borderRadius: 20, padding: '4px 14px', fontSize: 11, fontWeight: 800, letterSpacing: 1, marginBottom: 16 }}>
+          {/* Carte pricing glass */}
+          <div style={{
+            background: 'rgba(255,255,255,0.72)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1.5px solid rgba(139,92,246,0.28)',
+            borderRadius: 24, padding: '32px 24px', marginBottom: 14,
+            boxShadow: '0 16px 60px rgba(139,92,246,0.14), inset 0 1px 0 rgba(255,255,255,0.95)',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            {/* Glow top-right */}
+            <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+            <div style={{ display: 'inline-block', background: 'linear-gradient(135deg, #8B5CF6, #6D28D9)', color: 'white', borderRadius: 20, padding: '5px 16px', fontSize: 10, fontWeight: 900, letterSpacing: 1.5, marginBottom: 20, boxShadow: '0 4px 16px rgba(139,92,246,0.4)' }}>
               OFFRE DE LANCEMENT
             </div>
+
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 4, marginBottom: 4 }}>
-              <span style={{ fontSize: 56, fontWeight: 900, color: '#0d0b1a', lineHeight: 1 }}>4,99</span>
-              <span style={{ fontSize: 20, color: '#6b7280', fontWeight: 700 }}>€</span>
-              <span style={{ fontSize: 16, color: '#6b7280', fontWeight: 600 }}>/mois</span>
+              <span style={{ fontSize: 64, fontWeight: 900, color: '#0d0b1a', lineHeight: 1, letterSpacing: -2 }}>4,99</span>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 22, color: '#8B5CF6', fontWeight: 800, lineHeight: 1.2 }}>€</span>
+                <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 600 }}>/mois</span>
+              </div>
             </div>
-            <p style={{ fontSize: 13, color: '#6b7280', margin: '0 0 24px' }}>après 14 jours d'essai gratuit</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', marginBottom: 24 }}>
-              {['14 jours d\'essai offerts — sans carte', 'Accès à toutes les fonctionnalités', 'Sync automatique avec ton agenda', 'Résiliable en 1 clic, quand tu veux'].map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                  <span style={{ fontSize: 14, color: '#374151', fontWeight: 500 }}>{item}</span>
+            <p style={{ fontSize: 13, color: '#9ca3af', margin: '0 0 28px' }}>après 14 jours d'essai gratuit</p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', marginBottom: 28 }}>
+              {[
+                { txt: '14 jours d\'essai offerts — sans carte', ok: true },
+                { txt: 'Toutes les fonctionnalités incluses', ok: true },
+                { txt: 'Sync automatique avec ton agenda', ok: true },
+                { txt: 'Résiliable en 1 clic, quand tu veux', ok: true },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 22, height: 22, borderRadius: 7, background: 'linear-gradient(135deg, rgba(139,92,246,0.2), rgba(109,40,217,0.1))', border: '1px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  </div>
+                  <span style={{ fontSize: 14, color: '#374151', fontWeight: 500 }}>{item.txt}</span>
                 </div>
               ))}
             </div>
             <CTAButton onClick={goAuth}>Démarrer mon essai gratuit</CTAButton>
           </div>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>Paiement sécurisé · Aucun engagement · Résiliable à tout moment</p>
+          <p style={{ fontSize: 12, color: '#a0aec0' }}>Paiement sécurisé · Aucun engagement · Résiliable à tout moment</p>
         </div>
       </section>
 
